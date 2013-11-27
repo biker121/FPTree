@@ -29,6 +29,7 @@ int main(int argc, const char * argv[])
         int minSup = atoi(argv[2]);
         
         //*** test use only ***
+        //github test
 //        minSup = 2;
         
         cout << "===== FP-growth TDB=" << fileName << " minsup=" << minSup << " =====" << endl;

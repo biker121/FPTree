@@ -17,9 +17,9 @@
 using namespace std;
 
 class FPTree {
+private:
+    
 public :
     static void processFile(string fileName, int minSup);
-    static void createHeaderTable(string fileName, int minSup);
-
 };
 #endif

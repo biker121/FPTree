@@ -29,13 +29,13 @@ void FPTreeItem::increment(){
     this->count++;
 }
 
-/*-------------------compareTo(OrderedData *)-------------------------------------------
- * @purpose: compares two FPTreeItems based on their data value and returns an integer representing result of comparison
+/*----------------------------------------------------------------------------------------
+ * @purpose: compares based on data value itself and returns an integer representing result of comparison
  * @parm   : OrderedData *, item that is to be compared
  * @return : 0 -> if both FPTreeItems have same data value
  *         :+1 -> current tree would appear after  the given, in a sorted order
- *         :-1 -> current tree would appear before the given, in a sorted order
- *--------------------------------------------------------------------------------------
+ *         :-1 -> current tree swould appear before the given, in a sorted order
+ *----------------------------------------------------------------------------==----------
  */
 int FPTreeItem::compareTo(OrderedData *item){
 	FPTreeItem *otherFPTreeItem = dynamic_cast<FPTreeItem *>(item);
@@ -46,24 +46,24 @@ int FPTreeItem::compareTo(OrderedData *item){
 		result = -1;
 	} else {
         
-        if (this->data < otherFPTreeItem->data){
+        if (this->data < otherFPTreeItem->data)
             result = -1;
-        } else if (this->data == otherFPTreeItem->data){
+        else if (this->data == otherFPTreeItem->data)
             result = 0;
-        } else {
+        else
             result = 1;
-        }
  	}
     
 	return result;
-}//compareTo(OrderedData *)
+}
 
+
+//@purpose: Compares based on frequency
 int FPTreeItem::compareFrequencyTo(FPTreeItem *item){
     int result = 0;
     
-    if (item != NULL){
+    if (item != NULL)
         result = this->count - item->count;
-    }
     
     return result;
 }
@@ -74,7 +74,7 @@ int FPTreeItem::compareFrequencyTo(FPTreeItem *item){
  */
 void FPTreeItem::print(){
 	cout << this->data << "[" << this->count << "]" << endl;
-}//print()
+}
 
 string FPTreeItem::toString(){
     stringstream ss;

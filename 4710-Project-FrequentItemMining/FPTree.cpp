@@ -20,5 +20,7 @@ void FPTree::processFile(string fileName, int minSup){
     headerTable->createHeaderTable(fileName, minSup);
     headerTable->printTable();
     
-    delete(headerTable);
+    delete headerTable;
+    
+    cout << "test\n";
 }

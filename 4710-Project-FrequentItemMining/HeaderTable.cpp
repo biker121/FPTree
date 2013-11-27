@@ -170,7 +170,7 @@ void HeaderTable::increment(FPTreeItem *item){
         
         if (found != NULL){
             found->increment();
-            delete(item);
+            delete item;
         } else {
             add(item);
         }

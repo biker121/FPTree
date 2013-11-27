@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		ED78803B1845365C00A44EBC /* FPTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED7880391845365C00A44EBC /* FPTree.cpp */; };
+		ED8FD51F1845E128008D1AB0 /* FPTreeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED8FD51D1845E128008D1AB0 /* FPTreeNode.cpp */; };
 		EDB95B7F183ECB9600304110 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDB95B7E183ECB9600304110 /* main.cpp */; };
 		EDB95B81183ECB9600304110 /* _710_Project_FrequentItemMining.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = EDB95B80183ECB9600304110 /* _710_Project_FrequentItemMining.1 */; };
 		EDB95B8C183F11E700304110 /* FPTreeItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDB95B8A183F11E700304110 /* FPTreeItem.cpp */; };
@@ -34,6 +35,8 @@
 		ED191AD81845DA2D003682BB /* test3.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test3.txt; sourceTree = "<group>"; };
 		ED7880381845364D00A44EBC /* FPTree.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FPTree.hpp; sourceTree = "<group>"; };
 		ED7880391845365C00A44EBC /* FPTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPTree.cpp; sourceTree = "<group>"; };
+		ED8FD51D1845E128008D1AB0 /* FPTreeNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPTreeNode.cpp; sourceTree = "<group>"; };
+		ED8FD5221845E2BA008D1AB0 /* FPTreeNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FPTreeNode.hpp; sourceTree = "<group>"; };
 		EDB95B7B183ECB9600304110 /* 4710-Project-FrequentItemMining */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "4710-Project-FrequentItemMining"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB95B7E183ECB9600304110 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		EDB95B80183ECB9600304110 /* _710_Project_FrequentItemMining.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = _710_Project_FrequentItemMining.1; sourceTree = "<group>"; };
@@ -86,16 +89,18 @@
 		EDB95B7D183ECB9600304110 /* 4710-Project-FrequentItemMining */ = {
 			isa = PBXGroup;
 			children = (
-				ED7880381845364D00A44EBC /* FPTree.hpp */,
-				ED7880391845365C00A44EBC /* FPTree.cpp */,
-				EDB95B89183F11A200304110 /* FPTreeItem.hpp */,
-				EDB95B8A183F11E700304110 /* FPTreeItem.cpp */,
-				EDB95B7E183ECB9600304110 /* main.cpp */,
 				EDB95B80183ECB9600304110 /* _710_Project_FrequentItemMining.1 */,
-				EDB95B8E183F15BB00304110 /* OrderedData.hpp */,
-				EDB95B8F183F15EA00304110 /* OrderedData.cpp */,
-				EDB95B92183F212B00304110 /* HeaderTable.hpp */,
+				ED7880391845365C00A44EBC /* FPTree.cpp */,
+				ED7880381845364D00A44EBC /* FPTree.hpp */,
+				EDB95B8A183F11E700304110 /* FPTreeItem.cpp */,
+				EDB95B89183F11A200304110 /* FPTreeItem.hpp */,
+				ED8FD51D1845E128008D1AB0 /* FPTreeNode.cpp */,
+				ED8FD5221845E2BA008D1AB0 /* FPTreeNode.hpp */,
 				EDB95B93183F213200304110 /* HeaderTable.cpp */,
+				EDB95B92183F212B00304110 /* HeaderTable.hpp */,
+				EDB95B7E183ECB9600304110 /* main.cpp */,
+				EDB95B8F183F15EA00304110 /* OrderedData.cpp */,
+				EDB95B8E183F15BB00304110 /* OrderedData.hpp */,
 			);
 			path = "4710-Project-FrequentItemMining";
 			sourceTree = "<group>";
@@ -154,6 +159,7 @@
 				EDB95B91183F15EA00304110 /* OrderedData.cpp in Sources */,
 				ED78803B1845365C00A44EBC /* FPTree.cpp in Sources */,
 				EDB95B95183F213200304110 /* HeaderTable.cpp in Sources */,
+				ED8FD51F1845E128008D1AB0 /* FPTreeNode.cpp in Sources */,
 				EDB95B8C183F11E700304110 /* FPTreeItem.cpp in Sources */,
 				EDB95B7F183ECB9600304110 /* main.cpp in Sources */,
 			);

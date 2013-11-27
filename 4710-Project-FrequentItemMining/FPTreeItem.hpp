@@ -46,8 +46,8 @@ public:
     void increment();
 
     //*****************Minor Methods********************
-    int     compareFrequencyTo(FPTreeItem *item);
     int 	compareTo(OrderedData *item);
+    int     compareFrequencyTo(FPTreeItem *item);
     void 	print();
     string  toString();
     
