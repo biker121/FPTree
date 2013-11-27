@@ -6,13 +6,39 @@
 //  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
 //
 
-#include <iostream>
+#include <string>
+
+#include "FPTree.hpp"
+
+using namespace std;
+//-----------------------------------------------------------
+// AUTHOR(S)	  :	Brahmdeep Singh Juneja, Sukhpreet Lotey
+// COURSE		  : Comp 4710 - Data Mining
+// INSTRUCTOR	  : Carson K. Leung
+//
+// REMARKS        : This implementation of an FP-Tree algorithm to mine data
+//                  from a given data set.
+//
+// ASSUMPTIONS    : 1) see sample data files for data format
+//-----------------------------------------------------------
 
 int main(int argc, const char * argv[])
 {
-
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+    if (argc == 3) {
+        string fileName = argv[1];
+        int minSup = atoi(argv[2]);
+        
+        //*** test use only ***
+//        minSup = 2;
+        
+        cout << "===== FP-growth TDB=" << fileName << " minsup=" << minSup << " =====" << endl;
+        FPTree::processFile(fileName, minSup);
+        cout << "=====================================================================" << endl;
+    } else {
+        cout << "Invalid parameters - must have <filename> <minsup>";
+    }
+    
+    cout << "\nEnd of processing.\n";
+    
+    return EXIT_SUCCESS;
 }
-

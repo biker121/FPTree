@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED78803B1845365C00A44EBC /* FPTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED7880391845365C00A44EBC /* FPTree.cpp */; };
 		EDB95B7F183ECB9600304110 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDB95B7E183ECB9600304110 /* main.cpp */; };
 		EDB95B81183ECB9600304110 /* _710_Project_FrequentItemMining.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = EDB95B80183ECB9600304110 /* _710_Project_FrequentItemMining.1 */; };
+		EDB95B8C183F11E700304110 /* FPTreeItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDB95B8A183F11E700304110 /* FPTreeItem.cpp */; };
+		EDB95B91183F15EA00304110 /* OrderedData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDB95B8F183F15EA00304110 /* OrderedData.cpp */; };
+		EDB95B95183F213200304110 /* HeaderTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDB95B93183F213200304110 /* HeaderTable.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,9 +29,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		ED191AD61845DA2D003682BB /* test1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test1.txt; sourceTree = "<group>"; };
+		ED191AD71845DA2D003682BB /* test2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test2.txt; sourceTree = "<group>"; };
+		ED191AD81845DA2D003682BB /* test3.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test3.txt; sourceTree = "<group>"; };
+		ED7880381845364D00A44EBC /* FPTree.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FPTree.hpp; sourceTree = "<group>"; };
+		ED7880391845365C00A44EBC /* FPTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPTree.cpp; sourceTree = "<group>"; };
 		EDB95B7B183ECB9600304110 /* 4710-Project-FrequentItemMining */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "4710-Project-FrequentItemMining"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB95B7E183ECB9600304110 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		EDB95B80183ECB9600304110 /* _710_Project_FrequentItemMining.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = _710_Project_FrequentItemMining.1; sourceTree = "<group>"; };
+		EDB95B89183F11A200304110 /* FPTreeItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FPTreeItem.hpp; sourceTree = "<group>"; };
+		EDB95B8A183F11E700304110 /* FPTreeItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPTreeItem.cpp; sourceTree = "<group>"; };
+		EDB95B8E183F15BB00304110 /* OrderedData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OrderedData.hpp; sourceTree = "<group>"; };
+		EDB95B8F183F15EA00304110 /* OrderedData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OrderedData.cpp; sourceTree = "<group>"; };
+		EDB95B92183F212B00304110 /* HeaderTable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HeaderTable.hpp; sourceTree = "<group>"; };
+		EDB95B93183F213200304110 /* HeaderTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeaderTable.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,9 +56,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED191AD21845D989003682BB /* test_files */ = {
+			isa = PBXGroup;
+			children = (
+				ED191AD61845DA2D003682BB /* test1.txt */,
+				ED191AD71845DA2D003682BB /* test2.txt */,
+				ED191AD81845DA2D003682BB /* test3.txt */,
+			);
+			path = test_files;
+			sourceTree = "<group>";
+		};
 		EDB95B72183ECB9500304110 = {
 			isa = PBXGroup;
 			children = (
+				ED191AD21845D989003682BB /* test_files */,
 				EDB95B7D183ECB9600304110 /* 4710-Project-FrequentItemMining */,
 				EDB95B7C183ECB9600304110 /* Products */,
 			);
@@ -60,8 +86,16 @@
 		EDB95B7D183ECB9600304110 /* 4710-Project-FrequentItemMining */ = {
 			isa = PBXGroup;
 			children = (
+				ED7880381845364D00A44EBC /* FPTree.hpp */,
+				ED7880391845365C00A44EBC /* FPTree.cpp */,
+				EDB95B89183F11A200304110 /* FPTreeItem.hpp */,
+				EDB95B8A183F11E700304110 /* FPTreeItem.cpp */,
 				EDB95B7E183ECB9600304110 /* main.cpp */,
 				EDB95B80183ECB9600304110 /* _710_Project_FrequentItemMining.1 */,
+				EDB95B8E183F15BB00304110 /* OrderedData.hpp */,
+				EDB95B8F183F15EA00304110 /* OrderedData.cpp */,
+				EDB95B92183F212B00304110 /* HeaderTable.hpp */,
+				EDB95B93183F213200304110 /* HeaderTable.cpp */,
 			);
 			path = "4710-Project-FrequentItemMining";
 			sourceTree = "<group>";
@@ -117,6 +151,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDB95B91183F15EA00304110 /* OrderedData.cpp in Sources */,
+				ED78803B1845365C00A44EBC /* FPTree.cpp in Sources */,
+				EDB95B95183F213200304110 /* HeaderTable.cpp in Sources */,
+				EDB95B8C183F11E700304110 /* FPTreeItem.cpp in Sources */,
 				EDB95B7F183ECB9600304110 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -225,6 +263,7 @@
 				EDB95B86183ECB9600304110 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
