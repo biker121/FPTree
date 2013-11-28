@@ -26,7 +26,6 @@ public:
     virtual	~OrderedData();
     virtual int 	compareTo(OrderedData *)    = 0;
     virtual void 	print()                     = 0;
-    virtual string  toString()                  = 0;
 };
 
 #endif

@@ -9,6 +9,10 @@
 #ifndef _710_Project_FrequentItemMining_FPTreeNode_hpp
 #define _710_Project_FrequentItemMining_FPTreeNode_hpp
 
+#include <string>
+#include <sstream>
+
+
 #include "FPTreeItem.hpp"
 #include "FPTreeNode.hpp"
 
@@ -16,16 +20,37 @@ using namespace std;
 
 class FPTreeNode;
 
-class FPTreeNode {    
+class FPTreeNode : public OrderedData {
 private:
-    FPTreeItem data;
-    
+    FPTreeItem *data;
+    FPTreeNode *nextSimilarNode;
     FPTreeNode *parent;
-    void *headChild;
-
-public:
-
+    FPTreeNode *nextSibling;
+    FPTreeNode *headChild;
     
+    FPTreeNode *incrementChild(FPTreeItem *target);
+    
+public:
+    FPTreeNode();
+    FPTreeNode(FPTreeItem *data, FPTreeNode *parent, FPTreeNode *nextSibling);
+    virtual ~FPTreeNode();    
+    
+    void insertTransaction(FPTreeItem *items[], int size, int curr);
+    int compareTo(OrderedData *);
+    void print();
+    void print(int level); //testing only
+    
+    //**** GETTERS ******
+    FPTreeItem* getData();
+    FPTreeNode* getNextSimilarNode();
+    FPTreeNode* getParent();
+    FPTreeNode* getNextSibling();
+    FPTreeNode* getHeadChild();
+    
+    //**** SETTERS ******
+    void setNextSibling(FPTreeNode *nextSibling);
+    
+    string toString();
 };
 
 #endif

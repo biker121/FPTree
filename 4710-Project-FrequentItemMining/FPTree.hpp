@@ -12,14 +12,27 @@
 #include <string>
 
 #include "HeaderTable.hpp"
+#include "FPTreeNode.hpp"
 #include "FPTree.hpp"
+
 
 using namespace std;
 
+class FPTreeNode;
+
 class FPTree {
 private:
+    HeaderTable *headerTable;
+    FPTreeNode *root;
+
+    void createTree(string fileName);
+    void insertTransaction(FPTreeItem *items[], int size);
+    void printTree();
     
 public :
+    FPTree();
+    virtual ~FPTree();
+    
     static void processFile(string fileName, int minSup);
 };
 #endif

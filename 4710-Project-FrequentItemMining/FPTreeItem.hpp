@@ -17,8 +17,6 @@
 #include "OrderedData.hpp"
 #include "FPTreeItem.hpp"
 
-#define MAX_DOMAIN_ITEMS 1000
-
 using namespace std;
 
 class HeaderTable;
@@ -35,26 +33,22 @@ class FPTreeItem : public OrderedData {
     
 private:
     int data;
-    int count;
-    FPTreeItem *nextFPTreeItem;
+    int frequency;
     
 public:
     FPTreeItem();
-    FPTreeItem(int data, int count, FPTreeItem *ptr);
+    FPTreeItem(int data, int frequency);
     virtual ~FPTreeItem();
     
     void increment();
-
+        
     //*****************Minor Methods********************
     int 	compareTo(OrderedData *item);
-    int     compareFrequencyTo(FPTreeItem *item);
     void 	print();
-    string  toString();
     
     //************ Getters ********
     int getData();
-    int getCount();
-    FPTreeItem* getNextFPTreeItem();
+    int getFrequency();
 };
 
 #endif

@@ -12,21 +12,19 @@
 //------------------Constructor/Destructor---------------------
 FPTreeItem::FPTreeItem(){
 	this->data = 0;
-	this->count = 0;
-    this->nextFPTreeItem = NULL;
+	this->frequency = 0;
 }
 
-FPTreeItem::FPTreeItem(int data, int count, FPTreeItem *ptr){
+FPTreeItem::FPTreeItem(int data, int frequency){
 	this->data = data;
-	this->count = count;
-    this->nextFPTreeItem = ptr;
+	this->frequency = frequency;
 }
 
 FPTreeItem::~FPTreeItem(){}
 //-------------------------------------------------------------
 
 void FPTreeItem::increment(){
-    this->count++;
+    this->frequency++;
 }
 
 /*----------------------------------------------------------------------------------------
@@ -39,51 +37,22 @@ void FPTreeItem::increment(){
  */
 int FPTreeItem::compareTo(OrderedData *item){
 	FPTreeItem *otherFPTreeItem = dynamic_cast<FPTreeItem *>(item);
-	int result;
-    
-	if (otherFPTreeItem == NULL){
-		cout << "Error: class conflict <-FPTreeItem::compareTo(OrderedData *)" << endl;
-		result = -1;
-	} else {
-        
-        if (this->data < otherFPTreeItem->data)
-            result = -1;
-        else if (this->data == otherFPTreeItem->data)
-            result = 0;
-        else
-            result = 1;
- 	}
-    
-	return result;
-}
-
-
-//@purpose: Compares based on frequency
-int FPTreeItem::compareFrequencyTo(FPTreeItem *item){
     int result = 0;
     
-    if (item != NULL)
-        result = this->count - item->count;
+    if (otherFPTreeItem != NULL)
+        result = this->frequency - otherFPTreeItem->frequency;
     
     return result;
 }
 
 /*-----------------------print()---------------------------------------------
- * @purpose: prints data item and count
+ * @purpose: prints data item and frequency
  *---------------------------------------------------------------------------
  */
 void FPTreeItem::print(){
-	cout << this->data << "[" << this->count << "]" << endl;
-}
-
-string FPTreeItem::toString(){
-    stringstream ss;
-    ss << this->data << "[" << this->count << "]";
-
-    return ss.str();
+	cout << this->data << " : " << this->frequency << endl;
 }
 
 //************** GETTERS ***********************
 int FPTreeItem::getData(){ return this->data; }
-int FPTreeItem::getCount(){ return this->count; }
-FPTreeItem* FPTreeItem::getNextFPTreeItem(){ return this->nextFPTreeItem; }
+int FPTreeItem::getFrequency(){ return this->frequency; }
