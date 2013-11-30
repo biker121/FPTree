@@ -24,13 +24,14 @@ class FPTree {
 private:
     HeaderTable *headerTable;
     FPTreeNode *root;
+    int minSup;
 
     void createTree(string fileName);
     void insertTransaction(FPTreeItem *items[], int size);
     void printTree();
     
 public :
-    FPTree();
+    FPTree(int minSup);
     virtual ~FPTree();
     
     static void processFile(string fileName, int minSup);

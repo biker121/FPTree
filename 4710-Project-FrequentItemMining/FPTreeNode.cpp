@@ -86,7 +86,9 @@ int FPTreeNode::compareTo(OrderedData *item){
     return result;
 }
 
-void FPTreeNode::print(){}
+void FPTreeNode::print(){
+    this->data->print();
+}
 
 void FPTreeNode::print(int level){
     stringstream ss;

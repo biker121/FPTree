@@ -9,9 +9,10 @@
 #include "FPTree.hpp"
 
 //------------------------Constructors and destructors-----------------------
-FPTree::FPTree(){
-    this->headerTable = new HeaderTable();
+FPTree::FPTree(int minSup){
+    this->headerTable = new HeaderTable(minSup);
     this->root = new FPTreeNode();
+    this->minSup = minSup;
 }
 FPTree::~FPTree(){
     delete(headerTable);
@@ -25,14 +26,14 @@ FPTree::~FPTree(){
  *-----------------------------------------------------------------------------------
  */
 void FPTree::processFile(string fileName, int minSup){
-    FPTree *tree = new FPTree();
+    FPTree *tree = new FPTree(minSup);
     
     //first pass - frequency population
-    tree->headerTable->createHeaderTable(fileName, minSup);
+    tree->headerTable->createHeaderTable(fileName);
     tree->headerTable->printTable();
 
     //second pass - tree creation
-    tree->createTree(fileName);
+//    tree->createTree(fileName);
     
     //third pass - data mining
     

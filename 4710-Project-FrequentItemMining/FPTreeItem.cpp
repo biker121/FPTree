@@ -50,7 +50,7 @@ int FPTreeItem::compareTo(OrderedData *item){
  *---------------------------------------------------------------------------
  */
 void FPTreeItem::print(){
-	cout << this->data << " : " << this->frequency << endl;
+	cout << this->data << " : " << this->frequency;
 }
 
 //************** GETTERS ***********************

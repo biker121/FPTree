@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED1740DC1847CF9500A45798 /* HeaderItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED1740DA1847CF9500A45798 /* HeaderItem.cpp */; };
 		ED78803B1845365C00A44EBC /* FPTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED7880391845365C00A44EBC /* FPTree.cpp */; };
 		ED8FD51F1845E128008D1AB0 /* FPTreeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED8FD51D1845E128008D1AB0 /* FPTreeNode.cpp */; };
 		EDB95B7F183ECB9600304110 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDB95B7E183ECB9600304110 /* main.cpp */; };
@@ -30,6 +31,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		ED1740DA1847CF9500A45798 /* HeaderItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeaderItem.cpp; sourceTree = "<group>"; };
+		ED1740DD1847CF9E00A45798 /* HeaderItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HeaderItem.hpp; sourceTree = "<group>"; };
 		ED191AD61845DA2D003682BB /* test1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test1.txt; sourceTree = "<group>"; };
 		ED191AD71845DA2D003682BB /* test2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test2.txt; sourceTree = "<group>"; };
 		ED191AD81845DA2D003682BB /* test3.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test3.txt; sourceTree = "<group>"; };
@@ -98,6 +101,8 @@
 				ED8FD5221845E2BA008D1AB0 /* FPTreeNode.hpp */,
 				EDB95B93183F213200304110 /* HeaderTable.cpp */,
 				EDB95B92183F212B00304110 /* HeaderTable.hpp */,
+				ED1740DA1847CF9500A45798 /* HeaderItem.cpp */,
+				ED1740DD1847CF9E00A45798 /* HeaderItem.hpp */,
 				EDB95B7E183ECB9600304110 /* main.cpp */,
 				EDB95B8F183F15EA00304110 /* OrderedData.cpp */,
 				EDB95B8E183F15BB00304110 /* OrderedData.hpp */,
@@ -162,6 +167,7 @@
 				ED8FD51F1845E128008D1AB0 /* FPTreeNode.cpp in Sources */,
 				EDB95B8C183F11E700304110 /* FPTreeItem.cpp in Sources */,
 				EDB95B7F183ECB9600304110 /* main.cpp in Sources */,
+				ED1740DC1847CF9500A45798 /* HeaderItem.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

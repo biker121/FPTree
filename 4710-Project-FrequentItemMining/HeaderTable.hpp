@@ -13,36 +13,38 @@
 #include <fstream>
 #include <string>
 
-#include "FPTreeItem.hpp"
-#include "FPTreeNode.hpp"
+#include "HeaderItem.hpp"
 #include "HeaderTable.hpp"
 
 #define MAX_DOMAIN_ITEMS 1000
 
 using namespace std;
 
+class FPTreeItem;
+
 class HeaderTable {
     
 private:
-    FPTreeNode *freqItems[MAX_DOMAIN_ITEMS];
+    HeaderItem *freqItems[MAX_DOMAIN_ITEMS];
     int numDomainItems;
-
-    void increment(FPTreeItem *item);
-    FPTreeNode* find(FPTreeItem *item);
-    void add(FPTreeItem *item);
-
+    int minSup;
+    
     bool populateFrequencies(string fileName);
-    int removeInfrequentItems(int minSup);
     void prioritizeFrequencies();
+    
+    void insertionSort(HeaderItem *array[], int len);
+    int assignPriorities(HeaderItem *array[], int len);
+    void hashItems(HeaderItem *items[], int len);
+    
+    void increment(FPTreeItem *item);
+    
 public:
-    HeaderTable();
+    HeaderTable(int minSup);
     virtual ~HeaderTable();
     
-    bool createHeaderTable(string fileName, int minSup);
+    bool createHeaderTable(string fileName);
     void printTable();
-    
-    static void insertionSort(FPTreeNode *array[], int len);
-    static void prioritizeItems(FPTreeItem *array[], int size);
+    int getHashIndex(FPTreeItem *item);
 };
 
 #endif
