@@ -37,7 +37,6 @@ bool HeaderTable::createHeaderTable(string fileName){
     
     tableCreated = populateFrequencies(fileName);
     if (tableCreated){
-        this->printTable();
         this->prioritizeFrequencies();
     }
     
@@ -133,7 +132,7 @@ void HeaderTable::insertionSort(HeaderItem *array[], int len){
 int HeaderTable::assignPriorities(HeaderItem *array[], int len){
     int currPriority = len; //which is also 'this->numDomainItems'
     bool infrequent = false;
-    int numFrequentItems = 0;
+    int numFrequentItems = this->numDomainItems;
     
     for (int i=0; i<len; i++){
         if (array[i] != NULL){
