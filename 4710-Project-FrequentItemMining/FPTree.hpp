@@ -28,6 +28,7 @@ private:
 
     void createTree(string fileName);
     void insertTransaction(FPTreeItem *items[], int size);
+    
     void printTree();
     
 public :

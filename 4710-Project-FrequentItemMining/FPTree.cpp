@@ -33,7 +33,13 @@ void FPTree::processFile(string fileName, int minSup){
     tree->headerTable->printTable();
 
     //second pass - tree creation
-//    tree->createTree(fileName);
+    if (tree->headerTable->getNumDomainItem() > 0){
+        tree->createTree(fileName);
+        tree->printTree();
+        
+        //DEBUG
+        tree->headerTable->verifyFrequencies(); //verifies tree node frequencies with header table frequency 
+    }
     
     //third pass - data mining
     
@@ -49,7 +55,9 @@ void FPTree::createTree(string fileName){
     int currTransaction, transactionSize;
     
     FPTreeItem *buffer[MAX_DOMAIN_ITEMS];
+    FPTreeItem *tempItem;
     int temp;
+    int bufferIndex;
     
     dataFile.open(fileName.c_str());
     
@@ -64,13 +72,22 @@ void FPTree::createTree(string fileName){
                 dataFile >> currTransaction >> transactionSize;
                 
                 //read entire transaction into array
+                bufferIndex = 0;
                 for (int i=0; i<transactionSize; i++){
                     dataFile >> temp;
-                    buffer[i] = new FPTreeItem(temp, 1); //temp is later freed
+                    tempItem = new FPTreeItem(temp, 1); //temp is later freed
+                    
+                    if (this->headerTable->isFrequent(tempItem) == true){
+                        buffer[bufferIndex] = tempItem;
+                        bufferIndex++;
+                    } else {
+                        delete(tempItem);
+                        tempItem = NULL;
+                    }
                 }
                 
                 //insert transaction
-                this->insertTransaction(buffer, transactionSize);
+                this->insertTransaction(buffer, bufferIndex);
                 
             } while (currTransaction < numTransactions);
         }
@@ -82,8 +99,8 @@ void FPTree::createTree(string fileName){
 
 // @purpose : passes job to root node which recursively inserts each item
 void FPTree::insertTransaction(FPTreeItem *items[], int size){
-//    HeaderTable::prioritizeItems(items, size);
-//    this->root->insertTransaction(items, size, 0);
+    this->headerTable->prioritizeItems(items, size);
+    this->root->insertTransaction(items, size, 0, this->headerTable);
 }
 
 void FPTree::printTree(){

@@ -20,7 +20,7 @@ HeaderItem::~HeaderItem(){
 }
 
 // @purpose : compares the frequency of two HeaderItems.
-// @remark  : NULL item is automatically assigned 0 priority
+// @remark  : NULL items are taken as lowest priority
 int HeaderItem::compareTo(OrderedData *other){
     HeaderItem *otherItem = NULL;
     int result = 1;

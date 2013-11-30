@@ -12,7 +12,7 @@
 #include <string>
 #include <sstream>
 
-
+#include "OrderedData.hpp"
 #include "FPTreeItem.hpp"
 #include "FPTreeNode.hpp"
 
@@ -28,14 +28,14 @@ private:
     FPTreeNode *nextSibling;
     FPTreeNode *headChild;
     
-    FPTreeNode *incrementChild(FPTreeItem *target);
+    FPTreeNode *incrementChild(FPTreeItem *target, HeaderTable *headerTable);
     
 public:
     FPTreeNode();
     FPTreeNode(FPTreeItem *data, FPTreeNode *parent, FPTreeNode *nextSibling);
     virtual ~FPTreeNode();    
     
-    void insertTransaction(FPTreeItem *items[], int size, int curr);
+    void insertTransaction(FPTreeItem *items[], int size, int curr, HeaderTable *headerTable);
     int compareTo(OrderedData *);
     void print();
     void print(int level); //testing only
@@ -49,6 +49,7 @@ public:
     
     //**** SETTERS ******
     void setNextSibling(FPTreeNode *nextSibling);
+    void setNextSimilarNode(FPTreeNode *nextSimilarNode);
     
     string toString();
 };

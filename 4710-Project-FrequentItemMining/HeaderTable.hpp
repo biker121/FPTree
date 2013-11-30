@@ -21,6 +21,7 @@
 using namespace std;
 
 class FPTreeItem;
+class FPTreeNode;
 
 class HeaderTable {
     
@@ -44,7 +45,19 @@ public:
     
     bool createHeaderTable(string fileName);
     void printTable();
+    
+    void prioritizeItems(FPTreeItem *items[], int size);
+    
     int getHashIndex(FPTreeItem *item);
+    bool isFrequent(FPTreeItem *item);
+    
+    void linkNode(FPTreeNode *node);
+    
+    //debug
+    void verifyFrequencies();
+    
+    //************* GETTERS ***************
+    int getNumDomainItem();
 };
 
 #endif
