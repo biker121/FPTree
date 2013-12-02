@@ -36,7 +36,7 @@ int main(int argc, const char * argv[])
         int minSup = atoi(argv[2]);
         
         //*** test use only ***
-        minSup = 1;
+        minSup = 2;
         
         cout << "===== FP-growth TDB=" << fileName << " minsup=" << minSup << " =====" << endl;
         FPTree::processFile(fileName, minSup);
