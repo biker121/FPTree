@@ -7,6 +7,7 @@
 //
 
 #include <string>
+#include <iostream>
 
 #include "FPTree.hpp"
 
@@ -19,9 +20,15 @@ using namespace std;
 // REMARKS        : This implementation of an FP-Tree algorithm to mine data
 //                  from a given data set.
 //
-// ASSUMPTIONS    : 1) see sample data files for data format
 //-----------------------------------------------------------
 
+/*-------------------------------------------------------------------------------------
+ * PURPOSE:
+ * PARM   :
+ * PARM   :
+ * RETURN :
+ * REMARKS:
+ *-----------------------------------------------------------------------------------*/
 int main(int argc, const char * argv[])
 {
     if (argc == 3) {

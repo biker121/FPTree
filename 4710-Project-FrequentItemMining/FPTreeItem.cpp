@@ -23,18 +23,21 @@ FPTreeItem::FPTreeItem(int data, int frequency){
 FPTreeItem::~FPTreeItem(){}
 //-------------------------------------------------------------
 
+/*-------------------------------------------------------------------------------------
+ * PURPOSE: increases the frequency by one
+ *-----------------------------------------------------------------------------------*/
 void FPTreeItem::increment(){
     this->frequency++;
 }
 
-/*----------------------------------------------------------------------------------------
- * @purpose: compares based on data value itself and returns an integer representing result of comparison
- * @parm   : OrderedData *, item that is to be compared
- * @return : 0 -> if both FPTreeItems have same data value
- *         :+1 -> current tree would appear after  the given, in a sorted order
- *         :-1 -> current tree swould appear before the given, in a sorted order
- *----------------------------------------------------------------------------==----------
- */
+/*-------------------------------------------------------------------------------------
+ * PURPOSE: compares based on frequency and returns an integer representing result of 
+ *          comparison
+ * PARM   : OrderedItem *, item that is to be compared
+ * PARM   : 0  -> if both FPTreeItems have same data value
+ *        : +1 -> this TreeItem would appear after  the given, in alphabetical order
+ *        : -1 -> this TreeItem swould appear before the given, in alphabetical order
+ *-----------------------------------------------------------------------------------*/
 int FPTreeItem::compareTo(OrderedData *item){
 	FPTreeItem *otherFPTreeItem = dynamic_cast<FPTreeItem *>(item);
     int result = 0;
@@ -45,10 +48,9 @@ int FPTreeItem::compareTo(OrderedData *item){
     return result;
 }
 
-/*-----------------------print()---------------------------------------------
- * @purpose: prints data item and frequency
- *---------------------------------------------------------------------------
- */
+/*-------------------------------------------------------------------------------------
+ * PURPOSE: prints data item and frequency
+ *-----------------------------------------------------------------------------------*/
 void FPTreeItem::print(){
 	cout << this->data << " : " << this->frequency;
 }

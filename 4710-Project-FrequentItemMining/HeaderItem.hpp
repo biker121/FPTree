@@ -9,9 +9,13 @@
 #ifndef _710_Project_FrequentItemMining_HeaderItem_hpp
 #define _710_Project_FrequentItemMining_HeaderItem_hpp
 
-#include "FPTreeNode.hpp"
+#include <string>
+
+#include "OrderedData.hpp"
 
 using namespace std;
+
+class FPTreeNode;
 
 class HeaderItem : public OrderedData {
 private:
@@ -22,12 +26,11 @@ public:
     HeaderItem(FPTreeNode *data);
     ~HeaderItem();
     
-    
     int compareTo(OrderedData *other);
     void print();
     
     //************* GETTERS *************
-    FPTreeNode* getData();
+    FPTreeNode* getNode();
     int getPriority();
     
     //************* SETTERS *************

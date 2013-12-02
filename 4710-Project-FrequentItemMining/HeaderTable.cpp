@@ -10,11 +10,11 @@
 #include "FPTreeNode.hpp"
 #include "HeaderTable.hpp"
 
+//------------------------Constructors and destructors-----------------------
 HeaderTable::HeaderTable(int minSup){
     this->numDomainItems = 0;
     this->minSup = minSup;
 }
-
 HeaderTable::~HeaderTable(){
     if (numDomainItems > 0){
         for (int i=0; i<MAX_DOMAIN_ITEMS; i++){
@@ -24,7 +24,7 @@ HeaderTable::~HeaderTable(){
             }
         }
     }
-}
+}//--------------------------------------------------------------------------
 
 /*-----------------------createHeaderTable(string, int)-----------------------------------
  * @purpose: creates a header table based on the given data file, with only frequent items
@@ -185,7 +185,7 @@ int HeaderTable::assignPriorities(HeaderItem *array[], int len){
         if (array[i] != NULL){
             
             if (!infrequent &&
-                    array[i]->getData()->getData()->getFrequency() < this->minSup){
+                    array[i]->getNode()->getData()->getFrequency() < this->minSup){
                 infrequent = true;
                 numFrequentItems = i;
             }
@@ -207,7 +207,7 @@ int HeaderTable::assignPriorities(HeaderItem *array[], int len){
 void HeaderTable::hashItems(HeaderItem *items[], int len){
     for (int i=0; i<len; i++){
         if (items[i] != NULL){
-            this->freqItems[this->getHashIndex(items[i]->getData()->getData())] = items[i];
+            this->freqItems[this->getHashIndex(items[i]->getNode()->getData())] = items[i];
         }
     }
 }
@@ -259,7 +259,7 @@ void HeaderTable::increment(FPTreeItem *item){
                 this->freqItems[hashIndex] = tempHeader;
                 this->numDomainItems++;
             } else {
-                found->getData()->getData()->increment();
+                found->getNode()->getData()->increment();
                 delete(item);
             }
         }
@@ -274,8 +274,8 @@ void HeaderTable::linkNode(FPTreeNode *node){
         hashIndex = getHashIndex(node->getData());
         
         if (hashIndex != -1 && freqItems[hashIndex] != NULL){
-            node->setNextSimilarNode(freqItems[hashIndex]->getData()->getNextSimilarNode());
-            freqItems[hashIndex]->getData()->setNextSimilarNode(node);
+            node->setNextSimilarNode(freqItems[hashIndex]->getNode()->getNextSimilarNode());
+            freqItems[hashIndex]->getNode()->setNextSimilarNode(node);
         }            
     }
 }
@@ -310,14 +310,14 @@ void HeaderTable::verifyFrequencies(){
         if (freqItems[i] != NULL){
             count = 0; //running frequency count
             
-            curr = freqItems[i]->getData()->getNextSimilarNode();
+            curr = freqItems[i]->getNode()->getNextSimilarNode();
             while (curr != NULL){
                 count += curr->getData()->getFrequency(); //add frequency
                 curr = curr->getNextSimilarNode();
             }
             
             //if counted frequency doesn't match stored frequency --> print some details
-            if (count != freqItems[i]->getData()->getData()->getFrequency()){
+            if (count != freqItems[i]->getNode()->getData()->getFrequency()){
                 frequenciesValid = false;
                 cout << endl;
                 freqItems[i]->print();

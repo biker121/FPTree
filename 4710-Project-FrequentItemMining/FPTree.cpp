@@ -6,13 +6,21 @@
 //  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
 //
 
+#include <iostream>
+
+#include "FPTreeItem.hpp"
+#include "FPTreeNode.hpp"
+#include "HeaderTable.hpp"
 #include "FPTree.hpp"
 
 //------------------------Constructors and destructors-----------------------
-FPTree::FPTree(int minSup){
-    this->headerTable = new HeaderTable(minSup);
-    this->root = new FPTreeNode();
-    this->minSup = minSup;
+FPTree::FPTree(int minSup, string fileName){
+    if (fileName.length() > 0){
+        this->headerTable = new HeaderTable(minSup);
+        this->root = new FPTreeNode();
+        this->minSup = minSup;
+        this->fileName = fileName;
+    }
 }
 FPTree::~FPTree(){
     delete(headerTable);
@@ -23,19 +31,18 @@ FPTree::~FPTree(){
  * @purpose: primary handler method for mining a given datafile with indicated minsup
  * @parm   : string fileName, absolute file name
  * @parm   : int minSup, support threshold for frequent items
- *-----------------------------------------------------------------------------------
- */
+ *----------------------------------------------------------------------------------*/
 void FPTree::processFile(string fileName, int minSup){
-    FPTree *tree = new FPTree(minSup);
+    FPTree *tree = new FPTree(minSup, fileName);
     
     //first pass - frequency population
-    tree->headerTable->createHeaderTable(fileName);
+    tree->headerTable->createHeaderTable(tree->fileName);
     tree->headerTable->printTable();
 
     //second pass - tree creation
     if (tree->headerTable->getNumDomainItem() > 0){
-        tree->createTree(fileName);
-        tree->printTree();
+        tree->createTree();
+//        tree->printTree();
         
         //DEBUG
         tree->headerTable->verifyFrequencies(); //verifies tree node frequencies with header table frequency 
@@ -48,8 +55,11 @@ void FPTree::processFile(string fileName, int minSup){
     delete(tree);
 }
 
-// @purpose : creates the FP-Tree by inserting one transaction at a time
-void FPTree::createTree(string fileName){
+/*-----------------------------------------------------------------------------------
+ * PURPOSE: creates the FP-Tree by reading and inserting one transaction at a time for
+ *          only the frequent items
+ *----------------------------------------------------------------------------------*/
+void FPTree::createTree(){
     ifstream dataFile;
     int numTransactions;
     int currTransaction, transactionSize;
@@ -94,15 +104,27 @@ void FPTree::createTree(string fileName){
         
         dataFile.close();
     }
-    
 }
 
-// @purpose : passes job to root node which recursively inserts each item
+/*-----------------------------------------------------------------------------------
+ * PURPOSE: passes job to root node which recursively inserts each item
+ * PARM   : FPTreeItems[] that are to be inserted into the tree
+ * PARM   : size of the items array
+ * REMARKS: - inserts all items from the array
+ *          - any item from items[] that are not used, are freed
+ *----------------------------------------------------------------------------------*/
 void FPTree::insertTransaction(FPTreeItem *items[], int size){
     this->headerTable->prioritizeItems(items, size);
     this->root->insertTransaction(items, size, 0, this->headerTable);
 }
 
+/*-----------------------------------------------------------------------------------
+ * PURPOSE: prints the tree structure to console by recursively calling print node
+ *----------------------------------------------------------------------------------*/
 void FPTree::printTree(){
     this->root->print(0);
 }
+
+//**************************** GETTERS ************************
+int FPTree::getMinSup(){ return this->minSup; }
+string FPTree::getFileName(){ return this->fileName; }

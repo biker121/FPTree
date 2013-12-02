@@ -11,30 +11,30 @@
 
 #include <string>
 
-#include "HeaderTable.hpp"
-#include "FPTreeNode.hpp"
-#include "FPTree.hpp"
-
-
 using namespace std;
 
+class HeaderTable;
 class FPTreeNode;
+class FPTreeItem;
 
 class FPTree {
 private:
     HeaderTable *headerTable;
     FPTreeNode *root;
     int minSup;
+    string fileName;
 
-    void createTree(string fileName);
+    void createTree();
     void insertTransaction(FPTreeItem *items[], int size);
-    
     void printTree();
     
 public :
-    FPTree(int minSup);
+    FPTree(int minSup, string fileName);
     virtual ~FPTree();
     
     static void processFile(string fileName, int minSup);
+    
+    int getMinSup();
+    string getFileName();
 };
 #endif

@@ -36,22 +36,22 @@ public:
     virtual ~FPTreeNode();    
     
     void insertTransaction(FPTreeItem *items[], int size, int curr, HeaderTable *headerTable);
+    
+    //************* minor methods **********
     int compareTo(OrderedData *);
     void print();
-    void print(int level); //testing only
+    void print(int level);
     
-    //**** GETTERS ******
+    //************* GETTERS ****************
     FPTreeItem* getData();
     FPTreeNode* getNextSimilarNode();
     FPTreeNode* getParent();
     FPTreeNode* getNextSibling();
     FPTreeNode* getHeadChild();
     
-    //**** SETTERS ******
+    //************* SETTERS ****************
     void setNextSibling(FPTreeNode *nextSibling);
     void setNextSimilarNode(FPTreeNode *nextSimilarNode);
-    
-    string toString();
 };
 
 #endif
