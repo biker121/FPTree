@@ -26,7 +26,7 @@ class FPTreeNode;
 class HeaderTable {
     
 private:
-    HeaderItem *freqItems[MAX_DOMAIN_ITEMS];
+    HeaderItem *freqItems[MAX_DOMAIN_ITEMS]; //unique idx per item*
     int numDomainItems;
     int minSup;
     

@@ -22,12 +22,14 @@ HeaderItem::~HeaderItem(){
     delete(data);
 }//--------------------------------------------------------------------------
 
-// @purpose : compares the frequency of two HeaderItems
-// @parm    : HeaderItem - item that is being compared
-// @return  : <0 = 'this' item is less frequent
-//          : 0  = same frequency
-//          : >0 = 'this' item is more frequent
-// @remark  : NULL items are taken as lowest priority
+/*-------------------------------------------------------------------------------------
+ * PURPOSE: compares the frequency of two HeaderItems
+ * PARM   : HeaderItem - item that is being compared
+ * RETURN : <0 = 'this' item is less frequent
+ *           0 = same frequency
+ *          >0 = 'this' item is more frequent
+ * REMARKS: NULL items are taken as lowest priority
+ *-----------------------------------------------------------------------------------*/
 int HeaderItem::compareTo(OrderedData *other){
     HeaderItem *otherItem = NULL;
     int result = 1;
@@ -38,7 +40,9 @@ int HeaderItem::compareTo(OrderedData *other){
     return result;
 }
 
-// @purpose : prints priority, data value, frequency (e.g. "{10} 22 : 1")
+/*-------------------------------------------------------------------------------------
+ * PURPOSE: prints priority, data value, frequency (e.g. "{10} 22 : 1")
+ *-----------------------------------------------------------------------------------*/
 void HeaderItem::print(){
     cout << "{" << this->priority << "} ";
     this->data->print();

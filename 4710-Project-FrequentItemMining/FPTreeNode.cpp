@@ -85,7 +85,7 @@ FPTreeNode* FPTreeNode::incrementChild(FPTreeItem *target, HeaderTable *headerTa
  * PARM   : size - length of the items[] array
  * PARM   : curr - pos of the current item that is being processed
  * PARM   : headerTable - used only for linking new nodes to the headerTable
- * REMARKS: - 
+ * REMARKS: - items[] must be prioritized and contain only frequent items
  *-----------------------------------------------------------------------------------*/
 void FPTreeNode::insertTransaction(FPTreeItem *items[], int size, int curr, HeaderTable *headerTable){
     FPTreeNode *targetNode = NULL;
@@ -130,9 +130,8 @@ void FPTreeNode::print(){
 
 // @purpose : prints the node's depiction within the tree
 /*-------------------------------------------------------------------------------------
- * PURPOSE:
- * PARM   :
- * RETURN :
+ * PURPOSE: prints the current node and invokes print() on a sibling and first children
+ * PARM   : level - to identify pad space
  *-----------------------------------------------------------------------------------*/
 void FPTreeNode::print(int level){
     stringstream ss;
