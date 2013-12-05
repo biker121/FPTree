@@ -31,7 +31,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6B8DB27A1851436A0095B508 /* test4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test4.txt; sourceTree = "<group>"; };
 		ED1740DA1847CF9500A45798 /* HeaderItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeaderItem.cpp; sourceTree = "<group>"; };
 		ED1740DD1847CF9E00A45798 /* HeaderItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HeaderItem.hpp; sourceTree = "<group>"; };
 		ED191AD61845DA2D003682BB /* test1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test1.txt; sourceTree = "<group>"; };
@@ -69,7 +68,6 @@
 				ED191AD61845DA2D003682BB /* test1.txt */,
 				ED191AD71845DA2D003682BB /* test2.txt */,
 				ED191AD81845DA2D003682BB /* test3.txt */,
-				6B8DB27A1851436A0095B508 /* test4.txt */,
 			);
 			path = test_files;
 			sourceTree = "<group>";
