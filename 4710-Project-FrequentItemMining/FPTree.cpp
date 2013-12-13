@@ -40,16 +40,15 @@ void FPTree::processFile(string fileName, int minSup){
     tree->headerTable->printTable();
 
     //second pass - tree creation
-    if (tree->headerTable->getNumDomainItem() > 0){
+    if (tree->headerTable->getNumDomainItem() > 0) {
         tree->createTree();
-//        tree->printTree();
+        //tree->printTree();
         
         //DEBUG
         tree->headerTable->verifyFrequencies(); //verifies tree node frequencies with header table frequency 
     }
     
     //third pass - data mining
-    
     
     //free objects
     delete(tree);

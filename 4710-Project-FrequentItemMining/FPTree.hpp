@@ -26,6 +26,7 @@ private:
 
     void createTree();
     void insertTransaction(FPTreeItem *items[], int size);
+    void fp_growth(HeaderTable* h_table);
     void printTree();
     
 public :
