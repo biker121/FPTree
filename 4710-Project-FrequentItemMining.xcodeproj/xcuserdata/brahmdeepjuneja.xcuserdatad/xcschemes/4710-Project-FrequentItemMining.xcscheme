@@ -28,6 +28,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EDAAA147185A947400A076E8"
+               BuildableName = "4710-Project-FrequentItemMining Tests.xctest"
+               BlueprintName = "4710-Project-FrequentItemMining Tests"
+               ReferencedContainer = "container:4710-Project-FrequentItemMining.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

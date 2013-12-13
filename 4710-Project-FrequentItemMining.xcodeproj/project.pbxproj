@@ -21,16 +21,6 @@
 		EDB95B95183F213200304110 /* HeaderTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDB95B93183F213200304110 /* HeaderTable.cpp */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		EDAAA155185A947500A076E8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EDB95B73183ECB9500304110 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = EDB95B7A183ECB9600304110;
-			remoteInfo = "4710-Project-FrequentItemMining";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		EDB95B79183ECB9600304110 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -60,7 +50,6 @@
 		EDAAA13E185A837900A076E8 /* DLinkedList.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DLinkedList.hpp; sourceTree = "<group>"; };
 		EDAAA13F185A8F2D00A076E8 /* Data.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Data.hpp; sourceTree = "<group>"; };
 		EDAAA140185A8F3500A076E8 /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Data.cpp; sourceTree = "<group>"; };
-		EDAAA148185A947400A076E8 /* 4710-Project-FrequentItemMining Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "4710-Project-FrequentItemMining Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDAAA15A185A95B600A076E8 /* test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = test.cpp; path = "4710-Project-FrequentItemMining/test.cpp"; sourceTree = "<group>"; };
 		EDAAA15D185A966C00A076E8 /* test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = test.h; path = "4710-Project-FrequentItemMining/test.h"; sourceTree = "<group>"; };
 		EDB95B7B183ECB9600304110 /* 4710-Project-FrequentItemMining */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "4710-Project-FrequentItemMining"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,13 +64,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		EDAAA145185A947400A076E8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		EDB95B78183ECB9600304110 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -140,7 +122,6 @@
 			isa = PBXGroup;
 			children = (
 				EDB95B7B183ECB9600304110 /* 4710-Project-FrequentItemMining */,
-				EDAAA148185A947400A076E8 /* 4710-Project-FrequentItemMining Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -168,24 +149,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		EDAAA147185A947400A076E8 /* 4710-Project-FrequentItemMining Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = EDAAA157185A947500A076E8 /* Build configuration list for PBXNativeTarget "4710-Project-FrequentItemMining Tests" */;
-			buildPhases = (
-				EDAAA144185A947400A076E8 /* Sources */,
-				EDAAA145185A947400A076E8 /* Frameworks */,
-				EDAAA146185A947400A076E8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				EDAAA156185A947500A076E8 /* PBXTargetDependency */,
-			);
-			name = "4710-Project-FrequentItemMining Tests";
-			productName = "4710-Project-FrequentItemMining Tests";
-			productReference = EDAAA148185A947400A076E8 /* 4710-Project-FrequentItemMining Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		EDB95B7A183ECB9600304110 /* 4710-Project-FrequentItemMining */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EDB95B84183ECB9600304110 /* Build configuration list for PBXNativeTarget "4710-Project-FrequentItemMining" */;
@@ -211,11 +174,6 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Brahmdeep Singh Juneja";
-				TargetAttributes = {
-					EDAAA147185A947400A076E8 = {
-						TestTargetID = EDB95B7A183ECB9600304110;
-					};
-				};
 			};
 			buildConfigurationList = EDB95B76183ECB9500304110 /* Build configuration list for PBXProject "4710-Project-FrequentItemMining" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -230,29 +188,11 @@
 			projectRoot = "";
 			targets = (
 				EDB95B7A183ECB9600304110 /* 4710-Project-FrequentItemMining */,
-				EDAAA147185A947400A076E8 /* 4710-Project-FrequentItemMining Tests */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		EDAAA146185A947400A076E8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		EDAAA144185A947400A076E8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		EDB95B77183ECB9600304110 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -273,49 +213,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		EDAAA156185A947500A076E8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = EDB95B7A183ECB9600304110 /* 4710-Project-FrequentItemMining */;
-			targetProxy = EDAAA155185A947500A076E8 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		EDAAA158185A947500A076E8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "4710-Project-FrequentItemMining Tests/4710-Project-FrequentItemMining Tests-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "4710-Project-FrequentItemMining Tests/4710-Project-FrequentItemMining Tests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		EDAAA159185A947500A076E8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "4710-Project-FrequentItemMining Tests/4710-Project-FrequentItemMining Tests-Prefix.pch";
-				INFOPLIST_FILE = "4710-Project-FrequentItemMining Tests/4710-Project-FrequentItemMining Tests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 		EDB95B82183ECB9600304110 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -401,14 +299,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EDAAA157185A947500A076E8 /* Build configuration list for PBXNativeTarget "4710-Project-FrequentItemMining Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				EDAAA158185A947500A076E8 /* Debug */,
-				EDAAA159185A947500A076E8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
 		EDB95B76183ECB9500304110 /* Build configuration list for PBXProject "4710-Project-FrequentItemMining" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
