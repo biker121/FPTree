@@ -33,7 +33,7 @@ using namespace std;
  *-----------------------------------------------------------------------------------*/
 int main(int argc, const char * argv[])
 {
-    run_tests();
+    run_tests(); // test
     
     if (argc == 3) {
         string fileName = argv[1];
