@@ -43,8 +43,9 @@ public:
     void increment();
         
     //*****************Minor Methods********************
-    int 	compareTo(OrderedData *item);
+    int 	compareTo(OrderedData *item);   //compares frequency
     void 	print();
+    bool    isEqualsTo(Data *target);           //compares data value
     
     //************ Getters ********
     int getData();

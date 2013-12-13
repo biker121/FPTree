@@ -10,12 +10,26 @@
 		ED1740DC1847CF9500A45798 /* HeaderItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED1740DA1847CF9500A45798 /* HeaderItem.cpp */; };
 		ED78803B1845365C00A44EBC /* FPTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED7880391845365C00A44EBC /* FPTree.cpp */; };
 		ED8FD51F1845E128008D1AB0 /* FPTreeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED8FD51D1845E128008D1AB0 /* FPTreeNode.cpp */; };
+		EDAAA136185A82F700A076E8 /* NodeLL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAAA134185A82F700A076E8 /* NodeLL.cpp */; };
+		EDAAA13D185A836E00A076E8 /* DLinkedList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAAA13B185A836E00A076E8 /* DLinkedList.cpp */; };
+		EDAAA142185A8F3500A076E8 /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAAA140185A8F3500A076E8 /* Data.cpp */; };
+		EDAAA15C185A95B600A076E8 /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAAA15A185A95B600A076E8 /* test.cpp */; };
 		EDB95B7F183ECB9600304110 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDB95B7E183ECB9600304110 /* main.cpp */; };
 		EDB95B81183ECB9600304110 /* _710_Project_FrequentItemMining.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = EDB95B80183ECB9600304110 /* _710_Project_FrequentItemMining.1 */; };
 		EDB95B8C183F11E700304110 /* FPTreeItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDB95B8A183F11E700304110 /* FPTreeItem.cpp */; };
 		EDB95B91183F15EA00304110 /* OrderedData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDB95B8F183F15EA00304110 /* OrderedData.cpp */; };
 		EDB95B95183F213200304110 /* HeaderTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDB95B93183F213200304110 /* HeaderTable.cpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EDAAA155185A947500A076E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EDB95B73183ECB9500304110 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EDB95B7A183ECB9600304110;
+			remoteInfo = "4710-Project-FrequentItemMining";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		EDB95B79183ECB9600304110 /* CopyFiles */ = {
@@ -40,6 +54,15 @@
 		ED7880391845365C00A44EBC /* FPTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPTree.cpp; sourceTree = "<group>"; };
 		ED8FD51D1845E128008D1AB0 /* FPTreeNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPTreeNode.cpp; sourceTree = "<group>"; };
 		ED8FD5221845E2BA008D1AB0 /* FPTreeNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FPTreeNode.hpp; sourceTree = "<group>"; };
+		EDAAA134185A82F700A076E8 /* NodeLL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NodeLL.cpp; sourceTree = "<group>"; };
+		EDAAA137185A830900A076E8 /* NodeLL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NodeLL.hpp; sourceTree = "<group>"; };
+		EDAAA13B185A836E00A076E8 /* DLinkedList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DLinkedList.cpp; sourceTree = "<group>"; };
+		EDAAA13E185A837900A076E8 /* DLinkedList.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DLinkedList.hpp; sourceTree = "<group>"; };
+		EDAAA13F185A8F2D00A076E8 /* Data.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Data.hpp; sourceTree = "<group>"; };
+		EDAAA140185A8F3500A076E8 /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Data.cpp; sourceTree = "<group>"; };
+		EDAAA148185A947400A076E8 /* 4710-Project-FrequentItemMining Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "4710-Project-FrequentItemMining Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDAAA15A185A95B600A076E8 /* test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = test.cpp; path = "4710-Project-FrequentItemMining/test.cpp"; sourceTree = "<group>"; };
+		EDAAA15D185A966C00A076E8 /* test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = test.h; path = "4710-Project-FrequentItemMining/test.h"; sourceTree = "<group>"; };
 		EDB95B7B183ECB9600304110 /* 4710-Project-FrequentItemMining */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "4710-Project-FrequentItemMining"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB95B7E183ECB9600304110 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		EDB95B80183ECB9600304110 /* _710_Project_FrequentItemMining.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = _710_Project_FrequentItemMining.1; sourceTree = "<group>"; };
@@ -52,6 +75,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		EDAAA145185A947400A076E8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EDB95B78183ECB9600304110 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,9 +102,34 @@
 			path = test_files;
 			sourceTree = "<group>";
 		};
+		EDAAA133185A82D600A076E8 /* Data Structures */ = {
+			isa = PBXGroup;
+			children = (
+				EDAAA13B185A836E00A076E8 /* DLinkedList.cpp */,
+				EDAAA13E185A837900A076E8 /* DLinkedList.hpp */,
+				EDAAA134185A82F700A076E8 /* NodeLL.cpp */,
+				EDAAA137185A830900A076E8 /* NodeLL.hpp */,
+				EDAAA140185A8F3500A076E8 /* Data.cpp */,
+				EDAAA13F185A8F2D00A076E8 /* Data.hpp */,
+				EDB95B8F183F15EA00304110 /* OrderedData.cpp */,
+				EDB95B8E183F15BB00304110 /* OrderedData.hpp */,
+			);
+			name = "Data Structures";
+			sourceTree = "<group>";
+		};
+		EDAAA15E185A96B900A076E8 /* test */ = {
+			isa = PBXGroup;
+			children = (
+				EDAAA15A185A95B600A076E8 /* test.cpp */,
+				EDAAA15D185A966C00A076E8 /* test.h */,
+			);
+			name = test;
+			sourceTree = "<group>";
+		};
 		EDB95B72183ECB9500304110 = {
 			isa = PBXGroup;
 			children = (
+				EDAAA15E185A96B900A076E8 /* test */,
 				ED191AD21845D989003682BB /* test_files */,
 				EDB95B7D183ECB9600304110 /* 4710-Project-FrequentItemMining */,
 				EDB95B7C183ECB9600304110 /* Products */,
@@ -85,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				EDB95B7B183ECB9600304110 /* 4710-Project-FrequentItemMining */,
+				EDAAA148185A947400A076E8 /* 4710-Project-FrequentItemMining Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -92,6 +148,7 @@
 		EDB95B7D183ECB9600304110 /* 4710-Project-FrequentItemMining */ = {
 			isa = PBXGroup;
 			children = (
+				EDAAA133185A82D600A076E8 /* Data Structures */,
 				EDB95B80183ECB9600304110 /* _710_Project_FrequentItemMining.1 */,
 				ED7880391845365C00A44EBC /* FPTree.cpp */,
 				ED7880381845364D00A44EBC /* FPTree.hpp */,
@@ -104,8 +161,6 @@
 				ED1740DA1847CF9500A45798 /* HeaderItem.cpp */,
 				ED1740DD1847CF9E00A45798 /* HeaderItem.hpp */,
 				EDB95B7E183ECB9600304110 /* main.cpp */,
-				EDB95B8F183F15EA00304110 /* OrderedData.cpp */,
-				EDB95B8E183F15BB00304110 /* OrderedData.hpp */,
 			);
 			path = "4710-Project-FrequentItemMining";
 			sourceTree = "<group>";
@@ -113,6 +168,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		EDAAA147185A947400A076E8 /* 4710-Project-FrequentItemMining Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDAAA157185A947500A076E8 /* Build configuration list for PBXNativeTarget "4710-Project-FrequentItemMining Tests" */;
+			buildPhases = (
+				EDAAA144185A947400A076E8 /* Sources */,
+				EDAAA145185A947400A076E8 /* Frameworks */,
+				EDAAA146185A947400A076E8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EDAAA156185A947500A076E8 /* PBXTargetDependency */,
+			);
+			name = "4710-Project-FrequentItemMining Tests";
+			productName = "4710-Project-FrequentItemMining Tests";
+			productReference = EDAAA148185A947400A076E8 /* 4710-Project-FrequentItemMining Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		EDB95B7A183ECB9600304110 /* 4710-Project-FrequentItemMining */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EDB95B84183ECB9600304110 /* Build configuration list for PBXNativeTarget "4710-Project-FrequentItemMining" */;
@@ -138,6 +211,11 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Brahmdeep Singh Juneja";
+				TargetAttributes = {
+					EDAAA147185A947400A076E8 = {
+						TestTargetID = EDB95B7A183ECB9600304110;
+					};
+				};
 			};
 			buildConfigurationList = EDB95B76183ECB9500304110 /* Build configuration list for PBXProject "4710-Project-FrequentItemMining" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -152,28 +230,92 @@
 			projectRoot = "";
 			targets = (
 				EDB95B7A183ECB9600304110 /* 4710-Project-FrequentItemMining */,
+				EDAAA147185A947400A076E8 /* 4710-Project-FrequentItemMining Tests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		EDAAA146185A947400A076E8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		EDAAA144185A947400A076E8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EDB95B77183ECB9600304110 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				EDB95B91183F15EA00304110 /* OrderedData.cpp in Sources */,
+				EDAAA136185A82F700A076E8 /* NodeLL.cpp in Sources */,
 				ED78803B1845365C00A44EBC /* FPTree.cpp in Sources */,
 				EDB95B95183F213200304110 /* HeaderTable.cpp in Sources */,
 				ED8FD51F1845E128008D1AB0 /* FPTreeNode.cpp in Sources */,
+				EDAAA15C185A95B600A076E8 /* test.cpp in Sources */,
 				EDB95B8C183F11E700304110 /* FPTreeItem.cpp in Sources */,
 				EDB95B7F183ECB9600304110 /* main.cpp in Sources */,
 				ED1740DC1847CF9500A45798 /* HeaderItem.cpp in Sources */,
+				EDAAA13D185A836E00A076E8 /* DLinkedList.cpp in Sources */,
+				EDAAA142185A8F3500A076E8 /* Data.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		EDAAA156185A947500A076E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EDB95B7A183ECB9600304110 /* 4710-Project-FrequentItemMining */;
+			targetProxy = EDAAA155185A947500A076E8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		EDAAA158185A947500A076E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "4710-Project-FrequentItemMining Tests/4710-Project-FrequentItemMining Tests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "4710-Project-FrequentItemMining Tests/4710-Project-FrequentItemMining Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		EDAAA159185A947500A076E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "4710-Project-FrequentItemMining Tests/4710-Project-FrequentItemMining Tests-Prefix.pch";
+				INFOPLIST_FILE = "4710-Project-FrequentItemMining Tests/4710-Project-FrequentItemMining Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 		EDB95B82183ECB9600304110 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -259,6 +401,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		EDAAA157185A947500A076E8 /* Build configuration list for PBXNativeTarget "4710-Project-FrequentItemMining Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDAAA158185A947500A076E8 /* Debug */,
+				EDAAA159185A947500A076E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		EDB95B76183ECB9500304110 /* Build configuration list for PBXProject "4710-Project-FrequentItemMining" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -12,6 +12,8 @@
 
 //------------------------Constructors and destructors-----------------------
 HeaderTable::HeaderTable(int minSup){
+//    this->headerItems = new OrderedList();
+    
     this->numDomainItems = 0;
     this->minSup = minSup;
 }
@@ -44,7 +46,8 @@ bool HeaderTable::createHeaderTable(string fileName){
 }
 
 /*-------------------------------------------------------------------------------------
- * PURPOSE: records the frequency of items in the specified file in a hashed array
+ * PURPOSE: reads data and records the frequency of items in the specified file in a 
+ *          hashed array
  * PARM   : fileName - absolute path to the file that is to be read for reading frequency
  * RETURN : bool - indicating whether or not file was read properly
  *-----------------------------------------------------------------------------------*/

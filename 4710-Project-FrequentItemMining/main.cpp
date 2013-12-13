@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
 //
 
+#include "test.h"
+
 #include <string>
 #include <iostream>
 
@@ -31,6 +33,8 @@ using namespace std;
  *-----------------------------------------------------------------------------------*/
 int main(int argc, const char * argv[])
 {
+    run_tests();
+    
     if (argc == 3) {
         string fileName = argv[1];
         int minSup = atoi(argv[2]);

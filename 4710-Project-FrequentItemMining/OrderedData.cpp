@@ -6,6 +6,11 @@
 //  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
 //
 
+#include <string>
+#include <iostream>
 #include "OrderedData.hpp"
 
-OrderedData::~OrderedData(){}
+bool OrderedData::isEqualsTo(Data *other){
+    cout << "Error: method not implemented -- equals::OrderedData" << endl;
+    return false;
+}

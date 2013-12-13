@@ -55,6 +55,16 @@ void FPTreeItem::print(){
 	cout << this->data << " : " << this->frequency;
 }
 
+bool FPTreeItem::isEqualsTo(Data *target){
+    FPTreeItem *otherFPTreeItem = dynamic_cast<FPTreeItem *>(target);
+    bool isEquals = false;
+    
+    if (otherFPTreeItem != NULL && this->data == otherFPTreeItem->data)
+        isEquals = true;
+    
+    return isEquals;
+}
+
 //************** GETTERS ***********************
 int FPTreeItem::getData(){ return this->data; }
 int FPTreeItem::getFrequency(){ return this->frequency; }

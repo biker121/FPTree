@@ -22,11 +22,13 @@ using namespace std;
 
 class FPTreeItem;
 class FPTreeNode;
+class OrderedList;
 
 class HeaderTable {
     
 private:
     HeaderItem *freqItems[MAX_DOMAIN_ITEMS]; //unique idx per item*
+    //OrderedList *headerItems;
     int numDomainItems;
     int minSup;
     
