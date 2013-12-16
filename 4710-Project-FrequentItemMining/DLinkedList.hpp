@@ -10,7 +10,7 @@
 #define _710_Project_FrequentItemMining_DLinkedList_hpp
 
 class NodeLL;
-class Data;
+class OrderedData;
 
 class DLinkedList {
   
@@ -24,11 +24,14 @@ public:
     DLinkedList();
     ~DLinkedList();
     
-    NodeLL *find(Data *target);
+    NodeLL *find(OrderedData *target);
 
-    bool addToFront(Data *item);
-    bool addToBack(Data *item);
-    void remove(Data *target);
+    bool addToFront(OrderedData *item);
+    bool addToBack(OrderedData *item);
+    void remove(OrderedData *target);
+    
+    int getSize();
+    OrderedData* getData(int index);
     
     void print();
 };

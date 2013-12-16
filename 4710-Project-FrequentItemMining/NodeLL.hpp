@@ -9,28 +9,33 @@
 #ifndef _710_Project_FrequentItemMining_NodeLL_hpp
 #define _710_Project_FrequentItemMining_NodeLL_hpp
 
-class Data;
+class OrderedData;
 
 class NodeLL {
     
 private:
-    Data *data;
+    OrderedData *data;
     NodeLL *prev;
     NodeLL *next;
+    NodeLL *similarNode;
     
 public:
-    NodeLL(Data *data, NodeLL *prev, NodeLL *next);
+    NodeLL(OrderedData *data, NodeLL *prev, NodeLL *next);
+    NodeLL(OrderedData *data, NodeLL *prev, NodeLL *next, NodeLL *similar);
+    NodeLL(OrderedData *data);
     ~NodeLL();
     
     void print();
     
-    Data *getData();
+    OrderedData *getData();
     NodeLL *getPrev();
     NodeLL *getNext();
+    NodeLL *getSimilarNode();
     
-    void setData(Data *data);
+    void setData(OrderedData *data);
     void setPrev(NodeLL *prev);
     void setNext(NodeLL *next);
+    void setSimilar(NodeLL *similarNode);
 };
 
 

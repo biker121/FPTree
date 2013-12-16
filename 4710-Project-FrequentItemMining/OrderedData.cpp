@@ -10,7 +10,9 @@
 #include <iostream>
 #include "OrderedData.hpp"
 
-bool OrderedData::isEqualsTo(Data *other){
-    cout << "Error: method not implemented -- equals::OrderedData" << endl;
-    return false;
+OrderedData::~OrderedData(){}
+
+bool OrderedData::isEqualsTo(OrderedData *other)
+{
+    return true;
 }

@@ -17,25 +17,26 @@ class HeaderTable;
 class FPTreeNode;
 class FPTreeItem;
 
-class FPTree {
+class FPTree
+{
 private:
     HeaderTable *headerTable;
     FPTreeNode *root;
+    int partialLabel;
+    FPTree *parentProj;
+    
     int minSup;
-    string fileName;
-
-    void createTree();
-    void insertTransaction(FPTreeItem *items[], int size);
-    void fp_growth(HeaderTable* h_table);
     void printTree();
     
 public :
-    FPTree(int minSup, string fileName);
+    FPTree(int minSup);
     virtual ~FPTree();
-    
-    static void processFile(string fileName, int minSup);
+
+    void insertTransaction(FPTreeItem *items[], int size);
+    HeaderTable* createHeaderTable(string fileName);
+    void printHeaderTable();
     
     int getMinSup();
-    string getFileName();
+    HeaderTable* getHeaderTable();
 };
 #endif

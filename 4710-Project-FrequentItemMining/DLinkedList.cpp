@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include "NodeLL.hpp"
-#include "Data.hpp"
+#include "OrderedData.hpp"
 #include "DLinkedList.hpp"
 
 using namespace std;
@@ -30,7 +30,7 @@ DLinkedList::~DLinkedList(){
     }
 }
 
-bool DLinkedList::addToFront(Data *data){
+bool DLinkedList::addToFront(OrderedData *data){
     bool success = false;
     NodeLL *newNode;
     
@@ -52,7 +52,7 @@ bool DLinkedList::addToFront(Data *data){
     return success;
 }
 
-bool DLinkedList::addToBack(Data *data){
+bool DLinkedList::addToBack(OrderedData *data){
     bool success = false;
     NodeLL *newNode;
     
@@ -78,7 +78,7 @@ bool DLinkedList::addToBack(Data *data){
 // Purpose: Iterates through to find an item which equals to the given target
 // Parm   :
 // Return : ptr to the node that contains an item equals to the given taget
-NodeLL* DLinkedList::find(Data *target){
+NodeLL* DLinkedList::find(OrderedData *target){
     NodeLL *curr = this->head;
     
     while (curr != NULL && curr->getData()->isEqualsTo(target) == false){
@@ -89,7 +89,7 @@ NodeLL* DLinkedList::find(Data *target){
 }
 
 // Purpose: removes the given item from the list, if it exists
-void DLinkedList::remove(Data *target){
+void DLinkedList::remove(OrderedData *target){
     NodeLL *targetNode = find(target);
     
     if (targetNode != NULL){
@@ -117,6 +117,11 @@ void DLinkedList::remove(Data *target){
         delete(targetNode);
         this->size--;
     }
+}
+
+int DLinkedList::getSize()
+{
+    return size;
 }
 
 void DLinkedList::print(){

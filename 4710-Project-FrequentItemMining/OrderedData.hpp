@@ -9,7 +9,7 @@
 #ifndef _710_Project_FrequentItemMining_OrderedData_hpp
 #define _710_Project_FrequentItemMining_OrderedData_hpp
 
-#include "Data.hpp"
+#include "OrderedData.hpp"
 
 using namespace std;
 //-----------------------------------------------------------------------------------------
@@ -19,10 +19,12 @@ using namespace std;
 //
 // REMARKS: abstract class created to group objects together, in an ordered fashion
 //-----------------------------------------------------------------------------------------
-class OrderedData : public Data {
+class OrderedData {
 public:
+    virtual	~OrderedData();
+    virtual bool isEqualsTo(OrderedData *other);
     virtual int compareTo(OrderedData *)    = 0;
-    virtual bool isEqualsTo(Data *other);
+    virtual void print()                    = 0;
 };
 
 #endif
