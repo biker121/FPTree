@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B74FB0E185E5DCF00594465 /* ProjHeaderTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B74FB0C185E5DCF00594465 /* ProjHeaderTable.cpp */; };
 		ED1740DC1847CF9500A45798 /* HeaderItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED1740DA1847CF9500A45798 /* HeaderItem.cpp */; };
 		ED78803B1845365C00A44EBC /* FPTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED7880391845365C00A44EBC /* FPTree.cpp */; };
 		ED8FD51F1845E128008D1AB0 /* FPTreeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED8FD51D1845E128008D1AB0 /* FPTreeNode.cpp */; };
 		EDAAA136185A82F700A076E8 /* NodeLL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAAA134185A82F700A076E8 /* NodeLL.cpp */; };
 		EDAAA13D185A836E00A076E8 /* DLinkedList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAAA13B185A836E00A076E8 /* DLinkedList.cpp */; };
-		EDAAA142185A8F3500A076E8 /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAAA140185A8F3500A076E8 /* Data.cpp */; };
 		EDAAA15C185A95B600A076E8 /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAAA15A185A95B600A076E8 /* test.cpp */; };
 		EDB95B7F183ECB9600304110 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDB95B7E183ECB9600304110 /* main.cpp */; };
 		EDB95B81183ECB9600304110 /* _710_Project_FrequentItemMining.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = EDB95B80183ECB9600304110 /* _710_Project_FrequentItemMining.1 */; };
@@ -35,6 +35,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6B74FB0C185E5DCF00594465 /* ProjHeaderTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProjHeaderTable.cpp; sourceTree = "<group>"; };
+		6B74FB0D185E5DCF00594465 /* ProjHeaderTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjHeaderTable.h; sourceTree = "<group>"; };
 		ED1740DA1847CF9500A45798 /* HeaderItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeaderItem.cpp; sourceTree = "<group>"; };
 		ED1740DD1847CF9E00A45798 /* HeaderItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HeaderItem.hpp; sourceTree = "<group>"; };
 		ED191AD61845DA2D003682BB /* test1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test1.txt; sourceTree = "<group>"; };
@@ -48,8 +50,6 @@
 		EDAAA137185A830900A076E8 /* NodeLL.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NodeLL.hpp; sourceTree = "<group>"; };
 		EDAAA13B185A836E00A076E8 /* DLinkedList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DLinkedList.cpp; sourceTree = "<group>"; };
 		EDAAA13E185A837900A076E8 /* DLinkedList.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DLinkedList.hpp; sourceTree = "<group>"; };
-		EDAAA13F185A8F2D00A076E8 /* Data.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Data.hpp; sourceTree = "<group>"; };
-		EDAAA140185A8F3500A076E8 /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Data.cpp; sourceTree = "<group>"; };
 		EDAAA15A185A95B600A076E8 /* test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = test.cpp; path = "4710-Project-FrequentItemMining/test.cpp"; sourceTree = "<group>"; };
 		EDAAA15D185A966C00A076E8 /* test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = test.h; path = "4710-Project-FrequentItemMining/test.h"; sourceTree = "<group>"; };
 		EDB95B7B183ECB9600304110 /* 4710-Project-FrequentItemMining */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "4710-Project-FrequentItemMining"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,21 +84,6 @@
 			path = test_files;
 			sourceTree = "<group>";
 		};
-		EDAAA133185A82D600A076E8 /* Data Structures */ = {
-			isa = PBXGroup;
-			children = (
-				EDAAA13B185A836E00A076E8 /* DLinkedList.cpp */,
-				EDAAA13E185A837900A076E8 /* DLinkedList.hpp */,
-				EDAAA134185A82F700A076E8 /* NodeLL.cpp */,
-				EDAAA137185A830900A076E8 /* NodeLL.hpp */,
-				EDAAA140185A8F3500A076E8 /* Data.cpp */,
-				EDAAA13F185A8F2D00A076E8 /* Data.hpp */,
-				EDB95B8F183F15EA00304110 /* OrderedData.cpp */,
-				EDB95B8E183F15BB00304110 /* OrderedData.hpp */,
-			);
-			name = "Data Structures";
-			sourceTree = "<group>";
-		};
 		EDAAA15E185A96B900A076E8 /* test */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,7 +114,12 @@
 		EDB95B7D183ECB9600304110 /* 4710-Project-FrequentItemMining */ = {
 			isa = PBXGroup;
 			children = (
-				EDAAA133185A82D600A076E8 /* Data Structures */,
+				EDAAA13B185A836E00A076E8 /* DLinkedList.cpp */,
+				EDAAA13E185A837900A076E8 /* DLinkedList.hpp */,
+				EDAAA134185A82F700A076E8 /* NodeLL.cpp */,
+				EDAAA137185A830900A076E8 /* NodeLL.hpp */,
+				EDB95B8F183F15EA00304110 /* OrderedData.cpp */,
+				EDB95B8E183F15BB00304110 /* OrderedData.hpp */,
 				EDB95B80183ECB9600304110 /* _710_Project_FrequentItemMining.1 */,
 				ED7880391845365C00A44EBC /* FPTree.cpp */,
 				ED7880381845364D00A44EBC /* FPTree.hpp */,
@@ -142,6 +132,8 @@
 				EDB95B93183F213200304110 /* HeaderTable.cpp */,
 				EDB95B92183F212B00304110 /* HeaderTable.hpp */,
 				EDB95B7E183ECB9600304110 /* main.cpp */,
+				6B74FB0C185E5DCF00594465 /* ProjHeaderTable.cpp */,
+				6B74FB0D185E5DCF00594465 /* ProjHeaderTable.h */,
 			);
 			path = "4710-Project-FrequentItemMining";
 			sourceTree = "<group>";
@@ -207,7 +199,7 @@
 				EDB95B7F183ECB9600304110 /* main.cpp in Sources */,
 				ED1740DC1847CF9500A45798 /* HeaderItem.cpp in Sources */,
 				EDAAA13D185A836E00A076E8 /* DLinkedList.cpp in Sources */,
-				EDAAA142185A8F3500A076E8 /* Data.cpp in Sources */,
+				6B74FB0E185E5DCF00594465 /* ProjHeaderTable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
