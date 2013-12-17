@@ -27,12 +27,18 @@ class OrderedList;
 class HeaderTable {
     
 private:
-    HeaderItem *freqItems[MAX_DOMAIN_ITEMS]; //unique idx per item*
-    //OrderedList *headerItems;
+    HeaderItem *freqItems[MAX_DOMAIN_ITEMS]; //--refactor - remove
+    
+    HeaderItemList *headerItems;
     int numDomainItems;
     int minSup;
     
-    bool populateFrequencies(string fileName);
+    static bool populateHash(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
+    static void incrementHashItem(HeaderItem *hash[MAX_DOMAIN_ITEMS], FPTreeItem *item);
+    
+    static bool insertHeaderItems(HeaderTable *headerTable, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
+    
+    bool populateFrequencies(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]); //--refactor - remove
     void prioritizeFrequencies();
     
     void insertionSort(HeaderItem *array[], int len);
@@ -45,13 +51,13 @@ public:
     HeaderTable(int minSup);
     virtual ~HeaderTable();
     
-    bool createHeaderTable(string fileName);
+    bool createHeaderTable(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     void printTable();
     
-    void prioritizeItems(FPTreeItem *items[], int size);
+    void prioritizeItems(FPTreeItem *items[], int size); //might not be needed
     
-    int getHashIndex(FPTreeItem *item);
-    bool isFrequent(FPTreeItem *item);
+    static int getHashIndex(FPTreeItem *item);
+    bool isFrequent(FPTreeItem *item); //-refactor - remove
     
     void linkNode(FPTreeNode *node);
     

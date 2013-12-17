@@ -40,7 +40,8 @@ public:
     FPTreeItem(int data, int frequency);
     virtual ~FPTreeItem();
     
-    void increment();
+    void increaseSupport();
+    void increaseSupport(FPTreeItem *item);
         
     //*****************Minor Methods********************
     int 	compareTo(OrderedData *item);       //compares frequency

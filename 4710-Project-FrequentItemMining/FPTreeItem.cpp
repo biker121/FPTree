@@ -26,8 +26,17 @@ FPTreeItem::~FPTreeItem(){}
 /*-------------------------------------------------------------------------------------
  * PURPOSE: increases the frequency by one
  *-----------------------------------------------------------------------------------*/
-void FPTreeItem::increment(){
+void FPTreeItem::increaseSupport(){
     this->frequency++;
+}
+
+/*-------------------------------------------------------------------------------------
+ * PURPOSE: increases frequency by the frequency of given item
+ *-----------------------------------------------------------------------------------*/
+void FPTreeItem::increaseSupport(FPTreeItem *item){
+    if (item != NULL){
+        this->frequency += item->frequency;
+    }
 }
 
 /*-------------------------------------------------------------------------------------

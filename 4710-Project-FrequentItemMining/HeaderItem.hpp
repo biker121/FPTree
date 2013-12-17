@@ -19,14 +19,15 @@ class FPTreeNode;
 
 class HeaderItem : public OrderedData {
 private:
-    FPTreeNode *data;
-    int priority;
+    //FPTreeItem *item
+    FPTreeNode *data; //refactor - pointer to node in tree
+    int priority; //refactor - remove --> compare FPTreeItem *item instead
 
 public:
     HeaderItem(FPTreeNode *data);
     ~HeaderItem();
     
-    int compareTo(OrderedData *other);
+    int compareTo(OrderedData *other); //--refactor -
     void print();
     
     //************* GETTERS *************
