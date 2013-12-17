@@ -15,9 +15,9 @@ FPTreeItem::FPTreeItem(){
 	this->support = 0;
 }
 
-FPTreeItem::FPTreeItem(int data, int frequency){
+FPTreeItem::FPTreeItem(int data, int support){
 	this->data = data;
-	this->support = frequency;
+	this->support = support;
 }
 
 FPTreeItem::~FPTreeItem(){}

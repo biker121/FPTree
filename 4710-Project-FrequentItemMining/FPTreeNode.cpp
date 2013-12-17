@@ -44,14 +44,7 @@ FPTreeNode::~FPTreeNode(){
  * REMARKS: - items[] must be prioritized and contain only frequent items
  *-----------------------------------------------------------------------------------*/
 void FPTreeNode::insertTransaction(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
-    
     this->insertTransactionItem(items, size, 0, hash); //recursive call
-//    NodeLL *currTransactionItem = NULL;
-//    
-//    if (transactionItems != NULL && hash != NULL){
-//        currTransactionItem = transactionItems->getHead();
-//        this->insertTransactionItem(currTransactionItem, hash); //recursive call
-//    }
 }
 
 // PURPOSE: Recursively inserts each NodeLL's data (which should be of type FPTreeItem)
@@ -65,20 +58,6 @@ void FPTreeNode::insertTransactionItem(FPTreeItem *items[MAX_DOMAIN_ITEMS], int 
             targetNode->insertTransactionItem(items, size, pos+1, hash); //recursively insert next item
         }
     }
-//    FPTreeNode *targetNode = NULL;
-//    FPTreeItem *currItem = NULL;
-//
-//    if (currTransactionItem != NULL){
-//        currItem = dynamic_cast<FPTreeItem *>(currTransactionItem->getData());
-//        
-//        if (currItem != NULL){
-//            targetNode = this->insertChild(currItem, hash); //insert currItem to subtree
-//            
-//            if (targetNode != NULL){
-//                targetNode->insertTransactionItem(currTransactionItem->getNext(), hash); //recursively insert next item
-//            }
-//        }
-//    }
 }
 
 /*-------------------------------------------------------------------------------------

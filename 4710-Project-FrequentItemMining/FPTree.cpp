@@ -61,11 +61,8 @@ void FPTree::processFile(string fileName, int minSup)
         tree->printTree();
         delete[] hash; //DEBUG - double check**
         
-        //DEBUG
-//        tree->getHeaderTable()->verifyFrequencies(); //verifies tree node frequencies with header table frequency
-        
         //third pass - data mining
-        tree->mine();
+//        tree->mine();
     }
     
     //free objects
@@ -93,7 +90,6 @@ void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
     int numTransactions;
     int currTransaction, transactionSize;
     
-//    DOrderedList *transactionItems; //frequent items will be inserted in decreasing freq.
     FPTreeItem **buffer =  new FPTreeItem *[MAX_DOMAIN_ITEMS];
     int size; //size of buffer
     
@@ -112,7 +108,6 @@ void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
         if (numTransactions > 0){
             do {
                 dataFile >> currTransaction >> transactionSize;
-//                transactionItems = new DOrderedList();
                 size = 0;
                 
                 //read entire transaction into array
@@ -122,7 +117,6 @@ void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
                     
                     hashIdx = HeaderTable::getHashIndex(tempItem);
                     if (hash[hashIdx] != NULL) { //if frequent
-//                        transactionItems->insert(tempItem);
                         buffer[size] = tempItem;
                         size++;
                     } else {
@@ -130,9 +124,6 @@ void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
                         tempItem = NULL;
                     }
                 }
-                
-                //insert transaction items
-//                this->insertTransaction(transactionItems, hash);
                 
                 //DEBUG
                 cout << "----buffer items----" << endl;
@@ -160,7 +151,6 @@ void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
                 
                 //DEBUG
                 this->printTree();
-//                delete(transactionItems);
                 
             } while (currTransaction < numTransactions);
         }
@@ -212,7 +202,6 @@ void FPTree::mine(){}
  *          - any item from items[] that are not used, are freed
  *----------------------------------------------------------------------------------*/
 void FPTree::insertTransaction(FPTreeItem *buffer[MAX_DOMAIN_ITEMS], int size, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
-//    this->root->insertTransaction(transactionItems, hash);
     if (size > 0){
         this->root->insertTransaction(buffer, size, hash);
     }
