@@ -76,16 +76,16 @@ void fp_groth_mine(FPTree* tree, int base)
  * PURPOSE: creates the FP-Tree by reading and inserting one transaction at a time for
  *          only the frequent items
  *----------------------------------------------------------------------------------*/
-void createTree(FPTree* tree, string fileName)
+void createTree(FPTree* tree, string fileName, FPTreeItem *hash[MAX_DOMAIN_ITEMS])
 {
     ifstream dataFile;
     int numTransactions;
     int currTransaction, transactionSize;
     
-    FPTreeItem *buffer[MAX_DOMAIN_ITEMS];
+//    FPTreeItem *buffer[MAX_DOMAIN_ITEMS];
     FPTreeItem *tempItem;
     int temp;
-    int bufferIndex;
+//    int bufferIndex;
     
     dataFile.open(fileName.c_str());
     
@@ -105,17 +105,31 @@ void createTree(FPTree* tree, string fileName)
                     dataFile >> temp;
                     tempItem = new FPTreeItem(temp, 1); //temp is later freed
                     
-                    if (tree->getHeaderTable()->isFrequent(tempItem) == true){
-                        buffer[bufferIndex] = tempItem;
-                        bufferIndex++;
+                    /*
+                     * -- refactor - add to ordered list instead of array
+                        - insert based on its priorty in hash
+                     */
+                    int index = HeaderTable::getHashIndex(tempItem);
+                    
+                    if (hash[index] != NULL) {
+                        //insert *tempItem
                     } else {
                         delete(tempItem);
                         tempItem = NULL;
                     }
+                    
+//                    if (tree->getHeaderTable()->isFrequent(tempItem) == true){
+//                        buffer[bufferIndex] = tempItem;
+//                        bufferIndex++;
+//                    } else {
+//                        delete(tempItem);
+//                        tempItem = NULL;
+//                    }
                 }
                 
                 //insert transaction
-                tree->insertTransaction(buffer, bufferIndex);
+                tree->insertTransaction(buffer, bufferIndex); //modify to accept list
+                //delete list
                 
             } while (currTransaction < numTransactions);
         }
@@ -132,14 +146,15 @@ void createTree(FPTree* tree, string fileName)
 void processFile(string fileName, int minSup)
 {
     FPTree *tree = new FPTree(minSup);
+    HeaderItem *hash[MAX_DOMAIN_ITEMS];
     
     //first pass - frequency population
-    tree->createHeaderTable(fileName);
+    tree->createHeaderTable(fileName, hash); //will fill hash[] with frequent 1-itemsets
     tree->printHeaderTable();
     
     //second pass - tree creation
     if (tree->getHeaderTable()->getNumDomainItem() > 0) {
-        createTree(tree, fileName);
+        createTree(tree, fileName, hash);
         //tree->printTree();
         
         //DEBUG

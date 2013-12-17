@@ -19,6 +19,19 @@ FPTree::FPTree(int minSup)
     this->headerTable = new HeaderTable(minSup);
     this->root = new FPTreeNode();
     this->minSup = minSup;
+    
+    this->partialPrefix = -1;
+    this->parentProj = NULL;
+}
+
+FPTree::FPTree(int minSup, int partialPrefix, FPTree *parentProj)
+{
+    this->headerTable = new HeaderTable(minSup);
+    this->root = new FPTreeNode();
+    this->minSup = minSup;
+    
+    this->partialPrefix = partialPrefix;
+    this->parentProj = parentProj;
 }
 
 FPTree::~FPTree()
@@ -34,16 +47,21 @@ FPTree::~FPTree()
  * REMARKS: - inserts all items from the array
  *          - any item from items[] that are not used, are freed
  *----------------------------------------------------------------------------------*/
-void FPTree::insertTransaction(FPTreeItem *items[], int size)
+void FPTree::insertTransaction(FPTreeItem *transactionItems[], int size)
 {
-    this->headerTable->prioritizeItems(items, size);
-    this->root->insertTransaction(items, size, 0, this->headerTable);
+    this->headerTable->prioritizeItems(transactionItems, size);
+    this->root->insertTransaction(transactionItems, size, 0, this->headerTable);
 }
 
-HeaderTable* FPTree::createHeaderTable(string fileName)
+/*-----------------------------------------------------------------------------------
+ * PURPOSE:
+ * PARM   :
+ * PARM   :
+ * REMARKS:
+ *----------------------------------------------------------------------------------*/
+void FPTree::createHeaderTable(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 {
-    headerTable->createHeaderTable(fileName);
-    return headerTable;
+    this->headerTable->createHeaderTable(fileName, hash);
 }
 
 /*-----------------------------------------------------------------------------------
@@ -59,9 +77,36 @@ void FPTree::printHeaderTable()
     this->headerTable->printTable();
 }
 
-//**************************** GETTERS ************************
-int FPTree::getMinSup()
+// PURPOSE: iterate through projections from yourself -> original tree and append label at each projection
+string FPTree::getLabelPrefix()
 {
+    stringstream ss;
+    FPTree *currProj = this;
+    
+    ss << "";
+    while (currProj != NULL && currProj->partialPrefix != -1){
+        ss << this->partialPrefix;
+        currProj = currProj->parentProj;
+    }
+    
+    return ss.str();
+}
+
+// PURPOSE: returns integer representing base k-level projection
+int FPTree::getBaseLevel(){
+    int lvl = 0;
+    FPTree *currProj = this;
+    
+    while (currProj != NULL && currProj->partialPrefix != -1){
+        lvl++;
+        currProj = currProj->parentProj;
+    }
+    
+    return lvl;
+}
+
+//**************************** GETTERS ************************
+int FPTree::getMinSup(){ 
     return this->minSup;
 }
 
@@ -69,3 +114,4 @@ HeaderTable* FPTree::getHeaderTable()
 {
     return headerTable;
 }
+
