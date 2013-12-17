@@ -80,7 +80,6 @@ int HeaderItem::compareTo(OrderedData *other){
     
     if (other != NULL && (otherItem = dynamic_cast<HeaderItem *>(other)) != NULL)
         result = this->data->compareTo(otherItem->data);
-//        result = this->getNode()->getData()->compareTo(otherItem->getNode()->getData());
     
     return result;
 }

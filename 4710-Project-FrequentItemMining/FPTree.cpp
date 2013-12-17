@@ -59,6 +59,7 @@ void FPTree::processFile(string fileName, int minSup)
     if (tree->getHeaderTable()->getNumDomainItem() > 0) {
         tree->createTree(fileName, hash);
         tree->printTree();
+        
         delete[] hash; //DEBUG - double check**
         
         //third pass - data mining
