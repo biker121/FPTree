@@ -11,13 +11,14 @@
 #include "HeaderTable.hpp"
 
 //------------------------Constructors and destructors-----------------------
-HeaderTable::HeaderTable(int minSup){
-//    this->headerItems = new OrderedList();
-    
+HeaderTable::HeaderTable(int minSup)
+{
     this->numDomainItems = 0;
     this->minSup = minSup;
 }
-HeaderTable::~HeaderTable(){
+
+HeaderTable::~HeaderTable()
+{
     if (numDomainItems > 0){
         for (int i=0; i<MAX_DOMAIN_ITEMS; i++){
             if (freqItems[i] != NULL){
@@ -151,6 +152,8 @@ void HeaderTable:: prioritizeItems(FPTreeItem *array[], int size){
  * PURPOSE: sorts the array (including NULLS) in drecreasing frequency
  * PARM   : array[] to be sorted
  * PARM   : len - size of array[]
+ * 
+ * NOT USED!!!
  *-----------------------------------------------------------------------------------*/
 void HeaderTable::insertionSort(HeaderItem *array[], int len){
     HeaderItem *temp;
@@ -169,6 +172,55 @@ void HeaderTable::insertionSort(HeaderItem *array[], int len){
             array[j] = temp;
         }
     }
+}
+
+void HeaderTable::insertByFreqOrder(int item)
+{
+    bool done = false;
+    
+    if (head == NULL)
+    {
+        FPTreeItem* newItem = new FPTreeItem(item, 1);
+        head = new NodeLL(newItem);
+        tail = head;
+    }else
+    {
+        NodeLL *curr = head;
+        NodeLL *prev = NULL;
+        
+        while (curr!=NULL && !done)
+        {
+            FPTreeItem* dataItem = (FPTreeItem*)curr->getData();
+            
+            if(dataItem!=NULL)
+            {
+                // merge, if same item
+                if(dataItem->getData()==item)
+                {
+                    dataItem->increment();
+                    
+                    if(prev!=NULL)
+                    {
+                        FPTreeItem* prevData = (FPTreeItem*)prev->getData();
+                        
+                        if (dataItem->getFrequency() > prevData->getFrequency())
+                        {
+                            //switch pointers
+                            NodeLL *temp = curr->getNext();
+                            curr->setNext(prev);
+                            prev->setNext(temp);
+                        }
+                    }
+                    done = true;
+                }
+            }
+            
+            prev = curr;
+            curr=curr->getNext();
+        }
+    }
+	// increment size
+	size++;
 }
 
 /*-------------------------------------------------------------------------------------

@@ -34,15 +34,16 @@ void fp_groth_mine(FPTree* tree, int base)
 	// Iterates through each header item in the header table starting from
 	// the bottom to the top
 	HeaderItem *currHeaderItem = headerTable->get_lowest_freq_item();
-	while(currHeaderItem->prev()!=NULL)
+	while(currHeaderItem->prev() != NULL)
 	{
-		DLinkedList *paths = new DLinkedList();
+        
+		DLinkedList paths[currHeaderItem->getSimilarNodeCount()];
         
 		// Iterates over nodes in the FP tree starting with a given header item
 		// and generates a new list containing that path following the global
 		// FP tree sorting order
 		FPTreeNode *currNode = currHeaderItem->getNode();
-		while(currNode!=null)
+		while(currNode != NULL)
 		{
 			// generates a path by chasing the parent pointers
 			FPTreeNode *parent = currNode->getParent();
