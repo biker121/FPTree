@@ -10,6 +10,7 @@
 #include <string>
 #include "FPTreeNode.hpp"
 #include "HeaderTable.hpp"
+#include "HeaderItem.hpp"
 #include "FPTree.hpp"
 #include "FPTreeItem.hpp"
 
@@ -38,19 +39,37 @@ FPTree::~FPTree()
 {
     delete(headerTable);
     delete(root);
-}
+}//-------------------------------------------------------------------------
 
 /*-----------------------------------------------------------------------------------
- * PURPOSE: passes job to root node which recursively inserts each item
- * PARM   : FPTreeItems[] that are to be inserted into the tree
- * PARM   : size of the items array
- * REMARKS: - inserts all items from the array
- *          - any item from items[] that are not used, are freed
+ * @purpose: primary handler method for mining a given datafile with indicated minsup
+ * @parm   : string fileName, absolute file name
+ * @parm   : int minSup, support threshold for frequent items
  *----------------------------------------------------------------------------------*/
-void FPTree::insertTransaction(FPTreeItem *transactionItems[], int size)
+void FPTree::processFile(string fileName, int minSup)
 {
-    this->headerTable->prioritizeItems(transactionItems, size);
-    this->root->insertTransaction(transactionItems, size, 0, this->headerTable);
+    HeaderItem **hash =  new HeaderItem *[MAX_DOMAIN_ITEMS];
+    FPTree *tree = new FPTree(minSup);
+    
+    //first pass - populate frequent items
+    tree->createHeaderTable(fileName, hash); //will also fill hash[] with frequent 1-itemsets
+    tree->printHeaderTable();
+    
+    //second pass - tree creation of frequent items
+    if (tree->getHeaderTable()->getNumDomainItem() > 0) {
+        tree->createTree(fileName, hash);
+        tree->printTree();
+        delete[] hash; //DEBUG - double check**
+        
+        //DEBUG
+//        tree->getHeaderTable()->verifyFrequencies(); //verifies tree node frequencies with header table frequency
+        
+        //third pass - data mining
+        tree->mine();
+    }
+    
+    //free objects
+    delete(tree);
 }
 
 /*-----------------------------------------------------------------------------------
@@ -62,6 +81,141 @@ void FPTree::insertTransaction(FPTreeItem *transactionItems[], int size)
 void FPTree::createHeaderTable(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 {
     this->headerTable->createHeaderTable(fileName, hash);
+}
+
+/*-----------------------------------------------------------------------------------
+ * PURPOSE: creates the FP-Tree by reading and inserting one transaction at a time for
+ *          only the frequent items
+ *----------------------------------------------------------------------------------*/
+void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
+{
+    ifstream dataFile;
+    int numTransactions;
+    int currTransaction, transactionSize;
+    
+//    DOrderedList *transactionItems; //frequent items will be inserted in decreasing freq.
+    FPTreeItem **buffer =  new FPTreeItem *[MAX_DOMAIN_ITEMS];
+    int size; //size of buffer
+    
+    FPTreeItem *tempItem;
+    int temp;
+    int hashIdx;
+    
+    dataFile.open(fileName.c_str());
+    
+    if ( dataFile.is_open() == false ){
+        cout<<"Error while opening file. "<< endl;
+    } else {
+        dataFile >> numTransactions;
+        
+        //cycle through each transaction
+        if (numTransactions > 0){
+            do {
+                dataFile >> currTransaction >> transactionSize;
+//                transactionItems = new DOrderedList();
+                size = 0;
+                
+                //read entire transaction into array
+                for (int i=0; i<transactionSize; i++){
+                    dataFile >> temp;
+                    tempItem = new FPTreeItem(temp, 1); //temp is later freed
+                    
+                    hashIdx = HeaderTable::getHashIndex(tempItem);
+                    if (hash[hashIdx] != NULL) { //if frequent
+//                        transactionItems->insert(tempItem);
+                        buffer[size] = tempItem;
+                        size++;
+                    } else {
+                        delete(tempItem);
+                        tempItem = NULL;
+                    }
+                }
+                
+                //insert transaction items
+//                this->insertTransaction(transactionItems, hash);
+                
+                //DEBUG
+                cout << "----buffer items----" << endl;
+                for (int i=0; i<size; i++){
+                    if (buffer[i] != NULL){
+                        buffer[i]->print();
+                        cout << endl;
+                    }
+                }
+                cout << endl;
+                
+                FPTree::sortByPriority(buffer, size, hash);
+                
+                //DEBUG
+                cout << "----buffer items----" << endl;
+                for (int i=0; i<size; i++){
+                    if (buffer[i] != NULL){
+                        buffer[i]->print();
+                        cout << endl;
+                    }
+                }
+                cout << endl;
+                
+                this->insertTransaction(buffer, size, hash);
+                
+                //DEBUG
+                this->printTree();
+//                delete(transactionItems);
+                
+            } while (currTransaction < numTransactions);
+        }
+        
+        dataFile.close();
+    }
+    delete[] buffer;
+}
+
+// PURPOSE: sorts **array based by comparing their counterparts in the **hash, in descending order
+void FPTree::sortByPriority(FPTreeItem **array, int size, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
+    FPTreeItem *temp;
+    int tempIdx;
+    int j;
+    
+    for (int i=0; i<size; i++){
+        tempIdx = HeaderTable::getHashIndex(array[i]);
+        
+        if (hash[tempIdx] == NULL){
+            delete(array[i]);
+            array[i] = NULL;
+        } else {
+            temp = array[i];
+            for (j=i;
+                 j>0 && ((array[j-1] == NULL)
+                         || (hash[tempIdx]->compareTo(hash[HeaderTable::getHashIndex(array[j-1])]) > 0));
+                j--)
+            {
+                array[j] = array[j-1];
+            }
+            array[j] = temp;
+        }
+    }
+}
+
+/*-----------------------------------------------------------------------------------
+ * PURPOSE:
+ * PARM   :
+ * PARM   :
+ * REMARKS:
+ *----------------------------------------------------------------------------------*/
+void FPTree::mine(){}
+
+/*-----------------------------------------------------------------------------------
+ * PURPOSE: passes job to root node which recursively inserts each item
+ * PARM   : FPTreeItems[] that are to be inserted into the tree
+ * PARM   : size of the items array
+ * REMARKS: - inserts all items from the array
+ *          - any item from items[] that are not used, are freed
+ *----------------------------------------------------------------------------------*/
+void FPTree::insertTransaction(FPTreeItem *buffer[MAX_DOMAIN_ITEMS], int size, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
+//    this->root->insertTransaction(transactionItems, hash);
+    if (size > 0){
+        this->root->insertTransaction(buffer, size, hash);
+    }
 }
 
 /*-----------------------------------------------------------------------------------
@@ -114,4 +268,3 @@ HeaderTable* FPTree::getHeaderTable()
 {
     return headerTable;
 }
-

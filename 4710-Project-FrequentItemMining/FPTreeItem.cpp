@@ -12,22 +12,23 @@
 //------------------Constructor/Destructor---------------------
 FPTreeItem::FPTreeItem(){
 	this->data = 0;
-	this->frequency = 0;
+	this->support = 0;
 }
 
 FPTreeItem::FPTreeItem(int data, int frequency){
 	this->data = data;
-	this->frequency = frequency;
+	this->support = frequency;
 }
 
 FPTreeItem::~FPTreeItem(){}
 //-------------------------------------------------------------
 
+
 /*-------------------------------------------------------------------------------------
  * PURPOSE: increases the frequency by one
  *-----------------------------------------------------------------------------------*/
 void FPTreeItem::increaseSupport(){
-    this->frequency++;
+    this->support++;
 }
 
 /*-------------------------------------------------------------------------------------
@@ -35,7 +36,7 @@ void FPTreeItem::increaseSupport(){
  *-----------------------------------------------------------------------------------*/
 void FPTreeItem::increaseSupport(FPTreeItem *item){
     if (item != NULL){
-        this->frequency += item->frequency;
+        this->support += item->support;
     }
 }
 
@@ -51,8 +52,23 @@ int FPTreeItem::compareTo(OrderedData *item){
 	FPTreeItem *otherFPTreeItem = dynamic_cast<FPTreeItem *>(item);
     int result = 0;
     
-    if (otherFPTreeItem != NULL)
-        result = this->frequency - otherFPTreeItem->frequency;
+    if (otherFPTreeItem != NULL){
+        result = this->support - otherFPTreeItem->support;
+        
+        if (result == 0){//compare canonical order
+            result = otherFPTreeItem->data - this->data;
+        }
+    }
+    
+    return result;
+}
+
+bool FPTreeItem::isEqualsTo(OrderedData *target){
+    FPTreeItem *otherFPTreeItem = dynamic_cast<FPTreeItem *>(target);
+    bool result = false;
+    
+    if (otherFPTreeItem != NULL && this->data == otherFPTreeItem->data)
+        result = true;
     
     return result;
 }
@@ -61,19 +77,9 @@ int FPTreeItem::compareTo(OrderedData *item){
  * PURPOSE: prints data item and frequency
  *-----------------------------------------------------------------------------------*/
 void FPTreeItem::print(){
-	cout << this->data << " : " << this->frequency;
-}
-
-bool FPTreeItem::isEqualsTo(OrderedData *target){
-    FPTreeItem *otherFPTreeItem = dynamic_cast<FPTreeItem *>(target);
-    bool isEquals = false;
-    
-    if (otherFPTreeItem != NULL && this->data == otherFPTreeItem->data)
-        isEquals = true;
-    
-    return isEquals;
+	cout << this->data << " : " << this->support;
 }
 
 //************** GETTERS ***********************
 int FPTreeItem::getData(){ return this->data; }
-int FPTreeItem::getFrequency(){ return this->frequency; }
+int FPTreeItem::getSupport(){ return this->support; }

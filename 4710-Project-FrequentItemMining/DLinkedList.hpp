@@ -9,8 +9,12 @@
 #ifndef _710_Project_FrequentItemMining_DLinkedList_hpp
 #define _710_Project_FrequentItemMining_DLinkedList_hpp
 
+#include <cstdlib>
+
+using namespace std;
+
 class NodeLL;
-class OrderedData;
+class Data;
 
 class DLinkedList {
   
@@ -19,21 +23,31 @@ private:
     NodeLL *tail;
     int size;
     
-    
+    NodeLL *find(Data *target);
+
 public:
     DLinkedList();
     ~DLinkedList();
     
-    NodeLL *find(OrderedData *target);
+    //    Data* getData(int index);
 
-    bool addToFront(OrderedData *item);
-    bool addToBack(OrderedData *item);
-    void remove(OrderedData *target);
+    bool addToFront(Data *item);
+    bool addToBack(Data *item);
     
-    int getSize();
-    OrderedData* getData(int index);
+    Data* remove(Data *target);
+    void destroy(Data *target);
     
     void print();
+
+    //************ Getters ********
+    NodeLL* getHead();
+    NodeLL* getTail();
+    int getSize();
+
+    //************ Setters ********
+    void setHead(NodeLL *head);
+    void setTail(NodeLL *tail);
+    void setSize(int size);
 };
 
 #endif

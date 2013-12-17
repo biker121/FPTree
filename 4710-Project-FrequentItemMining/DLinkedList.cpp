@@ -8,11 +8,12 @@
 
 #include <iostream>
 #include "NodeLL.hpp"
-#include "OrderedData.hpp"
+#include "Data.hpp"
 #include "DLinkedList.hpp"
 
 using namespace std;
 
+//------------------Constructor/Destructor---------------------
 DLinkedList::DLinkedList(){
     this->head = NULL;
     this->tail = NULL;
@@ -28,9 +29,9 @@ DLinkedList::~DLinkedList(){
         delete(curr);
         curr = next;
     }
-}
+}//------------------------------------------------------------
 
-bool DLinkedList::addToFront(OrderedData *data){
+bool DLinkedList::addToFront(Data *data){
     bool success = false;
     NodeLL *newNode;
     
@@ -52,7 +53,7 @@ bool DLinkedList::addToFront(OrderedData *data){
     return success;
 }
 
-bool DLinkedList::addToBack(OrderedData *data){
+bool DLinkedList::addToBack(Data *data){
     bool success = false;
     NodeLL *newNode;
     
@@ -78,7 +79,7 @@ bool DLinkedList::addToBack(OrderedData *data){
 // Purpose: Iterates through to find an item which equals to the given target
 // Parm   :
 // Return : ptr to the node that contains an item equals to the given taget
-NodeLL* DLinkedList::find(OrderedData *target){
+NodeLL* DLinkedList::find(Data *target){
     NodeLL *curr = this->head;
     
     while (curr != NULL && curr->getData()->isEqualsTo(target) == false){
@@ -89,8 +90,9 @@ NodeLL* DLinkedList::find(OrderedData *target){
 }
 
 // Purpose: removes the given item from the list, if it exists
-void DLinkedList::remove(OrderedData *target){
+Data* DLinkedList::remove(Data *target){
     NodeLL *targetNode = find(target);
+    Data *item = NULL;
     
     if (targetNode != NULL){
         
@@ -114,24 +116,53 @@ void DLinkedList::remove(OrderedData *target){
         }
         
         //remove node
+        item = targetNode->getData();
+        
+        targetNode->setData(NULL);
         delete(targetNode);
         this->size--;
     }
+    
+    return item;
 }
 
-int DLinkedList::getSize()
-{
-    return size;
+void DLinkedList::destroy(Data *item){
+    Data *toDestory = remove(item);
+    
+    if (toDestory != NULL){
+        delete(toDestory);
+    }
 }
 
+// PURPOSE: prints each data item on a line
 void DLinkedList::print(){
     NodeLL *curr = this->head;
     
     while (curr != NULL){
-        curr->getData()->print();
-        cout << endl;
-        
+        curr->getData()->print();        
         curr = curr->getNext();
     }
     cout << endl;
+}
+
+//************ GETTERS *************
+NodeLL* DLinkedList::getHead(){
+    return this->head;
+}
+NodeLL* DLinkedList::getTail(){
+    return this->tail;
+}
+int DLinkedList::getSize(){
+    return size;
+}
+
+//************ SETTERS *************
+void DLinkedList::setHead(NodeLL *head){
+    this->head = head;
+}
+void DLinkedList::setTail(NodeLL *tail){
+    this->head = tail;
+}
+void DLinkedList::setSize(int size){
+    this->size = size;
 }

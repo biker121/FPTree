@@ -9,16 +9,20 @@
 #ifndef _710_Project_FrequentItemMining_FPTreeNode_hpp
 #define _710_Project_FrequentItemMining_FPTreeNode_hpp
 
+#include <cstdlib>
 #include <string>
 #include <sstream>
 
 #include "OrderedData.hpp"
+#include "DOrderedList.hpp"
 #include "FPTreeItem.hpp"
 #include "FPTreeNode.hpp"
+#include "HeaderTable.hpp"
 
 using namespace std;
 
 class FPTreeNode;
+class HeaderItem;
 
 class FPTreeNode : public OrderedData {
 private:
@@ -28,17 +32,21 @@ private:
     FPTreeNode *nextSibling;
     FPTreeNode *headChild;
     
-    FPTreeNode *incrementChild(FPTreeItem *target, HeaderTable *headerTable);
+//    void insertTransactionItem(NodeLL *currTranscationItem, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
+    void insertTransactionItem(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, int pos, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
+    FPTreeNode *insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     
 public:
     FPTreeNode();
     FPTreeNode(FPTreeItem *data, FPTreeNode *parent, FPTreeNode *nextSibling);
     virtual ~FPTreeNode();    
     
-    void insertTransaction(FPTreeItem *items[], int size, int curr, HeaderTable *headerTable);
+//    void insertTransaction(DOrderedList *items, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
+    void insertTransaction(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     
     //************* minor methods **********
     int compareTo(OrderedData *);
+    bool isEqualsTo(OrderedData *);
     void print();
     void print(int level);
     

@@ -13,39 +13,27 @@
 #include <fstream>
 #include <string>
 
-#include "HeaderItem.hpp"
-#include "HeaderTable.hpp"
-
 #define MAX_DOMAIN_ITEMS 1000
 
 using namespace std;
 
+class DOrderedList;
 class FPTreeItem;
-class FPTreeNode;
-class OrderedList;
+class HeaderItem;
 
 class HeaderTable {
     
 private:
-    HeaderItem *freqItems[MAX_DOMAIN_ITEMS]; //--refactor - remove
+//    HeaderItem *freqItems[MAX_DOMAIN_ITEMS]; //--refactor - remove
     
-    HeaderItemList *headerItems;
+    DOrderedList *headerItems;
     int numDomainItems;
     int minSup;
     
     static bool populateHash(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
-    static void incrementHashItem(HeaderItem *hash[MAX_DOMAIN_ITEMS], FPTreeItem *item);
+    static void incrementHashItem(FPTreeItem *item, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     
     static bool insertHeaderItems(HeaderTable *headerTable, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
-    
-    bool populateFrequencies(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]); //--refactor - remove
-    void prioritizeFrequencies();
-    
-    void insertionSort(HeaderItem *array[], int len);
-    int assignPriorities(HeaderItem *array[], int len);
-    void hashItems(HeaderItem *items[], int len);
-    
-    void increment(FPTreeItem *item);
     
 public:
     HeaderTable(int minSup);
@@ -54,15 +42,10 @@ public:
     bool createHeaderTable(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     void printTable();
     
-    void prioritizeItems(FPTreeItem *items[], int size); //might not be needed
-    
     static int getHashIndex(FPTreeItem *item);
-    bool isFrequent(FPTreeItem *item); //-refactor - remove
-    
-    void linkNode(FPTreeNode *node);
     
     //debug
-    void verifyFrequencies();
+//    void verifyFrequencies();
     
     //************* GETTERS ***************
     int getNumDomainItem();

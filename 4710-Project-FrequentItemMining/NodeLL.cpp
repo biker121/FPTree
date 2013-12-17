@@ -7,37 +7,21 @@
 //
 
 #include <iostream>
-#include "OrderedData.hpp"
+#include "Data.hpp"
 #include "NodeLL.hpp"
 
-NodeLL::NodeLL(OrderedData *data, NodeLL *prev, NodeLL *next){
+//------------------Constructor/Destructor---------------------
+NodeLL::NodeLL(Data *data, NodeLL *prev, NodeLL *next){
     this->data = data;
     this->prev = prev;
     this->next = next;
-    this->similarNode = NULL;
 }
-
-NodeLL::NodeLL(OrderedData *data, NodeLL *prev, NodeLL *next, NodeLL *similar){
-    this->data = data;
-    this->prev = prev;
-    this->next = next;
-    this->similarNode = similar;
-}
-
-NodeLL::NodeLL(OrderedData* data)
-{
-    this->data = data;
-    this->prev = NULL;
-    this->next = NULL;
-    this->similarNode = NULL;
-}
-
 NodeLL::~NodeLL(){
     delete(data);
+    this->data = NULL;
     this->prev = NULL;
     this->next = NULL;
-    this->similarNode = NULL;
-}
+}//------------------------------------------------------------
 
 void NodeLL::print(){
     if (data != NULL){
@@ -45,7 +29,8 @@ void NodeLL::print(){
     }
 }
 
-OrderedData* NodeLL::getData()
+//************** GETTERS ***********************
+Data* NodeLL::getData()
 {
     return this->data;
 }
@@ -60,12 +45,8 @@ NodeLL* NodeLL::getNext()
     return this->next;
 }
 
-NodeLL* NodeLL::getSimilarNode()
-{
-    return similarNode;
-}
-
-void NodeLL::setData(OrderedData *data)
+//************** SETTERS ***********************
+void NodeLL::setData(Data *data)
 {
     this->data = data;
 }
@@ -78,9 +59,4 @@ void NodeLL::setPrev(NodeLL *prev)
 void NodeLL::setNext(NodeLL *next)
 {
     this->next = next;
-}
-
-void NodeLL::setSimilar(NodeLL* similar)
-{
-    this->similarNode = similar;
 }
