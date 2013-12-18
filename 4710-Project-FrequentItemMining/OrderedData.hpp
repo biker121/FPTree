@@ -9,7 +9,8 @@
 #ifndef _710_Project_FrequentItemMining_OrderedData_hpp
 #define _710_Project_FrequentItemMining_OrderedData_hpp
 
-#include "OrderedData.hpp"
+#include <string>
+#include <iostream>
 
 using namespace std;
 //-----------------------------------------------------------------------------------------
@@ -21,10 +22,9 @@ using namespace std;
 //-----------------------------------------------------------------------------------------
 class OrderedData {
 public:
-    virtual	~OrderedData();
-    virtual bool isEqualsTo(OrderedData *other);
-    virtual int compareTo(OrderedData *)    = 0;
-    virtual void print()                    = 0;
+    virtual ~OrderedData();
+    virtual int compareTo(OrderedData *other)=0;
+    virtual void print()=0;
 };
 
 #endif

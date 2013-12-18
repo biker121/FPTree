@@ -9,33 +9,48 @@
 #ifndef _710_Project_FrequentItemMining_HeaderItem_hpp
 #define _710_Project_FrequentItemMining_HeaderItem_hpp
 
+#include <cstdlib>
 #include <string>
-
+#include "HeaderTable.hpp"
 #include "OrderedData.hpp"
 
 using namespace std;
 
+class FPTreeItem;
 class FPTreeNode;
+class NodeLL;
 
-class HeaderItem : public OrderedData {
+class HeaderItem : public OrderedData
+{
 private:
-    //FPTreeItem *item
-    FPTreeNode *data; //refactor - pointer to node in tree
-    int priority; //refactor - remove --> compare FPTreeItem *item instead
-
+    FPTreeItem *data;
+    FPTreeNode *firstSimilarTreeNode;
+    NodeLL *firstPathNode;
+    NodeLL *lastPathNode;
+    int similarNodeCount;
+    
 public:
-    HeaderItem(FPTreeNode *data);
-    ~HeaderItem();
+    HeaderItem(FPTreeItem *data);
+    virtual ~HeaderItem();
+    
+    void linkTreeNode(FPTreeNode *treeNode, HeaderItem *hash[]);
+    void linkNextPath(NodeLL *path);
     
     int compareTo(OrderedData *other); //--refactor -
     void print();
+    void increaseSupport();
     
     //************* GETTERS *************
-    FPTreeNode* getNode();
-    int getPriority();
+    FPTreeItem* getData();
+    FPTreeNode* getFirstSimilarTreeNode();
+    NodeLL* getFirstPathNode();
+    NodeLL* getLastPathNode();
+    int getSimilarNodeCount();
     
     //************* SETTERS *************
-    void setPriority(int priority);
+    void setFirstSimilarTreeNode(FPTreeNode *firstSimilarTreeNode);
+    void setFirstPathNode(NodeLL *firstPathNode);
+    void setLastPathNode(NodeLL *lastPathNode);
 };
 
 #endif

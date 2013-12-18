@@ -6,9 +6,6 @@
 //  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
 //
 
-#include <iostream>
-#include "NodeLL.hpp"
-#include "OrderedData.hpp"
 #include "DLinkedList.hpp"
 
 using namespace std;
@@ -30,9 +27,9 @@ DLinkedList::~DLinkedList(){
     }
 }
 
-bool DLinkedList::addToFront(OrderedData *data){
+NodeLL* DLinkedList::addToFront(OrderedData *data) {
     bool success = false;
-    NodeLL *newNode;
+    NodeLL *newNode=NULL;
     
     if (data != NULL){
         newNode = new NodeLL(data, NULL, NULL);
@@ -49,12 +46,12 @@ bool DLinkedList::addToFront(OrderedData *data){
         success = true;
         this->size++;
     }
-    return success;
+    return newNode;
 }
 
-bool DLinkedList::addToBack(OrderedData *data){
+NodeLL* DLinkedList::addToBack(OrderedData *data) {
     bool success = false;
-    NodeLL *newNode;
+    NodeLL *newNode=NULL;
     
     if (data != NULL){
         newNode = new NodeLL(data, NULL, NULL);
@@ -72,7 +69,7 @@ bool DLinkedList::addToBack(OrderedData *data){
         this->size++;
     }
     
-    return success;
+    return newNode;
 }
 
 // Purpose: Iterates through to find an item which equals to the given target
@@ -81,7 +78,7 @@ bool DLinkedList::addToBack(OrderedData *data){
 NodeLL* DLinkedList::find(OrderedData *target){
     NodeLL *curr = this->head;
     
-    while (curr != NULL && curr->getData()->isEqualsTo(target) == false){
+    while (curr != NULL && curr->getData()->compareTo(target) == 0){
         curr = curr->getNext();
     }
     

@@ -6,27 +6,21 @@
 //  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
 //
 
-#include "HeaderItem.hpp"
-#include "FPTreeNode.hpp"
 #include "HeaderTable.hpp"
 
+#include "NodeLL.hpp"
+#include "FPTreeNode.hpp"
+#include "HeaderItem.hpp"
+
 //------------------------Constructors and destructors-----------------------
-HeaderTable::HeaderTable(int minSup)
-{
+HeaderTable::HeaderTable(int minSup){
+    this->headerItems = new HeaderItemList();
     this->numDomainItems = 0;
     this->minSup = minSup;
 }
-
-HeaderTable::~HeaderTable()
-{
-    if (numDomainItems > 0){
-        for (int i=0; i<MAX_DOMAIN_ITEMS; i++){
-            if (freqItems[i] != NULL){
-                delete(freqItems[i]);
-                freqItems[i] = NULL;
-            }
-        }
-    }
+HeaderTable::~HeaderTable(){
+    delete(headerItems);
+    this->headerItems = NULL;
 }//--------------------------------------------------------------------------
 
 /*-------------------------------------------------------------------------------------
@@ -48,6 +42,13 @@ bool HeaderTable::createHeaderTable(string fileName, HeaderItem *hash[MAX_DOMAIN
     return tableCreated;
 }
 
+HeaderItem* HeaderTable::insertByFreqOrder(int domainItem)
+{
+    HeaderItem *newItem = new HeaderItem(new FPTreeItem(domainItem, 1));
+    HeaderItem *returned = headerItems->insertByFreqOrder(newItem);
+    
+    return returned;
+}
 
 // PURPOSE : fills the given hash with their frequency in the file
 bool HeaderTable::populateHash(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
@@ -76,7 +77,7 @@ bool HeaderTable::populateHash(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEM
                     dataFile >> temp;
                     
                     tempItem = new FPTreeItem(temp, 1); //temp is later freed
-                    HeaderTable::incrementHashItem(hash, tempItem);
+                    HeaderTable::incrementHashItem(tempItem, hash);
                 }
             } while (currTransaction < numTransactions);
         }
@@ -87,19 +88,21 @@ bool HeaderTable::populateHash(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEM
     return success;
 }
 
-// PURPOSE : inserts pointers from hash into header table list
+// PURPOSE : inserts frequent items from hash into header table list and removes
+//           removes all infrequent items in hash
 bool HeaderTable::insertHeaderItems(HeaderTable *headerTable, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
     bool success = false;
-    int currentPriority = MAX_DOMAIN_ITEMS;
     
     if (headerTable != NULL && hash != NULL){
         for (int i=0; i<MAX_DOMAIN_ITEMS; i++){
-            if (hash[i] != NULL){
-                if (hash[i]->getNode()->getData()->getFrequency() < headerTable->minSup){
+            if (hash[i] != NULL){ //frequent
+                if (hash[i]->getData()->getSupport() < headerTable->minSup){
                     delete(hash[i]);
                     hash[i] = NULL;
                 } else {
-                    headerTable->headerItems->insertByFreqOrder(hash[i]); //insert by frequency
+                    cout << "adding..";
+                    hash[i]->print();
+                    headerTable->headerItems->orderedInsert(hash[i]); //insert by frequency
                     headerTable->numDomainItems++;
                 }
             }
@@ -109,230 +112,6 @@ bool HeaderTable::insertHeaderItems(HeaderTable *headerTable, HeaderItem *hash[M
     }
     
     return success;
-}
-
-/*-------------------------------------------------------------------------------------
- * PURPOSE: reads data and records the frequency of items in the specified file in a 
- *          hashed array
- * PARM   : fileName - absolute path to the file that is to be read for reading frequency
- * RETURN : bool - indicating whether or not file was read properly
- *-----------------------------------------------------------------------------------*/
-bool HeaderTable::populateFrequencies(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
-    bool success = false;
-    ifstream dataFile;    //the input file
-    int numTransactions;
-    int currTransaction, transactionSize;
-    
-    FPTreeItem *tempItem;
-    int temp;
-    
-    dataFile.open(fileName.c_str());
-    
-    if ( dataFile.is_open() == false ){
-        cout<<"Error while opening file. "<< endl;
-    } else {
-        dataFile >> numTransactions;
-        
-        //cycle through each transaction
-        if (numTransactions > 0){
-            do {
-                dataFile >> currTransaction >> transactionSize;
-                
-                //increment appropriate count
-                for (int i=0; i<transactionSize; i++){
-                    dataFile >> temp;
-                    
-                    tempItem = new FPTreeItem(temp, 1); //temp is later freed
-                    this->increment(tempItem);
-                }
-                
-            } while (currTransaction < numTransactions);
-        }
-        
-        dataFile.close();
-        success = true;
-    }
-    return success;
-}
-
-/*-------------------------------------------------------------------------------------
- * PURPOSE: While maintaining hash, this method orders items in decreasing frequency 
- *          and removes infrequent items
- *-----------------------------------------------------------------------------------*/
-void HeaderTable::prioritizeFrequencies(){
-    HeaderItem *temp;
-    HeaderItem *tempArray[MAX_DOMAIN_ITEMS];
-    
-    this->insertionSort(freqItems, MAX_DOMAIN_ITEMS); //sort headerItems in decreasing frequency
-    this->numDomainItems = this->assignPriorities(freqItems, numDomainItems);
-    
-    if (numDomainItems > 0){
-        
-        //copy over items to tempArray while maintaining order
-        for (int i=0; i<this->numDomainItems; i++){
-            temp = freqItems[i];
-            tempArray[i] = temp;
-            freqItems[i] = NULL;
-        }
-        
-        //hash items
-        this->hashItems(tempArray, this->numDomainItems);
-    }
-}
-
-/*-------------------------------------------------------------------------------------
- * PURPOSE: prioritizes given array of items according to header table
- * PARM   : array[] which contains unprioritized list of FPTreeItems
- * PARM   : size of array[]
- * REMARKS: -- used for prioritizing FPTreeItems before passing array to for tree 
- *          insertion
- *-----------------------------------------------------------------------------------*/
-void HeaderTable:: prioritizeItems(FPTreeItem *array[], int size){
-    FPTreeItem *temp;
-    int tempIndex;
-    int j;
-
-    for (int i=0; i<size; i++){
-        tempIndex = this->getHashIndex(array[i]);
-        
-        if (freqItems[tempIndex] == NULL){
-            delete(array[i]);
-            array[i] = NULL;
-        } else {
-            temp = array[i];
-
-            for (j=i; j>0
-                    && ((array[j-1] == NULL)
-                        || ((freqItems[tempIndex]->getPriority()
-                            - freqItems[this->getHashIndex(array[j-1])]->getPriority())) > 0)
-                    ; j--){
-                array[j] = array[j-1];
-            }
-            array[j] = temp;
-        }
-    }
-}
-
-/*-------------------------------------------------------------------------------------
- * PURPOSE: sorts the array (including NULLS) in drecreasing frequency
- * PARM   : array[] to be sorted
- * PARM   : len - size of array[]
- * 
- * NOT USED!!!
- *-----------------------------------------------------------------------------------*/
-void HeaderTable::insertionSort(HeaderItem *array[], int len){
-    HeaderItem *temp;
-    int j;
-    
-    for (int i=1; i<len; i++){
-        temp = array[i];
-
-        if (temp != NULL){
-            //swap temp if it is higher priority
-            for (j=i; j>0 &&
-                 ((array[j-1] == NULL) || (temp->compareTo(array[j-1]) > 0))
-                 ; j--){
-                array[j] = array[j-1];
-            }
-            array[j] = temp;
-        }
-    }
-}
-
-void HeaderTable::insertByFreqOrder(int item)
-{
-    bool done = false;
-    
-    if (head == NULL)
-    {
-        FPTreeItem* newItem = new FPTreeItem(item, 1);
-        head = new NodeLL(newItem);
-        tail = head;
-    }else
-    {
-        NodeLL *curr = head;
-        NodeLL *prev = NULL;
-        
-        while (curr!=NULL && !done)
-        {
-            FPTreeItem* dataItem = (FPTreeItem*)curr->getData();
-            
-            if(dataItem!=NULL)
-            {
-                // merge, if same item
-                if(dataItem->getData()==item)
-                {
-                    dataItem->increment();
-                    
-                    if(prev!=NULL)
-                    {
-                        FPTreeItem* prevData = (FPTreeItem*)prev->getData();
-                        
-                        if (dataItem->getFrequency() > prevData->getFrequency())
-                        {
-                            //switch pointers
-                            NodeLL *temp = curr->getNext();
-                            curr->setNext(prev);
-                            prev->setNext(temp);
-                        }
-                    }
-                    done = true;
-                }
-            }
-            
-            prev = curr;
-            curr=curr->getNext();
-        }
-    }
-	// increment size
-	size++;
-}
-
-/*-------------------------------------------------------------------------------------
- * PURPOSE: assigns priority to items based on their position in the given array
- * PARM   : array[] - holds the items in decreasing priority
- * PARM   : len - size of the array[]
- * RETURN : int - representing the number of frequent items
- * REMARKS: higher priority is recognized by a higher priority #
- *-----------------------------------------------------------------------------------*/
-int HeaderTable::assignPriorities(HeaderItem *array[], int len){
-    int currPriority = len; //which is also 'this->numDomainItems'
-    bool infrequent = false;
-    int numFrequentItems = this->numDomainItems;
-    
-    for (int i=0; i<len; i++){
-        if (array[i] != NULL){
-            
-            if (!infrequent &&
-                    array[i]->getNode()->getData()->getFrequency() < this->minSup){
-                infrequent = true;
-                numFrequentItems = i;
-            }
-            
-            if (infrequent){
-                delete(array[i]);
-                array[i] = NULL;
-            } else {
-                array[i]->setPriority(currPriority);
-                currPriority--;
-            }
-        }
-    }
-    
-    return numFrequentItems;
-}
-
-/*-------------------------------------------------------------------------------------
- * PURPOSE: hashes the given items into the freqItems array
- * PARM   : items[] - which holds items that are to be hashed
- * PARM   : len - size of items[]
- *-----------------------------------------------------------------------------------*/
-void HeaderTable::hashItems(HeaderItem *items[], int len){
-    for (int i=0; i<len; i++){
-        if (items[i] != NULL){
-            this->freqItems[this->getHashIndex(items[i]->getNode()->getData())] = items[i];
-        }
-    }
 }
 
 /*-------------------------------------------------------------------------------------
@@ -351,26 +130,7 @@ int HeaderTable::getHashIndex(FPTreeItem *item){
     return result;
 }
 
-// @purpose :
-//
-// @return  : True if it exists in hashed array (aka is frequent), else false
-/*-------------------------------------------------------------------------------------
- * PURPOSE: checks to see if the given item is hashed into the array to determine
- *          if it is frequent
- * PARM   : *item - that is to be evaluated
- * RETURN : True - if frequent, else false
- *-----------------------------------------------------------------------------------*/
-bool HeaderTable::isFrequent(FPTreeItem *item){
-    bool isFrequent = false;
-    
-    if (item != NULL && freqItems[this->getHashIndex(item)] != NULL){
-        isFrequent = true;
-    }
-    
-    return isFrequent;
-}
-
-void  HeaderTable::incrementHashItem(HeaderItem *hash[MAX_DOMAIN_ITEMS], FPTreeItem *item){
+void  HeaderTable::incrementHashItem(FPTreeItem *item, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
     HeaderItem *found;
     int hashIndex = -1;
     
@@ -381,117 +141,37 @@ void  HeaderTable::incrementHashItem(HeaderItem *hash[MAX_DOMAIN_ITEMS], FPTreeI
             found = hash[hashIndex];
             
             if (found == NULL){ //if no entry
-                FPTreeNode *tempFPTreeNode = new FPTreeNode(item, NULL, NULL);
-                HeaderItem *tempHeader  = new HeaderItem(tempFPTreeNode);
-                hash[hashIndex] = tempHeader;
+                hash[hashIndex] = new HeaderItem(item);
             } else {
-                found->getNode()->getData()->increaseSupport(item);
-                delete(item);
-            }
-
-        }
-    }
-}
-
-/*-------------------------------------------------------------------------------------
- * PURPOSE: increments the count for the given item in the table
- *          - If the item does not exist, then adds the given item to table
- *          - else increments the existing similar item in table
- * PARM   : FPTreeItem, item to be incremented
- *-----------------------------------------------------------------------------------*/
-void HeaderTable::increment(FPTreeItem *item){
-    HeaderItem* found;
-    int hashIndex;
-
-    if (item != NULL){
-        hashIndex = getHashIndex(item);
-        
-        if (hashIndex >=0 && hashIndex < MAX_DOMAIN_ITEMS){
-            found = freqItems[hashIndex];
-            
-            if (found == NULL){ //if no entry
-                FPTreeNode *tempFPTreeNode = new FPTreeNode(item, NULL, NULL);
-                HeaderItem *tempHeader  = new HeaderItem(tempFPTreeNode);
-                this->freqItems[hashIndex] = tempHeader;
-                this->numDomainItems++;
-            } else {
-                found->getNode()->getData()->increaseSupport(item);
+                found->getData()->increaseSupport(item);
                 delete(item);
             }
         }
-    }
-}
-
-/*-------------------------------------------------------------------------------------
- * PURPOSE: adds the link to the given node for the appropriate headerItem
- * PARM   : *node - that is to be linked to the header table
- * REMARKS: - this method links the node without question
- *-----------------------------------------------------------------------------------*/
-void HeaderTable::linkNode(FPTreeNode *node){
-    int hashIndex = 0;
-    
-    if (node != NULL && node->getData() != NULL){
-        hashIndex = getHashIndex(node->getData());
-        
-        if (hashIndex != -1 && freqItems[hashIndex] != NULL){
-            node->setNextSimilarNode(freqItems[hashIndex]->getNode()->getNextSimilarNode());
-            freqItems[hashIndex]->getNode()->setNextSimilarNode(node);
-        }            
     }
 }
 
 /*-------------------------------------------------------------------------------------
  * PURPOSE: simply prints the entire header table to console
  *-----------------------------------------------------------------------------------*/
-void HeaderTable::printTable(){
+void HeaderTable::printTable()
+{
     cout << "Header table: " << endl;
-    int count = 0;
-    int pos = 0;
-    
-    while (pos >= 0 && pos < MAX_DOMAIN_ITEMS && count < this->numDomainItems){
-        if (this->freqItems[pos] != NULL){
-            this->freqItems[pos]->print();
-            count++;
-        }
-        pos++;
-    }
-    
+    headerItems->print();
     cout << endl;
 }
 
-/*-------------------------------------------------------------------------------------
- * PURPOSE: for each header item, verifies its frequency with the tree
- * REMARKS: - if any of the frequencies don't match, it prints an error to console
- *-----------------------------------------------------------------------------------*/
-void HeaderTable::verifyFrequencies(){
-    int count;
-    FPTreeNode *curr;
-    bool frequenciesValid = true;
-    
-    for (int i=0; i<MAX_DOMAIN_ITEMS; i++){
-        if (freqItems[i] != NULL){
-            count = 0; //running frequency count
-            
-            curr = freqItems[i]->getNode()->getNextSimilarNode();
-            while (curr != NULL){
-                count += curr->getData()->getFrequency(); //add frequency
-                curr = curr->getNextSimilarNode();
-            }
-            
-            //if counted frequency doesn't match stored frequency --> print some details
-            if (count != freqItems[i]->getNode()->getData()->getFrequency()){
-                frequenciesValid = false;
-                cout << endl;
-                freqItems[i]->print();
-                cout << "added frequeny = " << count << endl;
-            }
-        }
-    }
-    
-    if (!frequenciesValid){
-        cout << "error in frequency count" << endl;
-    }
+//************************* GETTERS ************************
+int HeaderTable::getNumDomainItem()
+{
+    return this->numDomainItems;
 }
 
-//************************* GETTERS ************************
-int HeaderTable::getNumDomainItem(){ return this->numDomainItems; }
+NodeLL* HeaderTable::getLowestFreqNode()
+{
+    return headerItems->getTailNode();
+}
+
+NodeLL* HeaderTable::getHighestFreqNode()
+{
+    return headerItems->getHeadNode();
+}

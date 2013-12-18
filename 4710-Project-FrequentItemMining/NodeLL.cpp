@@ -14,14 +14,6 @@ NodeLL::NodeLL(OrderedData *data, NodeLL *prev, NodeLL *next){
     this->data = data;
     this->prev = prev;
     this->next = next;
-    this->similarNode = NULL;
-}
-
-NodeLL::NodeLL(OrderedData *data, NodeLL *prev, NodeLL *next, NodeLL *similar){
-    this->data = data;
-    this->prev = prev;
-    this->next = next;
-    this->similarNode = similar;
 }
 
 NodeLL::NodeLL(OrderedData* data)
@@ -29,14 +21,12 @@ NodeLL::NodeLL(OrderedData* data)
     this->data = data;
     this->prev = NULL;
     this->next = NULL;
-    this->similarNode = NULL;
 }
 
 NodeLL::~NodeLL(){
     delete(data);
     this->prev = NULL;
     this->next = NULL;
-    this->similarNode = NULL;
 }
 
 void NodeLL::print(){
@@ -60,11 +50,6 @@ NodeLL* NodeLL::getNext()
     return this->next;
 }
 
-NodeLL* NodeLL::getSimilarNode()
-{
-    return similarNode;
-}
-
 void NodeLL::setData(OrderedData *data)
 {
     this->data = data;
@@ -78,9 +63,4 @@ void NodeLL::setPrev(NodeLL *prev)
 void NodeLL::setNext(NodeLL *next)
 {
     this->next = next;
-}
-
-void NodeLL::setSimilar(NodeLL* similar)
-{
-    this->similarNode = similar;
 }

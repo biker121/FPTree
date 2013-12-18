@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B74FB1A18600C0B00594465 /* TransPathItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B74FB1818600C0B00594465 /* TransPathItem.cpp */; };
+		6B9D1BE0186159A700873EC4 /* HeaderItemList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B9D1BDE186159A700873EC4 /* HeaderItemList.cpp */; };
 		ED1740DC1847CF9500A45798 /* HeaderItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED1740DA1847CF9500A45798 /* HeaderItem.cpp */; };
-		ED46FE93185F994B004C6A47 /* DataMining.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED46FE91185F994B004C6A47 /* DataMining.cpp */; };
 		ED78803B1845365C00A44EBC /* FPTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED7880391845365C00A44EBC /* FPTree.cpp */; };
 		ED8FD51F1845E128008D1AB0 /* FPTreeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED8FD51D1845E128008D1AB0 /* FPTreeNode.cpp */; };
 		EDAAA136185A82F700A076E8 /* NodeLL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAAA134185A82F700A076E8 /* NodeLL.cpp */; };
@@ -35,6 +36,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6B74FB1818600C0B00594465 /* TransPathItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransPathItem.cpp; sourceTree = "<group>"; };
+		6B74FB1918600C0B00594465 /* TransPathItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransPathItem.h; sourceTree = "<group>"; };
+		6B9D1BDD1861199700873EC4 /* FPContants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FPContants.hpp; sourceTree = "<group>"; };
+		6B9D1BDE186159A700873EC4 /* HeaderItemList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeaderItemList.cpp; sourceTree = "<group>"; };
+		6B9D1BDF186159A700873EC4 /* HeaderItemList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderItemList.h; sourceTree = "<group>"; };
 		ED1740DA1847CF9500A45798 /* HeaderItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeaderItem.cpp; sourceTree = "<group>"; };
 		ED1740DD1847CF9E00A45798 /* HeaderItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HeaderItem.hpp; sourceTree = "<group>"; };
 		ED191AD61845DA2D003682BB /* test1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test1.txt; sourceTree = "<group>"; };
@@ -114,16 +120,12 @@
 		EDB95B7D183ECB9600304110 /* 4710-Project-FrequentItemMining */ = {
 			isa = PBXGroup;
 			children = (
-				EDAAA13B185A836E00A076E8 /* DLinkedList.cpp */,
-				EDAAA13E185A837900A076E8 /* DLinkedList.hpp */,
-				EDAAA134185A82F700A076E8 /* NodeLL.cpp */,
-				EDAAA137185A830900A076E8 /* NodeLL.hpp */,
-				EDB95B8F183F15EA00304110 /* OrderedData.cpp */,
-				EDB95B8E183F15BB00304110 /* OrderedData.hpp */,
 				EDB95B80183ECB9600304110 /* _710_Project_FrequentItemMining.1 */,
-				ED7880391845365C00A44EBC /* FPTree.cpp */,
 				ED46FE91185F994B004C6A47 /* DataMining.cpp */,
 				ED46FE95185F9B3C004C6A47 /* DataMining.hpp */,
+				EDAAA13B185A836E00A076E8 /* DLinkedList.cpp */,
+				EDAAA13E185A837900A076E8 /* DLinkedList.hpp */,
+				ED7880391845365C00A44EBC /* FPTree.cpp */,
 				ED7880381845364D00A44EBC /* FPTree.hpp */,
 				EDB95B8A183F11E700304110 /* FPTreeItem.cpp */,
 				EDB95B89183F11A200304110 /* FPTreeItem.hpp */,
@@ -134,6 +136,15 @@
 				EDB95B93183F213200304110 /* HeaderTable.cpp */,
 				EDB95B92183F212B00304110 /* HeaderTable.hpp */,
 				EDB95B7E183ECB9600304110 /* main.cpp */,
+				EDAAA134185A82F700A076E8 /* NodeLL.cpp */,
+				EDAAA137185A830900A076E8 /* NodeLL.hpp */,
+				EDB95B8F183F15EA00304110 /* OrderedData.cpp */,
+				EDB95B8E183F15BB00304110 /* OrderedData.hpp */,
+				6B74FB1818600C0B00594465 /* TransPathItem.cpp */,
+				6B74FB1918600C0B00594465 /* TransPathItem.h */,
+				6B9D1BDD1861199700873EC4 /* FPContants.hpp */,
+				6B9D1BDE186159A700873EC4 /* HeaderItemList.cpp */,
+				6B9D1BDF186159A700873EC4 /* HeaderItemList.h */,
 			);
 			path = "4710-Project-FrequentItemMining";
 			sourceTree = "<group>";
@@ -199,6 +210,8 @@
 				EDB95B7F183ECB9600304110 /* main.cpp in Sources */,
 				ED1740DC1847CF9500A45798 /* HeaderItem.cpp in Sources */,
 				EDAAA13D185A836E00A076E8 /* DLinkedList.cpp in Sources */,
+				6B74FB1A18600C0B00594465 /* TransPathItem.cpp in Sources */,
+				6B9D1BE0186159A700873EC4 /* HeaderItemList.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

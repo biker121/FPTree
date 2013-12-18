@@ -9,8 +9,9 @@
 #ifndef _710_Project_FrequentItemMining_DLinkedList_hpp
 #define _710_Project_FrequentItemMining_DLinkedList_hpp
 
-class NodeLL;
-class OrderedData;
+#include <iostream>
+#include "NodeLL.hpp"
+#include "OrderedData.hpp"
 
 class DLinkedList {
   
@@ -26,8 +27,8 @@ public:
     
     NodeLL *find(OrderedData *target);
 
-    bool addToFront(OrderedData *item);
-    bool addToBack(OrderedData *item);
+    NodeLL *addToFront(OrderedData *item);
+    NodeLL *addToBack(OrderedData *item);
     void remove(OrderedData *target);
     
     int getSize();

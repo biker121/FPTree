@@ -9,6 +9,7 @@
 #ifndef _710_Project_FrequentItemMining_FPTreeItem_hpp
 #define _710_Project_FrequentItemMining_FPTreeItem_hpp
 
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -33,24 +34,24 @@ class FPTreeItem : public OrderedData {
     
 private:
     int data;
-    int frequency;
+    int support;
     
 public:
     FPTreeItem();
-    FPTreeItem(int data, int frequency);
+    FPTreeItem(int data, int support);
     virtual ~FPTreeItem();
     
     void increaseSupport();
     void increaseSupport(FPTreeItem *item);
-        
+    
     //*****************Minor Methods********************
-    int 	compareTo(OrderedData *item);       //compares frequency
-    void 	print();
-    bool    isEqualsTo(OrderedData *target);    //compares data value
+    int compareTo(OrderedData *item);       //compares frequency
+    void print();
+    bool isEqualsTo(OrderedData *target);    //compares data value
     
     //************ Getters ********
     int getData();
-    int getFrequency();
+    int getSupport();
 };
 
 #endif

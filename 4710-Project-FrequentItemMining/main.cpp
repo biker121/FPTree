@@ -10,10 +10,15 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 
 #include "FPTree.hpp"
+#include "FPTreeNode.hpp"
 #include "FPTreeItem.hpp"
 #include "HeaderTable.hpp"
+#include "HeaderItem.hpp"
+#include "DLinkedList.hpp"
+#include "TransPathItem.h"
 
 using namespace std;
 //-----------------------------------------------------------
@@ -26,167 +31,71 @@ using namespace std;
 //
 //-----------------------------------------------------------
 
-void fp_groth_mine(FPTree* tree, int base)
+void FPGrowthMine(FPTree* tree, int base)
 {
     
 	HeaderTable *headerTable = tree->getHeaderTable();
 	
 	// Iterates through each header item in the header table starting from
 	// the bottom to the top
-	HeaderItem *currHeaderItem = headerTable->get_lowest_freq_item();
-	while(currHeaderItem->prev() != NULL)
+	NodeLL *currHeaderNode = dynamic_cast<NodeLL*>(headerTable->getLowestFreqNode());
+	while(currHeaderNode != NULL)
 	{
+        FPTree *newProjTree = new FPTree(tree->getMinSup());
+        HeaderItem *headerItem = dynamic_cast<HeaderItem*>(currHeaderNode->getData());
+        DLinkedList *paths[headerItem->getSimilarNodeCount()];
+        HeaderTable *projHeader = newProjTree->getHeaderTable();
         
-		DLinkedList paths[currHeaderItem->getSimilarNodeCount()];
+        int currPathIndex = 0;
         
 		// Iterates over nodes in the FP tree starting with a given header item
 		// and generates a new list containing that path following the global
 		// FP tree sorting order
-		FPTreeNode *currNode = currHeaderItem->getNode();
-		while(currNode != NULL)
+		FPTreeNode *currSimilarNode = headerItem->getFirstSimilarTreeNode();
+		while(currSimilarNode != NULL)
 		{
+            paths[currPathIndex] = new DLinkedList();
+            
 			// generates a path by chasing the parent pointers
-			FPTreeNode *parent = currNode->getParent();
+			FPTreeNode *parent = currSimilarNode->getParent();
 			while(parent!=NULL)
 			{
-				FPTreeNode *parent = currNode->getParent();
+				FPTreeNode *parent = currSimilarNode->getParent();
                 FPTreeItem *dataItem = parent->getData();
-				
-				// add to header table
-				projHeaderTable->addByFreqOrder(dataItem->getData());
                 
-				// add to paths
-				??curr_path->addToFront(new FPTreeItem(dataItem->getData(),
-													   dataItem->getFrequency()));
+                FPTreeItem *item = new FPTreeItem(dataItem->getData(), dataItem->getSupport());
+                TransPathItem *pathItem = new TransPathItem(item, NULL);
+                NodeLL* addedPathNode = paths[currPathIndex]->addToFront(pathItem);
+                
+                // add to header table
+				HeaderItem *hItem = projHeader->insertByFreqOrder(dataItem->getData());
+                hItem->linkNextPath(addedPathNode);
                 
 				parent = parent->getParent();
 			}
             
-			// create a new node for path
-			paths->add(curr_path);
+			currPathIndex++;
             
-			currNode = currNode->getNextSimilarNode();
+			currSimilarNode = currSimilarNode->getNextSimilarNode();
 		}
         
-		curr = curr->prev();
+		currHeaderNode = currHeaderNode->getPrev();
 	}
 }
 
-/*-----------------------------------------------------------------------------------
- * PURPOSE: creates the FP-Tree by reading and inserting one transaction at a time for
- *          only the frequent items
- *----------------------------------------------------------------------------------*/
-void createTree(FPTree* tree, string fileName, FPTreeItem *hash[MAX_DOMAIN_ITEMS])
-{
-    ifstream dataFile;
-    int numTransactions;
-    int currTransaction, transactionSize;
-    
-//    FPTreeItem *buffer[MAX_DOMAIN_ITEMS];
-    FPTreeItem *tempItem;
-    int temp;
-//    int bufferIndex;
-    
-    dataFile.open(fileName.c_str());
-    
-    if ( dataFile.is_open() == false ){
-        cout<<"Error while opening file. "<< endl;
-    } else {
-        dataFile >> numTransactions;
-        
-        //cycle through each transaction
-        if (numTransactions > 0){
-            do {
-                dataFile >> currTransaction >> transactionSize;
-                
-                //read entire transaction into array
-                bufferIndex = 0;
-                for (int i=0; i<transactionSize; i++){
-                    dataFile >> temp;
-                    tempItem = new FPTreeItem(temp, 1); //temp is later freed
-                    
-                    /*
-                     * -- refactor - add to ordered list instead of array
-                        - insert based on its priorty in hash
-                     */
-                    int index = HeaderTable::getHashIndex(tempItem);
-                    
-                    if (hash[index] != NULL) {
-                        //insert *tempItem
-                    } else {
-                        delete(tempItem);
-                        tempItem = NULL;
-                    }
-                    
-//                    if (tree->getHeaderTable()->isFrequent(tempItem) == true){
-//                        buffer[bufferIndex] = tempItem;
-//                        bufferIndex++;
-//                    } else {
-//                        delete(tempItem);
-//                        tempItem = NULL;
-//                    }
-                }
-                
-                //insert transaction
-                tree->insertTransaction(buffer, bufferIndex); //modify to accept list
-                //delete list
-                
-            } while (currTransaction < numTransactions);
-        }
-        
-        dataFile.close();
-    }
-}
-
-/*-----------------------------------------------------------------------------------
- * @purpose: primary handler method for mining a given datafile with indicated minsup
- * @parm   : string fileName, absolute file name
- * @parm   : int minSup, support threshold for frequent items
- *----------------------------------------------------------------------------------*/
-void processFile(string fileName, int minSup)
-{
-    FPTree *tree = new FPTree(minSup);
-    HeaderItem *hash[MAX_DOMAIN_ITEMS];
-    
-    //first pass - frequency population
-    tree->createHeaderTable(fileName, hash); //will fill hash[] with frequent 1-itemsets
-    tree->printHeaderTable();
-    
-    //second pass - tree creation
-    if (tree->getHeaderTable()->getNumDomainItem() > 0) {
-        createTree(tree, fileName, hash);
-        //tree->printTree();
-        
-        //DEBUG
-        tree->getHeaderTable()->verifyFrequencies(); //verifies tree node frequencies with header table frequency
-    }
-    
-    //third pass - data mining
-    
-    //free objects
-    delete(tree);
-}
-
-/*-------------------------------------------------------------------------------------
- * PURPOSE:
- * PARM   :
- * PARM   :
- * RETURN :
- * REMARKS:
- *-----------------------------------------------------------------------------------*/
 int main(int argc, const char * argv[])
 {
-    run_tests();
+    //    run_tests();
     
     if (argc == 3) {
         string fileName = argv[1];
         int minSup = atoi(argv[2]);
         
         //*** test use only ***
-        minSup = 2;
+        minSup = 1;
         
         cout << "===== FP-growth TDB=" << fileName << " minsup=" << minSup << " =====" << endl;
-        processFile(fileName, minSup);
+        FPTree::processFile(fileName, minSup); //read, create, and mine tree
         cout << "=====================================================================" << endl;
     } else {
         cout << "Invalid parameters - must have <filename> <minsup>";
@@ -196,4 +105,3 @@ int main(int argc, const char * argv[])
     
     return EXIT_SUCCESS;
 }
-
