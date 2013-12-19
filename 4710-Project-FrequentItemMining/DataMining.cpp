@@ -6,7 +6,8 @@
 //  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
 //
 
-#include "FPTree.hpp"
 #include "DataMining.hpp"
+
+#include "FPTree.hpp"
 
 void DataMining::fp_growth_mining(FPTree* tree);

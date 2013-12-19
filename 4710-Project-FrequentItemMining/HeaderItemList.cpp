@@ -6,7 +6,10 @@
 //  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
 //
 
-#include "HeaderItemList.h"
+#include "HeaderItemList.hpp"
+
+#include "HeaderItem.hpp"
+#include "NodeLL.hpp"
 
 HeaderItemList::HeaderItemList()
 {
@@ -153,6 +156,17 @@ void HeaderItemList::orderedInsert(HeaderItem *item)
     }
 }
 
+void HeaderItemList::print()
+{
+    NodeLL* curr = head;
+    while (curr!=NULL) {
+        curr->getData()->print();
+        curr = curr->getNext();
+    }
+    
+}
+
+//****************** GETTERS *******************
 NodeLL* HeaderItemList::getHeadNode()
 {
     return head;
@@ -161,14 +175,4 @@ NodeLL* HeaderItemList::getHeadNode()
 NodeLL* HeaderItemList::getTailNode()
 {
     return tail;
-}
-
-void HeaderItemList::print()
-{
-    NodeLL* curr = head;
-    while (curr!=NULL) {
-        curr->getData()->print();
-        curr = curr->getNext();
-    }
-
 }

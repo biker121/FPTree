@@ -6,10 +6,13 @@
 //  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
 //
 
-#include <iostream>
-#include "OrderedData.hpp"
 #include "NodeLL.hpp"
 
+#include <iostream>
+
+#include "OrderedData.hpp"
+
+//------------------------Constructors and destructors-----------------------
 NodeLL::NodeLL(OrderedData *data, NodeLL *prev, NodeLL *next){
     this->data = data;
     this->prev = prev;
@@ -27,14 +30,18 @@ NodeLL::~NodeLL(){
     delete(data);
     this->prev = NULL;
     this->next = NULL;
-}
+}//--------------------------------------------------------------------------
 
-void NodeLL::print(){
-    if (data != NULL){
+// Purpose: prints contents fo this node
+void NodeLL::print()
+{
+    if (data != NULL)
+    {
         data->print();
     }
 }
 
+//**************** GETTERS *******************
 OrderedData* NodeLL::getData()
 {
     return this->data;
@@ -50,6 +57,7 @@ NodeLL* NodeLL::getNext()
     return this->next;
 }
 
+//**************** SETTERS *******************
 void NodeLL::setData(OrderedData *data)
 {
     this->data = data;

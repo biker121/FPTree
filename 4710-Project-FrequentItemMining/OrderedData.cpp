@@ -7,6 +7,4 @@
 //
 #include "OrderedData.hpp"
 
-OrderedData::~OrderedData()
-{
-}
+OrderedData::~OrderedData(){}

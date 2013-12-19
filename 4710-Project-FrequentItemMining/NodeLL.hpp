@@ -9,10 +9,8 @@
 #ifndef _710_Project_FrequentItemMining_NodeLL_hpp
 #define _710_Project_FrequentItemMining_NodeLL_hpp
 
-
-#include <iostream>
-
 class OrderedData;
+class NodeLL;
 
 class NodeLL {
     
@@ -24,14 +22,16 @@ private:
 public:
     NodeLL(OrderedData *data, NodeLL *prev, NodeLL *next);
     NodeLL(OrderedData *data);
-    ~NodeLL();
+    virtual ~NodeLL();
     
     void print();
     
+    //**************** GETTERS *******************
     OrderedData *getData();
     NodeLL *getPrev();
     NodeLL *getNext();
     
+    //**************** SETTERS *******************
     void setData(OrderedData *data);
     void setPrev(NodeLL *prev);
     void setNext(NodeLL *next);

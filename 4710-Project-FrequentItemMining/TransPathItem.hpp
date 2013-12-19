@@ -14,8 +14,8 @@
 class FPTreeItem;
 class NodeLL;
 
-class TransPathItem : public OrderedData
-{
+class TransPathItem : public OrderedData {
+    
 private:
     FPTreeItem *item;
     NodeLL *nextPathNode;
@@ -24,14 +24,16 @@ public:
     TransPathItem(FPTreeItem *data, NodeLL *nextNode);
     virtual ~TransPathItem();
     
-    void setNextPathNode(NodeLL* next);
-    void setItem(FPTreeItem* item);
+    int compareTo(OrderedData *other);
+    void print();
     
+    //**************** GETTERS *******************
     FPTreeItem* getItem();
     NodeLL* getNextPathNode();
     
-    int compareTo(OrderedData *other);
-    void print();
+    //**************** SETTERS *******************
+    void setNextPathNode(NodeLL* next);
+    void setItem(FPTreeItem* item);
 };
 
 #endif

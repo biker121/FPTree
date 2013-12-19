@@ -8,7 +8,10 @@
 
 #include "DLinkedList.hpp"
 
-using namespace std;
+#include <iostream>
+
+#include "OrderedData.hpp"
+#include "NodeLL.hpp"
 
 DLinkedList::DLinkedList(){
     this->head = NULL;
@@ -16,6 +19,7 @@ DLinkedList::DLinkedList(){
     this->size = 0;
 }
 
+// Purpose: destroys the entire list and its contents
 DLinkedList::~DLinkedList(){
     NodeLL *curr = this->head;
     NodeLL *next = NULL;
@@ -72,7 +76,7 @@ NodeLL* DLinkedList::addToBack(OrderedData *data) {
     return newNode;
 }
 
-// Purpose: Iterates through to find an item which equals to the given target
+// Purpose: Iterates through to find an item which comparitively equals to the given target
 // Parm   :
 // Return : ptr to the node that contains an item equals to the given taget
 NodeLL* DLinkedList::find(OrderedData *target){
@@ -85,9 +89,10 @@ NodeLL* DLinkedList::find(OrderedData *target){
     return curr;
 }
 
-// Purpose: removes the given item from the list, if it exists
-void DLinkedList::remove(OrderedData *target){
+// Purpose: pops the node containing the item similar to target
+OrderedData* DLinkedList::remove(OrderedData *target){
     NodeLL *targetNode = find(target);
+    OrderedData *item = NULL;
     
     if (targetNode != NULL){
         
@@ -110,15 +115,24 @@ void DLinkedList::remove(OrderedData *target){
             targetNode->getNext()->setPrev(targetNode->getPrev());
         }
         
+        //save data ptr
+        item = targetNode->getData();
+        
         //remove node
+        targetNode->setData(NULL);
         delete(targetNode);
         this->size--;
     }
+    return item;
 }
 
-int DLinkedList::getSize()
+void DLinkedList::destory(OrderedData *target)
 {
-    return size;
+    OrderedData *item = remove(target);
+    
+    if (item != NULL){
+        delete(item);
+    }
 }
 
 void DLinkedList::print(){
@@ -131,4 +145,13 @@ void DLinkedList::print(){
         curr = curr->getNext();
     }
     cout << endl;
+}
+
+int DLinkedList::getSize()
+{
+    return this->size;
+}
+
+NodeLL* DLinkedList::getHead(){
+    return this->head;
 }

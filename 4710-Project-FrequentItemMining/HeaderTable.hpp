@@ -9,18 +9,16 @@
 #ifndef _710_Project_FrequentItemMining_HeaderTable_hpp
 #define _710_Project_FrequentItemMining_HeaderTable_hpp
 
-#include <iostream>
-#include <fstream>
 #include <string>
 
 #include "FPContants.hpp"
-#include "HeaderItemList.h"
 
 using namespace std;
 
 class FPTreeItem;
 class HeaderItem;
 class HeaderItemList;
+class NodeLL;
 
 class HeaderTable {
     
@@ -42,9 +40,6 @@ public:
     void printTable();
     
     static int getHashIndex(FPTreeItem *item);
-    
-    //debug
-    //void verifyFrequencies();
     
     //************* GETTERS ***************
     int getNumDomainItem();

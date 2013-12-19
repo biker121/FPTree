@@ -21,10 +21,11 @@ using namespace std;
 // REMARKS: abstract class created to group objects together, in an ordered fashion
 //-----------------------------------------------------------------------------------------
 class OrderedData {
+    
 public:
     virtual ~OrderedData();
-    virtual int compareTo(OrderedData *other)=0;
-    virtual void print()=0;
+    virtual int compareTo(OrderedData *other) = 0;
+    virtual void print() = 0;
 };
 
 #endif

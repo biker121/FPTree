@@ -9,16 +9,17 @@
 #ifndef _710_Project_FrequentItemMining_FPTree_hpp
 #define _710_Project_FrequentItemMining_FPTree_hpp
 
-#include <cstdlib>
 #include <string>
-#include "HeaderTable.hpp"
-#include "DLinkedList.hpp"
+
+#include "FPContants.hpp"
 
 using namespace std;
 
 class HeaderItem;
+class HeaderTable;
 class FPTreeNode;
 class FPTreeItem;
+class DLinkedList;
 
 class FPTree
 {
@@ -34,7 +35,7 @@ private:
     
     static void sortByPriority(FPTreeItem **array, int size, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     
-    public :
+public :
     FPTree(int minSup);
     FPTree(int minSup, int partialLabel, FPTree *parentProj);
     virtual ~FPTree();
@@ -43,8 +44,9 @@ private:
     void createHeaderTable(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     void createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     
-    void insertTransaction(DLinkedList *transactionItems, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     void insertTransaction(FPTreeItem **buffer, int size, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
+    void insertTransaction(DLinkedList *transactionItems, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
+
     void printHeaderTable();
     
     string getLabelPrefix();

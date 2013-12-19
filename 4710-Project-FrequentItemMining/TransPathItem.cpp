@@ -7,7 +7,7 @@
 //
 #include <iostream>
 
-#include "TransPathItem.h"
+#include "TransPathItem.hpp"
 #include "OrderedData.hpp"
 #include "FPTreeItem.hpp"
 #include "NodeLL.hpp"
@@ -23,16 +23,20 @@ TransPathItem::~TransPathItem()
     delete(item);
 }
 
-void TransPathItem::setNextPathNode(NodeLL *next)
+//******************* MINOR METHODS *****************
+int TransPathItem::compareTo(OrderedData *other)
 {
-    this->nextPathNode = next;
+    return -1;
 }
 
-void TransPathItem::setItem(FPTreeItem *item)
+void TransPathItem::print()
 {
-    this->item = item;
+    if (item != NULL){
+        this->item->print();
+    }
 }
 
+//**************** GETTERS *******************
 FPTreeItem* TransPathItem::getItem()
 {
     return this->item;
@@ -43,12 +47,13 @@ NodeLL* TransPathItem::getNextPathNode()
     return this->nextPathNode;
 }
 
-int TransPathItem::compareTo(OrderedData *other)
+//**************** SETTERS *******************
+void TransPathItem::setNextPathNode(NodeLL *next)
 {
-    return -1;
+    this->nextPathNode = next;
 }
 
-void TransPathItem::print()
+void TransPathItem::setItem(FPTreeItem *item)
 {
-    
+    this->item = item;
 }

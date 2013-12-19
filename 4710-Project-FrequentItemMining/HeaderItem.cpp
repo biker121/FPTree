@@ -15,9 +15,10 @@
 
 #include "FPTreeItem.hpp"
 #include "HeaderItem.hpp"
+#include "HeaderTable.hpp"
 #include "FPTreeNode.hpp"
 #include "NodeLL.hpp"
-#include "TransPathItem.h"
+#include "TransPathItem.hpp"
 
 //------------------------Constructors and destructors-----------------------
 HeaderItem::HeaderItem(FPTreeItem *data){
@@ -28,6 +29,7 @@ HeaderItem::HeaderItem(FPTreeItem *data){
 }
 HeaderItem::~HeaderItem(){ //requires others to destroy path and tree nodes
     delete(data);
+    
     this->data = NULL;
     this->firstPathNode = NULL;
     this->firstSimilarTreeNode = NULL;
@@ -76,18 +78,25 @@ int HeaderItem::compareTo(OrderedData *other){
     FPTreeItem *otherData = otherItem->getData();
     int result = 1;
     
-    if (this->getData()->getData() == otherData->getData()) {
-        result = 0;
-    }else if(this->getData()->getSupport() < otherData->getSupport()) {
-        result = -1;
-    }else if(this->getData()->getSupport() == otherData->getSupport()) {
-        if (this->getData()->getData() > otherData->getData()) {
-            result = 1;
-        }else {
+    if (otherItem != NULL)
+    {
+        if (this->data->getData() == otherData->getData())
+        {
+            result = 0;
+        } else if(this->data->getSupport() < otherData->getSupport())
+        {
             result = -1;
+        } else if(this->data->getSupport() == otherData->getSupport())
+        {
+            if (this->data->getData() > otherData->getData())
+            {
+                result = 1;
+            } else
+            {
+                result = -1;
+            }
         }
     }
-    
     return result;
 }
 

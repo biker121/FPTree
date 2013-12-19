@@ -8,9 +8,17 @@
 
 #include "HeaderTable.hpp"
 
+#include <fstream>
+#include <string>
+#include <iostream>
+
+#include "FPContants.hpp"
+
 #include "NodeLL.hpp"
 #include "FPTreeNode.hpp"
+#include "FPTreeItem.hpp"
 #include "HeaderItem.hpp"
+#include "HeaderItemList.hpp"
 
 //------------------------Constructors and destructors-----------------------
 HeaderTable::HeaderTable(int minSup){
@@ -42,6 +50,12 @@ bool HeaderTable::createHeaderTable(string fileName, HeaderItem *hash[MAX_DOMAIN
     return tableCreated;
 }
 
+/*-------------------------------------------------------------------------------------
+ * PURPOSE:
+ * PARM   :
+ * PARM   :
+ * RETURN :
+ *-----------------------------------------------------------------------------------*/
 HeaderItem* HeaderTable::insertByFreqOrder(int domainItem)
 {
     HeaderItem *newItem = new HeaderItem(new FPTreeItem(domainItem, 1));
@@ -51,6 +65,12 @@ HeaderItem* HeaderTable::insertByFreqOrder(int domainItem)
 }
 
 // PURPOSE : fills the given hash with their frequency in the file
+/*-------------------------------------------------------------------------------------
+ * PURPOSE:
+ * PARM   :
+ * PARM   :
+ * RETURN :
+ *-----------------------------------------------------------------------------------*/
 bool HeaderTable::populateHash(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
     bool success = false;
     ifstream dataFile;    //the input file
@@ -90,6 +110,12 @@ bool HeaderTable::populateHash(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEM
 
 // PURPOSE : inserts frequent items from hash into header table list and removes
 //           removes all infrequent items in hash
+/*-------------------------------------------------------------------------------------
+ * PURPOSE:
+ * PARM   :
+ * PARM   :
+ * RETURN :
+ *-----------------------------------------------------------------------------------*/
 bool HeaderTable::insertHeaderItems(HeaderTable *headerTable, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
     bool success = false;
     
@@ -100,8 +126,8 @@ bool HeaderTable::insertHeaderItems(HeaderTable *headerTable, HeaderItem *hash[M
                     delete(hash[i]);
                     hash[i] = NULL;
                 } else {
-                    cout << "adding..";
-                    hash[i]->print();
+                    cout << "adding.."; //DEBUG
+                    hash[i]->print(); //DEBUG
                     headerTable->headerItems->orderedInsert(hash[i]); //insert by frequency
                     headerTable->numDomainItems++;
                 }
@@ -130,6 +156,12 @@ int HeaderTable::getHashIndex(FPTreeItem *item){
     return result;
 }
 
+/*-------------------------------------------------------------------------------------
+ * PURPOSE:
+ * PARM   :
+ * PARM   :
+ * RETURN :
+ *-----------------------------------------------------------------------------------*/
 void  HeaderTable::incrementHashItem(FPTreeItem *item, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
     HeaderItem *found;
     int hashIndex = -1;

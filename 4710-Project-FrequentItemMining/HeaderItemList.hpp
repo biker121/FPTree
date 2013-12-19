@@ -9,11 +9,8 @@
 #ifndef ___710_Project_FrequentItemMining__HeaderItemList__
 #define ___710_Project_FrequentItemMining__HeaderItemList__
 
-#include <iostream>
-#include "NodeLL.hpp"
-#include "HeaderItem.hpp"
-
 class HeaderItem;
+class NodeLL;
 
 class HeaderItemList
 {
@@ -23,10 +20,11 @@ private:
     
 public:
     HeaderItemList();
-    ~HeaderItemList();
+    virtual ~HeaderItemList();
     
     HeaderItem* insertByFreqOrder(HeaderItem* item);
     void orderedInsert(HeaderItem* item);
+
     void print();
     
     NodeLL* getHeadNode();

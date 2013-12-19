@@ -12,7 +12,7 @@
 class FPTree;
 
 class DataMining {
-    
+public:
     static void fp_growth_mining(FPTree *tree);
 };
 

@@ -9,14 +9,7 @@
 #ifndef _710_Project_FrequentItemMining_FPTreeItem_hpp
 #define _710_Project_FrequentItemMining_FPTreeItem_hpp
 
-#include <cstdlib>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
-
 #include "OrderedData.hpp"
-#include "FPTreeItem.hpp"
 
 using namespace std;
 

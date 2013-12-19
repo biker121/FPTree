@@ -6,14 +6,19 @@
 //  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
 //
 
-#include "HeaderTable.hpp"
-#include "HeaderItem.hpp"
 #include "FPTreeNode.hpp"
+
+#include "FPContants.hpp"
+
+#include "FPTreeItem.hpp"
+#include "HeaderItem.hpp"
+#include "HeaderTable.hpp"
 #include "NodeLL.hpp"
+#include "DLinkedList.hpp"
 
 //------------------------Constructors and destructors-----------------------
 FPTreeNode::FPTreeNode(){
-    this->data = 0;
+    this->data = NULL;
     this->nextSimilarNode = NULL;
     this->parent = NULL;
     this->nextSibling = NULL;
@@ -28,7 +33,8 @@ FPTreeNode::FPTreeNode(FPTreeItem *data, FPTreeNode *parent, FPTreeNode *nextSib
     this->headChild = NULL;
 }
 FPTreeNode::~FPTreeNode(){
-    delete(data);
+    if (data != NULL)
+        delete(data);
     
     if (nextSibling != NULL)
         delete(nextSibling);
@@ -47,6 +53,10 @@ void FPTreeNode::insertTransaction(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size
     this->insertTransactionItem(items, size, 0, hash); //recursive call
 }
 
+void FPTreeNode::insertTransaction(DLinkedList *items, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
+    this->insertTransactionItem(items->getHead(), hash); //recursive call
+}
+
 // PURPOSE: Recursively inserts each NodeLL's data (which should be of type FPTreeItem)
 //          into node's sub-tree
 void FPTreeNode::insertTransactionItem(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, int pos, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
@@ -55,10 +65,30 @@ void FPTreeNode::insertTransactionItem(FPTreeItem *items[MAX_DOMAIN_ITEMS], int 
     if (pos >= 0 && pos < size && items[pos] != NULL){
         targetNode = this->insertChild(items[pos], hash); //insert currItem to subtree
         if (targetNode != NULL){
+            items[pos] = NULL;
             targetNode->insertTransactionItem(items, size, pos+1, hash); //recursively insert next item
         }
     }
 }
+
+void FPTreeNode::insertTransactionItem(NodeLL *curr, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
+    FPTreeNode *targetNode;
+    FPTreeItem *item;
+    
+    if (curr != NULL && curr->getData() != NULL && hash != NULL)
+    {
+        item = dynamic_cast<FPTreeItem *>(curr->getData());
+        if (item != NULL)
+        {
+            targetNode = this->insertChild(item, hash);
+            if (targetNode != NULL){
+                curr->setData(NULL);
+                targetNode->insertTransactionItem(curr->getNext(), hash);
+            }
+        }
+    }
+}
+
 
 /*-------------------------------------------------------------------------------------
  * PURPOSE: adds target as one of its children
@@ -67,6 +97,7 @@ void FPTreeNode::insertTransactionItem(FPTreeItem *items[MAX_DOMAIN_ITEMS], int 
  * RETURN : returns a ptr to the child that is added
  * REMARKS: if 'this' already contains a child similar to target, it increments the
  *          child's frequency instead of adding a new node
+ *        : consumes given target
  *-----------------------------------------------------------------------------------*/
 FPTreeNode* FPTreeNode::insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
     FPTreeNode *targetNode = NULL;
@@ -99,7 +130,9 @@ FPTreeNode* FPTreeNode::insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOM
         
         //add node link to header table if a new node was created
         if (newNodeCreated){
-            hash[HeaderTable::getHashIndex(target)]->linkTreeNode(targetNode, hash); //will never be NULL
+            hash[HeaderTable::getHashIndex(target)]->linkTreeNode(targetNode, hash);
+        } else {
+            delete(target);
         }
     }
     return targetNode;
@@ -147,9 +180,8 @@ void FPTreeNode::print(){
     this->data->print();
 }
 
-// @purpose : prints the node's depiction within the tree
 /*-------------------------------------------------------------------------------------
- * PURPOSE: prints the current node and invokes print() on a sibling and first children
+ * PURPOSE: prints the contents of node, subling, then children
  * PARM   : level - to identify pad space
  *-----------------------------------------------------------------------------------*/
 void FPTreeNode::print(int level){

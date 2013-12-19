@@ -13,16 +13,17 @@
 #include <string>
 #include <sstream>
 
-#include "OrderedData.hpp"
-#include "FPTreeItem.hpp"
-#include "FPTreeNode.hpp"
-#include "HeaderTable.hpp"
 #include "FPContants.hpp"
+
+#include "OrderedData.hpp"
 
 using namespace std;
 
 class FPTreeNode;
+class DLinkedList;
+class NodeLL;
 class HeaderItem;
+class FPTreeItem;
 
 class FPTreeNode : public OrderedData
 {
@@ -33,17 +34,17 @@ private:
     FPTreeNode *nextSibling;
     FPTreeNode *headChild;
     
-    //    void insertTransactionItem(NodeLL *currTranscationItem, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     void insertTransactionItem(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, int pos, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
+    void insertTransactionItem(NodeLL *curr, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     FPTreeNode *insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     
 public:
     FPTreeNode();
     FPTreeNode(FPTreeItem *data, FPTreeNode *parent, FPTreeNode *nextSibling);
-    ~FPTreeNode();
+    virtual ~FPTreeNode();
     
-    //    void insertTransaction(DOrderedList *items, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     void insertTransaction(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
+    void insertTransaction(DLinkedList *items, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     
     //************* minor methods **********
     int compareTo(OrderedData *);

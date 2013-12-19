@@ -10,11 +10,15 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
+
+#include "FPContants.hpp"
+
+#include "DLinkedList.hpp"
 #include "FPTreeNode.hpp"
-#include "HeaderTable.hpp"
 #include "HeaderItem.hpp"
-#include "FPTree.hpp"
 #include "FPTreeItem.hpp"
+#include "HeaderTable.hpp"
 
 //------------------------Constructors and destructors-----------------------
 FPTree::FPTree(int minSup)
@@ -44,9 +48,9 @@ FPTree::~FPTree()
 }//-------------------------------------------------------------------------
 
 /*-----------------------------------------------------------------------------------
- * @purpose: primary handler method for mining a given datafile with indicated minsup
- * @parm   : string fileName, absolute file name
- * @parm   : int minSup, support threshold for frequent items
+ * PURPOSE : primary handler method for mining a given datafile with indicated minsup
+ * PARM    : string fileName, absolute file name
+ * PARM    : int minSup, support threshold for frequent items
  *----------------------------------------------------------------------------------*/
 void FPTree::processFile(string fileName, int minSup)
 {
@@ -76,6 +80,7 @@ void FPTree::processFile(string fileName, int minSup)
  * PURPOSE:
  * PARM   :
  * PARM   :
+ * RETURN :
  * REMARKS:
  *----------------------------------------------------------------------------------*/
 void FPTree::createHeaderTable(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
@@ -94,7 +99,7 @@ void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
     int currTransaction, transactionSize;
     
     FPTreeItem **buffer =  new FPTreeItem *[MAX_DOMAIN_ITEMS];
-    int size; //size of buffer
+    int size; //buffer size
     
     FPTreeItem *tempItem;
     int temp;
@@ -117,47 +122,36 @@ void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
                 size = 0;
                 
                 //read entire transaction into array
-                for (int i=0; i<transactionSize; i++){
+                for (int i=0; i<transactionSize; i++)
+                {
                     dataFile >> temp;
                     tempItem = new FPTreeItem(temp, 1); //temp is later freed
                     
                     hashIdx = HeaderTable::getHashIndex(tempItem);
-                    if (hash[hashIdx] != NULL) { //if frequent
+                    if (hash[hashIdx] != NULL)
+                    { //if frequent
                         buffer[size] = tempItem;
                         size++;
-                    } else {
+                    } else
+                    {
                         delete(tempItem);
                         tempItem = NULL;
                     }
                 }
-                
-                //DEBUG
-                cout << "----buffer items----" << endl;
-                for (int i=0; i<size; i++){
-                    if (buffer[i] != NULL){
-                        buffer[i]->print();
-                        cout << endl;
-                    }
-                }
-                cout << endl;
-                
                 FPTree::sortByPriority(buffer, size, hash);
                 
                 //DEBUG
-                cout << "----buffer items----" << endl;
-                for (int i=0; i<size; i++){
-                    if (buffer[i] != NULL){
-                        buffer[i]->print();
-                        cout << endl;
-                    }
-                }
-                cout << endl;
+//                cout << "----new transaction ----" << endl;
+//                for (int i=0; i<size; i++){
+//                    if (buffer[i] != NULL){
+//                        buffer[i]->print();
+//                        cout << endl;
+//                    }
+//                }
+//                cout << endl;
                 
                 this->insertTransaction(buffer, size, hash);
-                
-                //DEBUG
-                this->printTree();
-                
+//                this->printTree(); //DEBUG
             } while (currTransaction < numTransactions);
         }
         
@@ -193,13 +187,14 @@ void FPTree::sortByPriority(FPTreeItem **array, int size, HeaderItem *hash[MAX_D
     }
 }
 
-/*-----------------------------------------------------------------------------------
+/*----------------------------------------------------------------------------
  * PURPOSE: passes job to root node which recursively inserts each item
- * PARM   : FPTreeItems[] that are to be inserted into the tree
- * PARM   : size of the items array
+ * PARM   : buffer - items to be inserted into tree
+ * PARM   : size - buffer size
+ * PARM   : hash - passed for deleting consumed items to avoid dangling ptrs
  * REMARKS: - inserts all items from the array
  *          - any item from items[] that are not used, are freed
- *----------------------------------------------------------------------------------*/
+ *--------------------------------------------------------------------------*/
 void FPTree::insertTransaction(FPTreeItem *buffer[MAX_DOMAIN_ITEMS], int size, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 {
     if (size > 0)
@@ -208,14 +203,23 @@ void FPTree::insertTransaction(FPTreeItem *buffer[MAX_DOMAIN_ITEMS], int size, H
     }
 }
 
+/*----------------------------------------------------------------------------
+ * PURPOSE:
+ * PARM   :
+ * PARM   :
+ * REMARKS: - frees data items from transactionItems list
+ *--------------------------------------------------------------------------*/
 void FPTree::insertTransaction(DLinkedList *transactionItems, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 {
-    // TODO 
+    if (transactionItems->getSize() > 0)
+    {
+        this->root->insertTransaction(transactionItems, hash);
+    }
 }
 
-/*-----------------------------------------------------------------------------------
+/*----------------------------------------------------------------------------
  * PURPOSE: prints the tree structure to console by recursively calling print node
- *----------------------------------------------------------------------------------*/
+ *--------------------------------------------------------------------------*/
 void FPTree::printTree()
 {
     this->root->print(0);

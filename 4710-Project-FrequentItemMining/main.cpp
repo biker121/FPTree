@@ -18,7 +18,8 @@
 #include "HeaderTable.hpp"
 #include "HeaderItem.hpp"
 #include "DLinkedList.hpp"
-#include "TransPathItem.h"
+#include "TransPathItem.hpp"
+#include "NodeLL.hpp"
 
 using namespace std;
 //-----------------------------------------------------------
@@ -33,7 +34,6 @@ using namespace std;
 
 void FPGrowthMine(FPTree* tree, int base)
 {
-    
 	HeaderTable *headerTable = tree->getHeaderTable();
 	
 	// Iterates through each header item in the header table starting from
@@ -79,7 +79,8 @@ void FPGrowthMine(FPTree* tree, int base)
 			currSimilarNode = currSimilarNode->getNextSimilarNode();
 		}
         
-		currHeaderNode = currHeaderNode->getPrev();
+		//insert all paths
+        currHeaderNode = currHeaderNode->getPrev();
 	}
 }
 

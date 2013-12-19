@@ -9,9 +9,6 @@
 #ifndef _710_Project_FrequentItemMining_HeaderItem_hpp
 #define _710_Project_FrequentItemMining_HeaderItem_hpp
 
-#include <cstdlib>
-#include <string>
-#include "HeaderTable.hpp"
 #include "OrderedData.hpp"
 
 using namespace std;
