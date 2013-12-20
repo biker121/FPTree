@@ -41,7 +41,7 @@ void FPGrowthMine(FPTree* tree, int base)
 	NodeLL *currHeaderNode = dynamic_cast<NodeLL*>(headerTable->getLowestFreqNode());
 	while(currHeaderNode != NULL)
 	{
-        HeaderItem *headerItem = dynamic_cast<HeaderItem*>(currHeaderNode->getData());
+        HeaderItem *headerItem = (HeaderItem*)currHeaderNode->getData();
         DLinkedList *paths[headerItem->getSimilarNodeCount()];
         
         FPTree *newProjTree = new FPTree(tree->getMinSup(), headerItem->getData()->getData(), tree);
@@ -94,6 +94,7 @@ void FPGrowthMine(FPTree* tree, int base)
             //cout << "single Path\n";
         }else {
             
+            // DEBUG
 //            // mine frequent items sets
 //            cout << "\nProj Tree: ";
 //            currHeaderNode->print();
@@ -142,12 +143,10 @@ int main(int argc, const char * argv[])
         int minSup = atoi(argv[2]);
         
         //*** test use only ***
-        minSup = 1;
+        minSup = 2;
         
         cout << "===== FP-growth TDB=" << fileName << " minsup=" << minSup << " =====" << endl;
         FPTree* globalTree = processFile(fileName, minSup); //read, create, and mine tree
-        bool isSP = globalTree->isSinglePath();
-        cout << "TESTING SINGLE PATH: " << isSP << "\n";
         FPGrowthMine(globalTree, 0);
         cout << "=====================================================================" << endl;
     } else {

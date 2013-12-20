@@ -35,7 +35,7 @@ private:
     FPTreeNode *headChild;
     
     void insertTransactionItem(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, int pos, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
-    void insertTransactionItem(NodeLL *curr, HeaderItem *hash[MAX_DOMAIN_ITEMS], HeaderTable *htable);
+    void insertTransactionItem(NodeLL *curr, HeaderTable *htable);
     FPTreeNode *insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     FPTreeNode *insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOMAIN_ITEMS], HeaderTable *headerTable);
     
@@ -45,7 +45,7 @@ public:
     virtual ~FPTreeNode();
     
     void insertTransaction(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
-    void insertTransaction(DLinkedList *items, HeaderItem *hash[MAX_DOMAIN_ITEMS], HeaderTable *htable);
+    void insertTransaction(DLinkedList *items, HeaderTable *htable);
     
     //************* minor methods **********
     int compareTo(OrderedData *);

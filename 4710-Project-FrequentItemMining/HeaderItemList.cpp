@@ -222,7 +222,7 @@ void HeaderItemList::removeInfrequent(int minsup)
     while (curr!=NULL)
     {
         currHItem = (HeaderItem*)curr->getData();
-        currItem = currHItem->getData();
+        currItem = (FPTreeItem*)currHItem->getData();
         
         // get next pointer as this node might get destroyed if infreq
         tempNext = curr->getNext();
@@ -230,9 +230,17 @@ void HeaderItemList::removeInfrequent(int minsup)
         if(currItem !=NULL && currItem->getSupport() < minsup)
             infreqId++;
         
-        if(infreqId==1)
-            curr->setNext(NULL);
-        else if(infreqId>1) {
+        if(infreqId>=1) {
+            if(infreqId==1)
+            {
+                if(curr->getPrev()!=NULL) {
+                    curr->getPrev()->setNext(NULL);
+                    tail = curr->getPrev();
+                }else {
+                    head = NULL;
+                    tail = NULL;
+                }
+            }
             currHItem->removeInfreqPathItems();
             delete (curr);
         }

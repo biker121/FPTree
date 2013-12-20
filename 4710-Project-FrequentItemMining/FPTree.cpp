@@ -207,7 +207,7 @@ void FPTree::insertTransaction(DLinkedList *transactionItems)
 {
     if (transactionItems->getSize() > 0)
     {
-        this->root->insertTransaction(transactionItems, NULL, headerTable);
+        this->root->insertTransaction(transactionItems, headerTable);
     }
 }
 

@@ -54,8 +54,8 @@ void FPTreeNode::insertTransaction(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size
     this->insertTransactionItem(items, size, 0, hash); //recursive call
 }
 
-void FPTreeNode::insertTransaction(DLinkedList *items, HeaderItem *hash[MAX_DOMAIN_ITEMS], HeaderTable *htable){
-    this->insertTransactionItem(items->getHead(), hash, htable); //recursive call
+void FPTreeNode::insertTransaction(DLinkedList *items, HeaderTable *htable){
+    this->insertTransactionItem(items->getHead(), htable); //recursive call
 }
 
 // PURPOSE: Recursively inserts each NodeLL's data (which should be of type FPTreeItem)
@@ -73,7 +73,7 @@ void FPTreeNode::insertTransactionItem(FPTreeItem *items[MAX_DOMAIN_ITEMS], int 
     }
 }
 
-void FPTreeNode::insertTransactionItem(NodeLL *curr, HeaderItem *hash[MAX_DOMAIN_ITEMS], HeaderTable *htable)
+void FPTreeNode::insertTransactionItem(NodeLL *curr, HeaderTable *htable)
 {
     FPTreeNode *targetNode;
     TransPathItem *item;
@@ -87,7 +87,7 @@ void FPTreeNode::insertTransactionItem(NodeLL *curr, HeaderItem *hash[MAX_DOMAIN
             if (targetNode != NULL)
             {
                 curr->setData(NULL);
-                targetNode->insertTransactionItem(curr->getNext(), hash, htable);
+                targetNode->insertTransactionItem(curr->getNext(), htable);
             }
         }
     }
