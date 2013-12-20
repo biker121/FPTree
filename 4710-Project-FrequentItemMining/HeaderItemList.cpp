@@ -241,7 +241,9 @@ void HeaderItemList::removeInfrequent(int minsup)
                     tail = NULL;
                 }
             }
+            
             currHItem->removeInfreqPathItems();
+            
             delete (curr);
         }
         

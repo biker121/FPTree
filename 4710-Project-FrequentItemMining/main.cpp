@@ -43,11 +43,15 @@ void FPGrowthMine(FPTree* tree, int base)
 	{
         HeaderItem *headerItem = (HeaderItem*)currHeaderNode->getData();
         DLinkedList *paths[headerItem->getSimilarNodeCount()];
+        DLinkedList *path = NULL;
         
         FPTree *newProjTree = new FPTree(tree->getMinSup(), headerItem->getData()->getData(), tree);
         HeaderTable *projHeader = newProjTree->getHeaderTable();
         
         int currPathIndex = 0;
+        
+        // DEBUG print
+        tree->printTree();
         
 		// Iterates over nodes in the FP tree starting with a given header item
 		// and generates a new list containing that path following the global
@@ -56,6 +60,8 @@ void FPGrowthMine(FPTree* tree, int base)
 		while(currSimilarNode != NULL)
 		{
             paths[currPathIndex] = new DLinkedList();
+            path = paths[currPathIndex];
+            
             int currNodeSupport = currSimilarNode->getData()->getSupport();
             
 			// generates a path by chasing the parent pointers
@@ -63,8 +69,8 @@ void FPGrowthMine(FPTree* tree, int base)
 			while(parent->getData()!=NULL)
 			{
                 FPTreeItem *dataItem = parent->getData();
-                FPTreeItem *item = new FPTreeItem(dataItem->getData(), dataItem->getSupport());
-                TransPathItem *pathItem = new TransPathItem(item, NULL);
+                FPTreeItem *item = new FPTreeItem(dataItem->getData(), currNodeSupport);
+                TransPathItem *pathItem = new TransPathItem(item, path);
                 NodeLL* addedPathNode = paths[currPathIndex]->addToFront(pathItem);
                 
                 // add to header table
@@ -79,7 +85,22 @@ void FPGrowthMine(FPTree* tree, int base)
 			currSimilarNode = currSimilarNode->getNextSimilarNode();
 		}
         
+//        // DEBUG Print
+//        cout << "paths before pruning:\n";
+//        for (int i=0; i<headerItem->getSimilarNodeCount(); i++) {
+//            cout << "Path[" << i << "]\n";
+//            paths[i]->print();
+//        }
+        
         projHeader->removeInfrequent();
+        
+//        // DEBUG Print
+//        cout << "paths after pruning:\n";
+//        for (int i=0; i<headerItem->getSimilarNodeCount(); i++) {
+//            cout << "Path[" << i << "]\n";
+//            paths[i]->print();
+//        }
+        
         if(base==0)
             projHeader->printTable();
         
@@ -92,8 +113,8 @@ void FPGrowthMine(FPTree* tree, int base)
         if(newProjTree->isSinglePath())
         {
             //cout << "single Path\n";
-        }else {
-            
+        }else
+        {
             // DEBUG
 //            // mine frequent items sets
 //            cout << "\nProj Tree: ";

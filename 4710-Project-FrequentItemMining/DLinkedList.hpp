@@ -29,6 +29,7 @@ public:
     NodeLL *addToBack(OrderedData *item);
     
     OrderedData* remove(OrderedData *target);
+    void remove(NodeLL *node);
     void destory(OrderedData *target);
     
     void print();

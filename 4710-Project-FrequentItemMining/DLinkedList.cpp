@@ -126,6 +126,33 @@ OrderedData* DLinkedList::remove(OrderedData *target){
     return item;
 }
 
+void DLinkedList::remove(NodeLL *node)
+{
+    if(node != NULL)
+    {
+        NodeLL *currPrev = node->getPrev();
+        NodeLL *currNext = node->getNext();
+        
+        if(node==head)
+        {
+            head = currNext;
+            if(currNext!=NULL)
+                currNext->setPrev(NULL);
+        }else if(node==tail) {
+            tail = currPrev;
+            if(currPrev!=NULL)
+                currPrev->setNext(NULL);
+        }else {
+            currPrev->setNext(currNext);
+            currNext->setPrev(currPrev);
+        }
+        
+        size-=1;
+        
+        delete node;
+    }
+}
+
 void DLinkedList::destory(OrderedData *target)
 {
     OrderedData *item = remove(target);

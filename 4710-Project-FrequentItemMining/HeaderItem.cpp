@@ -19,6 +19,7 @@
 #include "FPTreeNode.hpp"
 #include "NodeLL.hpp"
 #include "TransPathItem.hpp"
+#include "DLinkedList.hpp"
 
 //------------------------Constructors and destructors-----------------------
 HeaderItem::HeaderItem(FPTreeItem *data){
@@ -37,26 +38,28 @@ HeaderItem::~HeaderItem(){ //requires others to destroy path and tree nodes
 void HeaderItem::removeInfreqPathItems()
 {
     NodeLL *pathNode = firstPathNode;
-    NodeLL *prev = NULL;
-    NodeLL *next = NULL;
+    NodeLL *nextPath = NULL;
     TransPathItem *pathItem = NULL;
+    DLinkedList *currPathList = NULL;
     
     while (pathNode!=NULL) {
         pathItem = (TransPathItem*)pathNode->getData();
-        next = pathNode->getNext();
-        prev = pathNode->getPrev();
-        if(prev!=NULL) {
-            prev->setNext(next);
-            if(next!=NULL)
-                next->setPrev(prev);
-        }else if(next!=NULL) {
-            next->setPrev(NULL);
+        
+        currPathList = pathItem->getPathList();
+        
+        // DEBUG code
+        if(currPathList != NULL)
+        {
+            currPathList->remove(pathNode);
         }
         
-        // get next path node before deleting
-        pathNode = pathItem->getNextPathNode();
+        // get pointer to next path before destroying node
+        nextPath = pathItem->getNextPathNode();
         
-        delete (pathNode);
+        // dont delete because it is done by the currPathList itself
+        //delete (pathNode);
+        
+        pathNode = nextPath;
     }
 }
 
@@ -67,17 +70,6 @@ void HeaderItem::removeInfreqPathItems()
  *-----------------------------------------------------------------------------------*/
 void HeaderItem::linkTreeNode(FPTreeNode *treeNode, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 {
-//    int hashIndex = 0;
-//    
-//    if (treeNode != NULL){
-//        hashIndex = HeaderTable::getHashIndex(treeNode->getData());
-//        
-//        if (hashIndex != -1 && hash[hashIndex] != NULL){ //if frequent
-//            treeNode->setNextSimilarNode(hash[hashIndex]->getFirstSimilarTreeNode());
-//            hash[hashIndex]->setFirstSimilarTreeNode(treeNode);
-//        }
-//    }
-    
     FPTreeNode *curr = firstSimilarTreeNode;
     bool done = false;
     
