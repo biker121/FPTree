@@ -50,15 +50,20 @@ bool HeaderTable::createHeaderTable(string fileName, HeaderItem *hash[MAX_DOMAIN
     return tableCreated;
 }
 
+void HeaderTable::removeInfrequent()
+{
+    headerItems->removeInfrequent(minSup);
+}
+
 /*-------------------------------------------------------------------------------------
  * PURPOSE:
  * PARM   :
  * PARM   :
  * RETURN :
  *-----------------------------------------------------------------------------------*/
-HeaderItem* HeaderTable::insertByFreqOrder(int domainItem)
+HeaderItem* HeaderTable::insertByFreqOrder(int domainItem, int support)
 {
-    HeaderItem *newItem = new HeaderItem(new FPTreeItem(domainItem, 1));
+    HeaderItem *newItem = new HeaderItem(new FPTreeItem(domainItem, support));
     HeaderItem *returned = headerItems->insertByFreqOrder(newItem);
     
     return returned;
@@ -126,8 +131,8 @@ bool HeaderTable::insertHeaderItems(HeaderTable *headerTable, HeaderItem *hash[M
                     delete(hash[i]);
                     hash[i] = NULL;
                 } else {
-                    cout << "adding.."; //DEBUG
-                    hash[i]->print(); //DEBUG
+                    //cout << "adding.."; //DEBUG
+                    //hash[i]->print(); //DEBUG
                     headerTable->headerItems->orderedInsert(hash[i]); //insert by frequency
                     headerTable->numDomainItems++;
                 }
@@ -206,4 +211,9 @@ NodeLL* HeaderTable::getLowestFreqNode()
 NodeLL* HeaderTable::getHighestFreqNode()
 {
     return headerItems->getHeadNode();
+}
+
+HeaderItem* HeaderTable::getItem(FPTreeItem *item)
+{
+    return headerItems->getItem(item);
 }

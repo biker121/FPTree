@@ -35,6 +35,7 @@ public:
     virtual ~FPTreeItem();
     
     void increaseSupport();
+    void increaseSupport(int inc);
     void increaseSupport(FPTreeItem *item);
     
     //*****************Minor Methods********************

@@ -10,4 +10,33 @@
 
 #include "FPTree.hpp"
 
-void DataMining::fp_growth_mining(FPTree* tree);
+void FPGrowthMine(FPTree* tree, int base)
+{
+    
+}
+
+/*-----------------------------------------------------------------------------------
+ * PURPOSE : primary handler method for mining a given datafile with indicated minsup
+ * PARM    : string fileName, absolute file name
+ * PARM    : int minSup, support threshold for frequent items
+ *----------------------------------------------------------------------------------*/
+FPTree* DataMining::processFile(string fileName, int minSup)
+{
+    HeaderItem **hash =  new HeaderItem *[MAX_DOMAIN_ITEMS];
+    FPTree *tree = new FPTree(minSup);
+    
+    //first pass - populate frequent items
+    tree->createHeaderTable(fileName, hash); //will also fill hash[] with frequent 1-itemsets
+    tree->printHeaderTable();
+    
+    //second pass - tree creation of frequent items
+    if (tree->getHeaderTable()->getNumDomainItem() > 0) {
+        tree->createTree(fileName, hash);
+        //tree->printTree();
+        
+        delete[] hash; //DEBUG - double check**
+    }
+    
+    return tree;
+}
+

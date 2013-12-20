@@ -41,6 +41,7 @@
 		6B9D1BDD1861199700873EC4 /* FPContants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FPContants.hpp; sourceTree = "<group>"; };
 		6B9D1BDE186159A700873EC4 /* HeaderItemList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeaderItemList.cpp; sourceTree = "<group>"; };
 		6B9D1BDF186159A700873EC4 /* HeaderItemList.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = HeaderItemList.hpp; sourceTree = "<group>"; };
+		6B9D1BE21863906000873EC4 /* singlePathTest.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = singlePathTest.txt; sourceTree = "<group>"; };
 		ED1740DA1847CF9500A45798 /* HeaderItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeaderItem.cpp; sourceTree = "<group>"; };
 		ED1740DD1847CF9E00A45798 /* HeaderItem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HeaderItem.hpp; sourceTree = "<group>"; };
 		ED191AD61845DA2D003682BB /* test1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = test1.txt; sourceTree = "<group>"; };
@@ -86,6 +87,7 @@
 				ED191AD61845DA2D003682BB /* test1.txt */,
 				ED191AD71845DA2D003682BB /* test2.txt */,
 				ED191AD81845DA2D003682BB /* test3.txt */,
+				6B9D1BE21863906000873EC4 /* singlePathTest.txt */,
 			);
 			path = test_files;
 			sourceTree = "<group>";

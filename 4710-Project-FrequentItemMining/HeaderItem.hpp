@@ -24,11 +24,11 @@ private:
     FPTreeNode *firstSimilarTreeNode;
     NodeLL *firstPathNode;
     NodeLL *lastPathNode;
-    int similarNodeCount;
     
 public:
     HeaderItem(FPTreeItem *data);
     virtual ~HeaderItem();
+    void removeInfreqPathItems();
     
     void linkTreeNode(FPTreeNode *treeNode, HeaderItem *hash[]);
     void linkNextPath(NodeLL *path);
@@ -36,6 +36,7 @@ public:
     int compareTo(OrderedData *other); //--refactor -
     void print();
     void increaseSupport();
+    void increaseSupport(int inc);
     
     //************* GETTERS *************
     FPTreeItem* getData();

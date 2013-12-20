@@ -19,6 +19,7 @@
 #include "HeaderItem.hpp"
 #include "FPTreeItem.hpp"
 #include "HeaderTable.hpp"
+#include "TransPathItem.hpp"
 
 //------------------------Constructors and destructors-----------------------
 FPTree::FPTree(int minSup)
@@ -46,35 +47,6 @@ FPTree::~FPTree()
     delete(headerTable);
     delete(root);
 }//-------------------------------------------------------------------------
-
-/*-----------------------------------------------------------------------------------
- * PURPOSE : primary handler method for mining a given datafile with indicated minsup
- * PARM    : string fileName, absolute file name
- * PARM    : int minSup, support threshold for frequent items
- *----------------------------------------------------------------------------------*/
-void FPTree::processFile(string fileName, int minSup)
-{
-    HeaderItem **hash =  new HeaderItem *[MAX_DOMAIN_ITEMS];
-    FPTree *tree = new FPTree(minSup);
-    
-    //first pass - populate frequent items
-    tree->createHeaderTable(fileName, hash); //will also fill hash[] with frequent 1-itemsets
-    tree->printHeaderTable();
-    
-    //second pass - tree creation of frequent items
-    if (tree->getHeaderTable()->getNumDomainItem() > 0) {
-        tree->createTree(fileName, hash);
-        //tree->printTree();
-        
-        delete[] hash; //DEBUG - double check**
-        
-        //third pass - data mining
-        //        tree->mine();
-    }
-    
-    //free objects
-    delete(tree);
-}
 
 /*-----------------------------------------------------------------------------------
  * PURPOSE:
@@ -138,6 +110,7 @@ void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
                         tempItem = NULL;
                     }
                 }
+                
                 FPTree::sortByPriority(buffer, size, hash);
                 
                 //DEBUG
@@ -150,8 +123,29 @@ void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 //                }
 //                cout << endl;
                 
-                this->insertTransaction(buffer, size, hash);
-//                this->printTree(); //DEBUG
+                
+                // DEBUG - TESTING: converts buffer array to list of paths
+                DLinkedList *tempPathList = new DLinkedList();
+                for (int i=0; i<size; i++)
+                {
+                    if (buffer[i] != NULL){
+                        
+                        TransPathItem *pathItem = new TransPathItem(
+                                                  new FPTreeItem(buffer[i]->getData(),
+                                                                 buffer[i]->getSupport()), NULL);
+                        tempPathList->addToBack(pathItem);
+                    }
+                }
+                
+//                // DEBUG Print
+//                cout << "Path:\n";
+//                tempPathList->print();
+                
+                // DEBUG Temporarily TESTING DLinkedList method
+                this->insertTransaction(tempPathList);
+                
+                //this->insertTransaction(buffer, size, hash);
+                //this->printTree(); //DEBUG
             } while (currTransaction < numTransactions);
         }
         
@@ -209,12 +203,25 @@ void FPTree::insertTransaction(FPTreeItem *buffer[MAX_DOMAIN_ITEMS], int size, H
  * PARM   :
  * REMARKS: - frees data items from transactionItems list
  *--------------------------------------------------------------------------*/
-void FPTree::insertTransaction(DLinkedList *transactionItems, HeaderItem *hash[MAX_DOMAIN_ITEMS])
+void FPTree::insertTransaction(DLinkedList *transactionItems)
 {
     if (transactionItems->getSize() > 0)
     {
-        this->root->insertTransaction(transactionItems, hash);
+        this->root->insertTransaction(transactionItems, NULL, headerTable);
     }
+}
+
+bool FPTree::isSinglePath()
+{
+    bool isSinglePath = true;
+    
+    FPTreeNode *curr = root;
+    while (curr!=NULL && isSinglePath) {
+        isSinglePath = curr->hasSingleChild();
+        curr = curr->getHeadChild();
+    }
+    
+    return isSinglePath;
 }
 
 /*----------------------------------------------------------------------------

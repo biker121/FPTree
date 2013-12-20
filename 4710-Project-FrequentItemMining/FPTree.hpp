@@ -31,8 +31,6 @@ private:
     int partialPrefix; //default = -1, indicating intial tree
     FPTree *parentProj;
     
-    void printTree();
-    
     static void sortByPriority(FPTreeItem **array, int size, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     
 public :
@@ -40,19 +38,20 @@ public :
     FPTree(int minSup, int partialLabel, FPTree *parentProj);
     virtual ~FPTree();
     
-    static void processFile(string fileName, int minSup);
     void createHeaderTable(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     void createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     
     void insertTransaction(FPTreeItem **buffer, int size, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
-    void insertTransaction(DLinkedList *transactionItems, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
+    void insertTransaction(DLinkedList *transactionItems);
 
+    bool isSinglePath();
     void printHeaderTable();
-    
     string getLabelPrefix();
     int getBaseLevel();
     
     int getMinSup();
     HeaderTable* getHeaderTable();
+    
+    void printTree();
 };
 #endif

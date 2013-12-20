@@ -25,30 +25,75 @@ HeaderItem::HeaderItem(FPTreeItem *data){
     this->data = data;
     this->firstSimilarTreeNode = NULL;
     this->firstPathNode = NULL;
-    this->similarNodeCount = 0;
 }
+
 HeaderItem::~HeaderItem(){ //requires others to destroy path and tree nodes
     delete(data);
-    
     this->data = NULL;
     this->firstPathNode = NULL;
     this->firstSimilarTreeNode = NULL;
 }//--------------------------------------------------------------------------
+
+void HeaderItem::removeInfreqPathItems()
+{
+    NodeLL *pathNode = firstPathNode;
+    NodeLL *prev = NULL;
+    NodeLL *next = NULL;
+    TransPathItem *pathItem = NULL;
+    
+    while (pathNode!=NULL) {
+        pathItem = (TransPathItem*)pathNode->getData();
+        next = pathNode->getNext();
+        prev = pathNode->getPrev();
+        if(prev!=NULL) {
+            prev->setNext(next);
+            if(next!=NULL)
+                next->setPrev(prev);
+        }else if(next!=NULL) {
+            next->setPrev(NULL);
+        }
+        
+        // get next path node before deleting
+        pathNode = pathItem->getNextPathNode();
+        
+        delete (pathNode);
+    }
+}
 
 /*-------------------------------------------------------------------------------------
  * PURPOSE: adds the link to the given node for the appropriate headerItem
  * PARM   : *node - that is to be linked to the header table
  * REMARKS: - this method links the node without question
  *-----------------------------------------------------------------------------------*/
-void HeaderItem::linkTreeNode(FPTreeNode *treeNode, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
-    int hashIndex = 0;
+void HeaderItem::linkTreeNode(FPTreeNode *treeNode, HeaderItem *hash[MAX_DOMAIN_ITEMS])
+{
+//    int hashIndex = 0;
+//    
+//    if (treeNode != NULL){
+//        hashIndex = HeaderTable::getHashIndex(treeNode->getData());
+//        
+//        if (hashIndex != -1 && hash[hashIndex] != NULL){ //if frequent
+//            treeNode->setNextSimilarNode(hash[hashIndex]->getFirstSimilarTreeNode());
+//            hash[hashIndex]->setFirstSimilarTreeNode(treeNode);
+//        }
+//    }
     
-    if (treeNode != NULL){
-        hashIndex = HeaderTable::getHashIndex(treeNode->getData());
-        
-        if (hashIndex != -1 && hash[hashIndex] != NULL){ //if frequent
-            treeNode->setNextSimilarNode(hash[hashIndex]->getFirstSimilarTreeNode());
-            hash[hashIndex]->setFirstSimilarTreeNode(treeNode);
+    FPTreeNode *curr = firstSimilarTreeNode;
+    bool done = false;
+    
+    if(curr==NULL) {
+        setFirstSimilarTreeNode(treeNode);
+    }else {
+        while (curr != NULL && !done)
+        {
+            if(curr->getNextSimilarNode()==NULL)
+            {
+                curr->setNextSimilarNode(treeNode);
+                done = true;
+            }
+            
+            if(!done)
+                curr = curr->getNextSimilarNode();
         }
     }
 }
@@ -73,7 +118,8 @@ void HeaderItem::linkNextPath(NodeLL *pathNodeToLink)
  *          >0 = 'this' item is more frequent
  * REMARKS: NULL items are taken as lowest priority
  *-----------------------------------------------------------------------------------*/
-int HeaderItem::compareTo(OrderedData *other){
+int HeaderItem::compareTo(OrderedData *other)
+{
     HeaderItem *otherItem = dynamic_cast<HeaderItem *>(other);
     FPTreeItem *otherData = otherItem->getData();
     int result = 1;
@@ -88,7 +134,7 @@ int HeaderItem::compareTo(OrderedData *other){
             result = -1;
         } else if(this->data->getSupport() == otherData->getSupport())
         {
-            if (this->data->getData() > otherData->getData())
+            if (this->data->getData() < otherData->getData())
             {
                 result = 1;
             } else
@@ -116,6 +162,14 @@ void HeaderItem::increaseSupport()
     }
 }
 
+void HeaderItem::increaseSupport(int inc)
+{
+    if(data!=NULL)
+    {
+        data->increaseSupport(inc);
+    }
+}
+
 //***************** GETTERS ******************
 FPTreeItem* HeaderItem::getData()
 {
@@ -132,6 +186,14 @@ NodeLL* HeaderItem::getFirstPathNode()
 
 int HeaderItem::getSimilarNodeCount()
 {
+    int similarNodeCount = 0;
+    
+    FPTreeNode *curr = this->firstSimilarTreeNode;
+    while (curr!=NULL) {
+        similarNodeCount++;
+        curr = curr->getNextSimilarNode();
+    }
+    
     return similarNodeCount;
 }
 

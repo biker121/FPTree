@@ -13,7 +13,8 @@ class FPTree;
 
 class DataMining {
 public:
-    static void fp_growth_mining(FPTree *tree);
+    static void FPGrowthMine(FPTree* tree, int base);
+    static FPTree* processFile(string fileName, int minsup);
 };
 
 #endif

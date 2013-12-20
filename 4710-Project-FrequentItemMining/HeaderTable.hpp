@@ -35,8 +35,9 @@ public:
     HeaderTable(int minSup);
     virtual ~HeaderTable();
     
-    HeaderItem* insertByFreqOrder(int domainItem);
+    HeaderItem* insertByFreqOrder(int domainItem, int support);
     bool createHeaderTable(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
+    void removeInfrequent();
     void printTable();
     
     static int getHashIndex(FPTreeItem *item);
@@ -45,6 +46,7 @@ public:
     int getNumDomainItem();
     NodeLL* getLowestFreqNode();
     NodeLL* getHighestFreqNode();
+    HeaderItem* getItem(FPTreeItem *item);
 };
 
 #endif

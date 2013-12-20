@@ -15,6 +15,7 @@
 #include "HeaderTable.hpp"
 #include "NodeLL.hpp"
 #include "DLinkedList.hpp"
+#include "TransPathItem.hpp"
 
 //------------------------Constructors and destructors-----------------------
 FPTreeNode::FPTreeNode(){
@@ -53,13 +54,14 @@ void FPTreeNode::insertTransaction(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size
     this->insertTransactionItem(items, size, 0, hash); //recursive call
 }
 
-void FPTreeNode::insertTransaction(DLinkedList *items, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
-    this->insertTransactionItem(items->getHead(), hash); //recursive call
+void FPTreeNode::insertTransaction(DLinkedList *items, HeaderItem *hash[MAX_DOMAIN_ITEMS], HeaderTable *htable){
+    this->insertTransactionItem(items->getHead(), hash, htable); //recursive call
 }
 
 // PURPOSE: Recursively inserts each NodeLL's data (which should be of type FPTreeItem)
 //          into node's sub-tree
-void FPTreeNode::insertTransactionItem(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, int pos, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
+void FPTreeNode::insertTransactionItem(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, int pos, HeaderItem *hash[MAX_DOMAIN_ITEMS])
+{
     FPTreeNode *targetNode;
     
     if (pos >= 0 && pos < size && items[pos] != NULL){
@@ -71,19 +73,21 @@ void FPTreeNode::insertTransactionItem(FPTreeItem *items[MAX_DOMAIN_ITEMS], int 
     }
 }
 
-void FPTreeNode::insertTransactionItem(NodeLL *curr, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
+void FPTreeNode::insertTransactionItem(NodeLL *curr, HeaderItem *hash[MAX_DOMAIN_ITEMS], HeaderTable *htable)
+{
     FPTreeNode *targetNode;
-    FPTreeItem *item;
+    TransPathItem *item;
     
-    if (curr != NULL && curr->getData() != NULL && hash != NULL)
+    if (curr != NULL && curr->getData() != NULL)
     {
-        item = dynamic_cast<FPTreeItem *>(curr->getData());
+        item = dynamic_cast<TransPathItem*>(curr->getData());
         if (item != NULL)
         {
-            targetNode = this->insertChild(item, hash);
-            if (targetNode != NULL){
+            targetNode = this->insertChild(item->getItem(), NULL, htable);
+            if (targetNode != NULL)
+            {
                 curr->setData(NULL);
-                targetNode->insertTransactionItem(curr->getNext(), hash);
+                targetNode->insertTransactionItem(curr->getNext(), hash, htable);
             }
         }
     }
@@ -129,7 +133,8 @@ FPTreeNode* FPTreeNode::insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOM
         }
         
         //add node link to header table if a new node was created
-        if (newNodeCreated){
+        if (newNodeCreated)
+        {
             hash[HeaderTable::getHashIndex(target)]->linkTreeNode(targetNode, hash);
         } else {
             delete(target);
@@ -137,6 +142,64 @@ FPTreeNode* FPTreeNode::insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOM
     }
     return targetNode;
 }
+
+/*-------------------------------------------------------------------------------------
+ * PURPOSE: adds target as one of its children
+ * PARM   : *target - item that is to be added as a child
+ * PARM   : *headerTable - for used for linking new nodes to the table
+ * RETURN : returns a ptr to the child that is added
+ * REMARKS: if 'this' already contains a child similar to target, it increments the
+ *          child's frequency instead of adding a new node
+ *        : consumes given target
+ *-----------------------------------------------------------------------------------*/
+FPTreeNode* FPTreeNode::insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOMAIN_ITEMS], HeaderTable *headerTable){
+    FPTreeNode *targetNode = NULL;
+    FPTreeNode *curr = this->headChild;
+    FPTreeNode *prev = NULL;
+    bool newNodeCreated = false;
+    
+    if (target != NULL){
+        //cycle to correct location
+        while (curr != NULL && curr->getData() != NULL &&
+               curr->compareTo(target) <= 0){
+            prev = curr;
+            curr = curr->getNextSibling();
+        }
+        
+        if (prev == NULL){
+            targetNode = new FPTreeNode(target, this, this->headChild);
+            newNodeCreated = true;
+            this->headChild = targetNode;
+        } else {
+            if (prev->isEqualsTo(target) == true){   //node already exists
+                prev->data->increaseSupport(target);
+                targetNode = prev;
+            } else {
+                targetNode = new FPTreeNode(target, this, curr);
+                newNodeCreated = true;
+                prev->nextSibling = targetNode;
+            }
+        }
+        
+        //add node link to header table if a new node was created
+        if (newNodeCreated)
+        {
+            if(headerTable != NULL)
+            {
+                FPTreeItem *temp = targetNode->getData();
+                HeaderItem *headerItem = headerTable->getItem(temp);
+                if(headerItem!=NULL) {
+                    headerItem->linkTreeNode(targetNode, NULL);
+                }
+            }
+            
+        } else {
+            delete(target);
+        }
+    }
+    return targetNode;
+}
+
 
 /*-------------------------------------------------------------------------------------
  * PURPOSE: compares based on alphabetical order and returns an integer representing
@@ -209,6 +272,11 @@ void FPTreeNode::print(int level){
     if (this->getNextSibling() != NULL){
         this->getNextSibling()->print(level);
     }
+}
+
+bool FPTreeNode::hasSingleChild()
+{
+    return (headChild==NULL || headChild->getNextSibling()==NULL);
 }
 
 //********************** GETTERS ***********************

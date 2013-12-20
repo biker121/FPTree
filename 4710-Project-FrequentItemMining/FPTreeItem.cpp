@@ -32,6 +32,13 @@ void FPTreeItem::increaseSupport(){
 }
 
 /*-------------------------------------------------------------------------------------
+ * PURPOSE: increases the frequency by one
+ *-----------------------------------------------------------------------------------*/
+void FPTreeItem::increaseSupport(int inc){
+    this->support+=inc;
+}
+
+/*-------------------------------------------------------------------------------------
  * PURPOSE: increases frequency by the frequency of given item
  *-----------------------------------------------------------------------------------*/
 void FPTreeItem::increaseSupport(FPTreeItem *item){
