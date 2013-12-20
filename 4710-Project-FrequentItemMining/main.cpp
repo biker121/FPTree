@@ -142,7 +142,7 @@ int main(int argc, const char * argv[])
         int minSup = atoi(argv[2]);
         
         //*** test use only ***
-        minSup = 2;
+        minSup = 1;
         
         cout << "===== FP-growth TDB=" << fileName << " minsup=" << minSup << " =====" << endl;
         FPTree* globalTree = processFile(fileName, minSup); //read, create, and mine tree
