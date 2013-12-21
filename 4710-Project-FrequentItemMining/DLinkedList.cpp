@@ -148,7 +148,7 @@ void DLinkedList::remove(NodeLL *node)
         }
         
         size-=1;
-        
+            
         delete node;
     }
 }

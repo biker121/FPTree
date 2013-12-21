@@ -211,6 +211,12 @@ void FPTree::insertTransaction(DLinkedList *transactionItems)
     }
 }
 
+bool FPTree::isEmpty()
+{
+    // DEBUG not sure
+    return (this->root->getHeadChild()==NULL);
+}
+
 bool FPTree::isSinglePath()
 {
     bool isSinglePath = true;

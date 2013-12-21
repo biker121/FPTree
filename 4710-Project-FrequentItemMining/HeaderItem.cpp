@@ -42,25 +42,31 @@ void HeaderItem::removeInfreqPathItems()
     TransPathItem *pathItem = NULL;
     DLinkedList *currPathList = NULL;
     
-    while (pathNode!=NULL) {
+    while (pathNode!=NULL)
+    {
         pathItem = (TransPathItem*)pathNode->getData();
         
+//        //DEBUG Print
+//        pathItem->print();
+//        cout << "\n";
+
         currPathList = pathItem->getPathList();
+
+        // get pointer to next path before destroying node
+        nextPath = pathItem->getNextPathNode();
         
-        // DEBUG code
+        // DEBUG not sure
         if(currPathList != NULL)
         {
             currPathList->remove(pathNode);
         }
-        
-        // get pointer to next path before destroying node
-        nextPath = pathItem->getNextPathNode();
-        
+                
         // dont delete because it is done by the currPathList itself
         //delete (pathNode);
         
         pathNode = nextPath;
     }
+    //printf("\n");
 }
 
 /*-------------------------------------------------------------------------------------

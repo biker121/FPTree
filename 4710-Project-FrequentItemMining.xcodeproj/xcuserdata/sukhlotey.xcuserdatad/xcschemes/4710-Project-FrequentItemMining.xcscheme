@@ -59,7 +59,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "/Users/sukhlotey/Documents/FPTree/test_files/test1.txt"
+            argument = "/Users/sukhlotey/Documents/FPTree/test_files/test3.txt"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

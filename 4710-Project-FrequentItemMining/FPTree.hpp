@@ -45,6 +45,7 @@ public :
     void insertTransaction(DLinkedList *transactionItems);
 
     bool isSinglePath();
+    bool isEmpty();
     void printHeaderTable();
     string getLabelPrefix();
     int getBaseLevel();

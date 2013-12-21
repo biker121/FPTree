@@ -35,6 +35,11 @@ using namespace std;
 void FPGrowthMine(FPTree* tree, int base)
 {
 	HeaderTable *headerTable = tree->getHeaderTable();
+    
+    
+//    // DEBUG Print
+//    tree->printTree();
+//    cout << "\n";
 	
 	// Iterates through each header item in the header table starting from
 	// the bottom to the top
@@ -49,9 +54,6 @@ void FPGrowthMine(FPTree* tree, int base)
         HeaderTable *projHeader = newProjTree->getHeaderTable();
         
         int currPathIndex = 0;
-        
-        // DEBUG print
-        tree->printTree();
         
 		// Iterates over nodes in the FP tree starting with a given header item
 		// and generates a new list containing that path following the global
@@ -70,7 +72,7 @@ void FPGrowthMine(FPTree* tree, int base)
 			{
                 FPTreeItem *dataItem = parent->getData();
                 FPTreeItem *item = new FPTreeItem(dataItem->getData(), currNodeSupport);
-                TransPathItem *pathItem = new TransPathItem(item, path);
+                TransPathItem *pathItem = new TransPathItem(item, paths[currPathIndex]);
                 NodeLL* addedPathNode = paths[currPathIndex]->addToFront(pathItem);
                 
                 // add to header table
@@ -85,6 +87,10 @@ void FPGrowthMine(FPTree* tree, int base)
 			currSimilarNode = currSimilarNode->getNextSimilarNode();
 		}
         
+//        // DEBUG Print
+//        cout << "Item: " << headerItem->getData()->getData() << "\n";
+//        projHeader->printTable();
+//
 //        // DEBUG Print
 //        cout << "paths before pruning:\n";
 //        for (int i=0; i<headerItem->getSimilarNodeCount(); i++) {
@@ -101,21 +107,26 @@ void FPGrowthMine(FPTree* tree, int base)
 //            paths[i]->print();
 //        }
         
-        if(base==0)
-            projHeader->printTable();
-        
-        
 		//insert all paths
         for (int i=0; i<headerItem->getSimilarNodeCount(); i++) {
             newProjTree->insertTransaction(paths[i]);
         }
         
-        if(newProjTree->isSinglePath())
+//        if(newProjTree->isEmpty())
+//        {
+//           cout << "empty tree\n";
+//        }
+        if(!newProjTree->isEmpty()) {
+            newProjTree->printTree();
+            cout << "\n";
+        }
+        
+        if(newProjTree->isEmpty() || newProjTree->isSinglePath())
         {
             //cout << "single Path\n";
         }else
         {
-            // DEBUG
+//            // DEBUG
 //            // mine frequent items sets
 //            cout << "\nProj Tree: ";
 //            currHeaderNode->print();
