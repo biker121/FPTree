@@ -192,7 +192,7 @@ void  HeaderTable::incrementHashItem(FPTreeItem *item, HeaderItem *hash[MAX_DOMA
  *-----------------------------------------------------------------------------------*/
 void HeaderTable::printTable()
 {
-    cout << "Header table: " << endl;
+    cout << "Header table(" << numDomainItems << ") : " << endl;
     headerItems->print();
     cout << endl;
 }

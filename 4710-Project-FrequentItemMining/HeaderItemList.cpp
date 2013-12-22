@@ -156,6 +156,46 @@ void HeaderItemList::orderedInsert(NodeLL *newNode)
     }
 }
 
+void HeaderItemList::removeInfrequent(int minsup)
+{
+    NodeLL *curr = head;
+    HeaderItem *currHItem = NULL;
+    FPTreeItem *currItem = NULL;
+    NodeLL *tempNext = NULL;
+    int infreqId = 0;
+    
+    while (curr!=NULL)
+    {
+        currHItem = (HeaderItem*)curr->getData();
+        currItem = (FPTreeItem*)currHItem->getData();
+        
+        // get next pointer as this node might get destroyed if infreq
+        tempNext = curr->getNext();
+        
+        if(currItem !=NULL && currItem->getSupport() < minsup)
+            infreqId++;
+        
+        if(infreqId>=1) {
+            if(infreqId==1)
+            {
+                if(curr->getPrev()!=NULL) {
+                    curr->getPrev()->setNext(NULL);
+                    tail = curr->getPrev();
+                }else {
+                    head = NULL;
+                    tail = NULL;
+                }
+            }
+            
+            currHItem->removeInfreqPathItems();
+            
+            delete (curr);
+        }
+        
+        curr = tempNext;
+    }
+}
+
 void HeaderItemList::print()
 {
     NodeLL* curr = head;
@@ -211,42 +251,15 @@ HeaderItem* HeaderItemList::getItem(FPTreeItem *item)
     return itemFound;
 }
 
-void HeaderItemList::removeInfrequent(int minsup)
+int HeaderItemList::getSize()
 {
     NodeLL *curr = head;
-    HeaderItem *currHItem = NULL;
-    FPTreeItem *currItem = NULL;
-    NodeLL *tempNext = NULL;
-    int infreqId = 0;
+    int size=0;
     
-    while (curr!=NULL)
-    {
-        currHItem = (HeaderItem*)curr->getData();
-        currItem = (FPTreeItem*)currHItem->getData();
-        
-        // get next pointer as this node might get destroyed if infreq
-        tempNext = curr->getNext();
-        
-        if(currItem !=NULL && currItem->getSupport() < minsup)
-            infreqId++;
-        
-        if(infreqId>=1) {
-            if(infreqId==1)
-            {
-                if(curr->getPrev()!=NULL) {
-                    curr->getPrev()->setNext(NULL);
-                    tail = curr->getPrev();
-                }else {
-                    head = NULL;
-                    tail = NULL;
-                }
-            }
-            
-            currHItem->removeInfreqPathItems();
-            
-            delete (curr);
-        }
-        
-        curr = tempNext;
+    while (curr!=NULL) {
+        size++;
+        curr=curr->getNext();
     }
+    
+    return size;
 }

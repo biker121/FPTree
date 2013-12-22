@@ -29,6 +29,9 @@ DLinkedList::~DLinkedList(){
         delete(curr);
         curr = next;
     }
+    
+    head = NULL;
+    tail = NULL;
 }
 
 NodeLL* DLinkedList::addToFront(OrderedData *data) {

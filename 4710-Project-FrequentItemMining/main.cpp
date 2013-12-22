@@ -32,14 +32,88 @@ using namespace std;
 //
 //-----------------------------------------------------------
 
+// private helper method for findFreqItems()
+void getPrefix(int i, string &str, string &result)
+{
+    int count = 0;
+    size_t pos = 0;
+    size_t newPos = 0;
+    std::string token;
+    while ((newPos = str.find(',', pos)) != std::string::npos && count < i)
+    {
+        token = str.substr(pos, newPos-pos);
+        pos=newPos+1;
+        if(count == 0)
+            result += token;
+        else
+            result += "," + token;
+        
+        count++;
+    }
+}
+
+// finds all the permutations of a given single path items
+void findFreqItems(int k, vector<string> *items)
+{
+    vector<string> *fitems = new vector<string>;
+    
+    if(k==1)
+    {
+        for(int i=0; i<items->size(); i++)
+        {
+            string curri = items->at(i);
+            for (int j=i+1; j<items->size(); j++) {
+                string currj = items->at(j);
+                string joint = curri + "," + currj;
+                fitems->push_back(joint);
+                
+//                // DEBUG Print K-2 items
+//                cout << "fitem: " <<  joint << endl;
+            }
+        }
+        
+    }if(k>1) {
+        for(int i=0; i<items->size(); i++)
+        {
+            string curri = items->at(i);
+            string prefix;
+            
+            getPrefix(k-1, curri, prefix);
+            
+            int j = i+1;
+            bool matches = true;
+            while(matches && j<items->size())
+            {
+                string currj = items->at(j);
+                string currjPrefix;
+                getPrefix(k-1, currj, currjPrefix);
+                
+                if(prefix.compare(currjPrefix)==0)
+                {
+                    string joint = curri + "," + currj.substr(currjPrefix.length() + 1);
+                    fitems->push_back(joint);
+                
+//                    // DEBUG Print K>2 items
+//                    cout << "-->fitem: " <<  joint << endl;
+                }else
+                {
+                    matches = false;
+                }
+                
+                j++;
+            }
+        }
+    }
+    
+    if(fitems->size()>1)
+    {
+        findFreqItems(k+1, fitems);
+    }
+}
+
 void FPGrowthMine(FPTree* tree, int base)
 {
 	HeaderTable *headerTable = tree->getHeaderTable();
-    
-    
-//    // DEBUG Print
-//    tree->printTree();
-//    cout << "\n";
 	
 	// Iterates through each header item in the header table starting from
 	// the bottom to the top
@@ -80,12 +154,13 @@ void FPGrowthMine(FPTree* tree, int base)
                 hItem->linkNextPath(addedPathNode);
                 
 				parent = parent->getParent();
-			}
+			}// end - path generate loop
             
 			currPathIndex++;
             
 			currSimilarNode = currSimilarNode->getNextSimilarNode();
-		}
+            
+		} // end - all paths generation loop
         
 //        // DEBUG Print
 //        cout << "Item: " << headerItem->getData()->getData() << "\n";
@@ -98,6 +173,8 @@ void FPGrowthMine(FPTree* tree, int base)
 //            paths[i]->print();
 //        }
         
+        // this removes all the infrequent items from the header table
+        // while also filtering out the infrequents from the paths
         projHeader->removeInfrequent();
         
 //        // DEBUG Print
@@ -107,39 +184,42 @@ void FPGrowthMine(FPTree* tree, int base)
 //            paths[i]->print();
 //        }
         
-		//insert all paths
-        for (int i=0; i<headerItem->getSimilarNodeCount(); i++) {
+		//insert all paths and DELETE them
+        for (int i=0; i<headerItem->getSimilarNodeCount(); i++)
+        {
             newProjTree->insertTransaction(paths[i]);
+            
+            // also DELETE paths because we dont need them anymore
+            delete paths[i];
         }
         
-//        if(newProjTree->isEmpty())
+        
+//        // DEBUG Print
+//        if(!newProjTree->isEmpty() && base==0)
 //        {
-//           cout << "empty tree\n";
+//            cout << "Item: ";
+//            headerItem->print();
+//            newProjTree->printTree();
+//            cout << "\n";
 //        }
-        if(!newProjTree->isEmpty()) {
-            newProjTree->printTree();
-            cout << "\n";
-        }
         
         if(newProjTree->isEmpty() || newProjTree->isSinglePath())
         {
-            //cout << "single Path\n";
+//            // DEBUG Print
+//            cout << "Item: ";
+//            headerItem->print();
+            vector<string> *singletons = newProjTree->getSinglePath();
+            findFreqItems(1, singletons);
         }else
         {
-//            // DEBUG
-//            // mine frequent items sets
-//            cout << "\nProj Tree: ";
-//            currHeaderNode->print();
-//            cout << " base: " << base << " \n";
-//            newProjTree->printTree();
-            
             FPGrowthMine(newProjTree, base+1);
         }
         
+        // going backwards from lowest to highest order
         currHeaderNode = currHeaderNode->getPrev();
 	}
 }
-
+                          
 /*-----------------------------------------------------------------------------------
  * PURPOSE : primary handler method for mining a given datafile with indicated minsup
  * PARM    : string fileName, absolute file name
@@ -157,7 +237,7 @@ FPTree* processFile(string fileName, int minSup)
     //second pass - tree creation of frequent items
     if (tree->getHeaderTable()->getNumDomainItem() > 0) {
         tree->createTree(fileName, hash);
-        //tree->printTree();
+        tree->printTree();
         
         delete[] hash; //DEBUG - double check**
     }
@@ -166,22 +246,20 @@ FPTree* processFile(string fileName, int minSup)
 }
 
 int main(int argc, const char * argv[])
-{
-    //    run_tests();
-    
+{    
     if (argc == 3)
     {
         string fileName = argv[1];
         int minSup = atoi(argv[2]);
         
-        //*** test use only ***
         minSup = 2;
         
         cout << "===== FP-growth TDB=" << fileName << " minsup=" << minSup << " =====" << endl;
         FPTree* globalTree = processFile(fileName, minSup); //read, create, and mine tree
         FPGrowthMine(globalTree, 0);
         cout << "=====================================================================" << endl;
-    } else {
+    } else
+    {
         cout << "Invalid parameters - must have <filename> <minsup>";
     }
     

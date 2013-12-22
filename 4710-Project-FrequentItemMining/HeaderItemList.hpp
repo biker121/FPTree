@@ -33,5 +33,6 @@ public:
     NodeLL* getHeadNode();
     NodeLL* getTailNode();
     HeaderItem* getItem(FPTreeItem *item);
+    int getSize();
 };
 #endif

@@ -124,27 +124,28 @@ void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 //                cout << endl;
                 
                 
-                // DEBUG - TESTING: converts buffer array to list of paths
-                DLinkedList *tempPathList = new DLinkedList();
-                for (int i=0; i<size; i++)
-                {
-                    if (buffer[i] != NULL){
-                        
-                        TransPathItem *pathItem = new TransPathItem(
-                                                  new FPTreeItem(buffer[i]->getData(),
-                                                                 buffer[i]->getSupport()), NULL);
-                        tempPathList->addToBack(pathItem);
-                    }
-                }
+//                // DEBUG - TESTING: converts buffer array to list of paths
+//                DLinkedList *tempPathList = new DLinkedList();
+//                for (int i=0; i<size; i++)
+//                {
+//                    if (buffer[i] != NULL){
+//                        
+//                        TransPathItem *pathItem = new TransPathItem(
+//                                                  new FPTreeItem(buffer[i]->getData(),
+//                                                                 buffer[i]->getSupport()), NULL);
+//                        tempPathList->addToBack(pathItem);
+//                    }
+//                }
                 
 //                // DEBUG Print
 //                cout << "Path:\n";
 //                tempPathList->print();
                 
-                // DEBUG Temporarily TESTING DLinkedList method
-                this->insertTransaction(tempPathList);
+//                // DEBUG Temporarily TESTING DLinkedList method
+//                this->insertTransaction(tempPathList);
                 
-                //this->insertTransaction(buffer, size, hash);
+                this->insertTransaction(buffer, size, hash);
+                
                 //this->printTree(); //DEBUG
             } while (currTransaction < numTransactions);
         }
@@ -283,4 +284,28 @@ int FPTree::getMinSup()
 HeaderTable* FPTree::getHeaderTable()
 {
     return headerTable;
+}
+
+vector<string> *FPTree::getSinglePath()
+{
+    vector<string> *path = new vector<string>();
+    FPTreeNode *curr = root->getHeadChild();
+    
+    //DEBUG optimization: remove this check and
+    //assume you get single path already
+    if(isSinglePath())
+    {
+        while (curr!=NULL && curr->getData()!=NULL)
+        {
+            string item;
+            item = to_string(curr->getData()->getData());
+            path->push_back(item);
+            
+//            // DEBUG Print
+//            cout << "string created" << item << endl;
+            curr = curr->getHeadChild();
+        }
+    }
+    
+    return path;
 }

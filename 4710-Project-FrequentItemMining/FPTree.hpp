@@ -10,6 +10,7 @@
 #define _710_Project_FrequentItemMining_FPTree_hpp
 
 #include <string>
+#include <vector>
 
 #include "FPContants.hpp"
 
@@ -48,6 +49,7 @@ public :
     bool isEmpty();
     void printHeaderTable();
     string getLabelPrefix();
+    vector<string> *getSinglePath();
     int getBaseLevel();
     
     int getMinSup();
