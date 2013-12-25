@@ -45,6 +45,7 @@ public :
     void insertTransaction(FPTreeItem **buffer, int size, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     void insertTransaction(DLinkedList *transactionItems);
 
+    int totalTreeNodes();
     bool isSinglePath();
     bool isEmpty();
     void printHeaderTable();

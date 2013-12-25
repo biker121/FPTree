@@ -200,6 +200,17 @@ FPTreeNode* FPTreeNode::insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOM
     return targetNode;
 }
 
+// PURPOSE: counts total number of in its subtree, including itself
+int FPTreeNode::countNodes(){
+    int count = 1;
+    
+    if (this->nextSibling != NULL)
+        count += this->nextSibling->countNodes();
+    if (this->headChild != NULL)
+        count += this->headChild->countNodes();
+    
+    return count;
+}
 
 /*-------------------------------------------------------------------------------------
  * PURPOSE: compares based on alphabetical order and returns an integer representing

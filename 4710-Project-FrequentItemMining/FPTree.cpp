@@ -231,12 +231,18 @@ bool FPTree::isSinglePath()
     return isSinglePath;
 }
 
+// PURPOSE: returns total number of nodes in the tree *including root*
+int FPTree::totalTreeNodes(){
+    return this->root->countNodes();;
+}
+
 /*----------------------------------------------------------------------------
  * PURPOSE: prints the tree structure to console by recursively calling print node
  *--------------------------------------------------------------------------*/
 void FPTree::printTree()
 {
     this->root->print(0);
+    cout << endl;
 }
 
 void FPTree::printHeaderTable()
@@ -253,8 +259,11 @@ string FPTree::getLabelPrefix()
     ss << "";
     while (currProj != NULL && currProj->partialPrefix != -1)
     {
-        ss << this->partialPrefix;
+        ss << currProj->partialPrefix;
         currProj = currProj->parentProj;
+        
+        if (currProj != NULL && currProj->partialPrefix != -1)
+            ss << ",";
     }
     
     return ss.str();

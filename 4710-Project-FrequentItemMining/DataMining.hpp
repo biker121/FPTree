@@ -9,6 +9,8 @@
 #ifndef _710_Project_FrequentItemMining_DataMining_hpp
 #define _710_Project_FrequentItemMining_DataMining_hpp
 
+#include  <string>
+
 class FPTree;
 
 class DataMining {

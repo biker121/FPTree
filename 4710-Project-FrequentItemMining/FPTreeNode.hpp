@@ -53,6 +53,7 @@ public:
     void print();
     void print(int level);
     bool hasSingleChild();
+    int countNodes();
     
     //************* GETTERS ****************
     FPTreeItem* getData();
