@@ -258,8 +258,8 @@ int main(int argc, const char * argv[])
         int countNodes = atoi(argv[6]);
         
         //**** DEBUG only ****
-        fileName = "/Users/brahmdeepjuneja/Desktop/SukhBranch/test_files/singlePathTest.txt";
-        minSup = 1;
+        fileName = "/Users/brahmdeepjuneja/Desktop/SukhBranch/test_files/test1.txt";
+        minSup = 4;
         
         cout << "===== FP-growth TDB=" << fileName
                     << " minsup=" << minSup
@@ -272,7 +272,7 @@ int main(int argc, const char * argv[])
         memset(k_level_itemset_counts, 0, (sizeof(int) * MAX_DOMAIN_ITEMS) );
 
         if (showFPs == 1)
-            cout << "showFPs=" << showFPs << endl;
+            cout << "---------showFPs=" << showFPs << "-----------" << endl;
 
         //----------START---------
         start = clock();
@@ -288,24 +288,23 @@ int main(int argc, const char * argv[])
         
         if (showTime == 1)
         {
-            cout << "showTime=" << showTime << endl;
+            cout << "--------showTime=" << showTime << "----------" << endl;
             cout << "runtime = " << duration << endl << endl;
         }
         
         if (countFPs == 1)
         {
-            cout << "countFPs=" << countFPs << endl;
+            cout << "--------countFPs=" << countFPs << "-----------" << endl;
             for (int i=0; i<MAX_DOMAIN_ITEMS && k_level_itemset_counts[i] != 0; i++)
-            {
                 cout << "|L" << i+1 << "| = " << k_level_itemset_counts[i] << endl;
-            }
             cout << endl;
         }
         
         if (countNodes == 1)
         {
-            cout << "countNodes=" << countNodes << endl;
+            cout << "------countNodes=" << countNodes << "----------"<< endl;
             cout << "total globalNodes = " << globalTree->totalTreeNodes() << endl;
+            cout << endl;
         }
         
         cout << "===== FP-growth TDB=" << fileName
