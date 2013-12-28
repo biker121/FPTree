@@ -264,12 +264,10 @@ FPTree* DataMining::createTree(string fileName, int minSup)
     
     //first pass - populate frequent items
     tree->createHeaderTable(fileName, hash); //will also fill hash[] with frequent 1-itemsets
-    tree->printHeaderTable();
     
     //second pass - tree creation of frequent items
     if (tree->getHeaderTable()->getNumDomainItem() > 0) {
         tree->createTree(fileName, hash);
-        tree->printTree();
         
         delete[] hash; //DEBUG - double check**
     }
