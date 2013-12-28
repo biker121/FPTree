@@ -138,8 +138,8 @@ void FPGrowthMine(FPTree* tree, int showFPs, int countFPs)
         if (showFPs == 1)
             cout << "{" << tree->getLabelPrefix() << "}" << endl;
     }
-
-    if(tree->isEmpty() || tree->isSinglePath())
+    
+    if(tree->isEmpty() == false && tree->isSinglePath())
     {
         vector<string> *singletons = tree->getSinglePath();
         findFreqItems(1, singletons, tree->getLabelPrefix(), tree->getBaseLevel(), showFPs);
@@ -259,7 +259,7 @@ int main(int argc, const char * argv[])
         
         //**** DEBUG only ****
         fileName = "/Users/brahmdeepjuneja/Desktop/SukhBranch/test_files/test1.txt";
-        minSup = 4;
+        minSup = 1;
         
         cout << "===== FP-growth TDB=" << fileName
                     << " minsup=" << minSup
