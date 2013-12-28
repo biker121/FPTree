@@ -57,9 +57,16 @@ void DataMining::processFile(string fileName, int minSup, int showFPs, int showT
     
     if (countFPs == 1)
     {
+        int totalFPs = 0;
+        
         cout << "--------countFPs=" << countFPs << "-----------" << endl;
         for (int i=0; i<MAX_DOMAIN_ITEMS && dataMining->k_level_itemset_counts[i] != 0; i++)
+        {
             cout << "|L" << i+1 << "| = " << dataMining->k_level_itemset_counts[i] << endl;
+            totalFPs += dataMining->k_level_itemset_counts[i];
+        }
+        
+        cout << "TotalFPs = " << totalFPs << endl;
         cout << endl;
     }
     
@@ -155,7 +162,7 @@ void DataMining::findFreqItems(int k, vector<string> *items, string label, int l
         k_level_itemset_counts[labelSize+k]++;
         
         if (showFPs == 1)
-            cout << "{" << formattedLabel << fitems->at(i) << "}" << endl; //DEBUG
+            cout << "{" << formattedLabel << fitems->at(i) << "}" << endl;
     }
     
     
@@ -269,7 +276,7 @@ FPTree* DataMining::createTree(string fileName, int minSup)
     if (tree->getHeaderTable()->getNumDomainItem() > 0) {
         tree->createTree(fileName, hash);
         
-        delete[] hash; //DEBUG - double check**
+        delete[] hash;
     }
     
     return tree;

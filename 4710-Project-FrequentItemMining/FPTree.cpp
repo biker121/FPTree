@@ -182,7 +182,6 @@ void FPTree::insertTransaction(DLinkedList *transactionItems)
 
 bool FPTree::isEmpty()
 {
-    // DEBUG not sure
     return (this->root->getHeadChild()==NULL);
 }
 
@@ -277,9 +276,6 @@ vector<string> *FPTree::getSinglePath()
             string item;
             item = to_string(curr->getData()->getData());
             path->push_back(item);
-            
-//            // DEBUG Print
-//            cout << "string created" << item << endl;
             curr = curr->getHeadChild();
         }
     }
