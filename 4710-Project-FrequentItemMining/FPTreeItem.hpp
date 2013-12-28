@@ -1,11 +1,3 @@
-//
-//  FPTreeItem.hpp
-//  4710-Project-FrequentItemMining
-//
-//  Created by Brahmdeep Singh Juneja on 11/21/2013.
-//  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
-//
-
 #ifndef _710_Project_FrequentItemMining_FPTreeItem_hpp
 #define _710_Project_FrequentItemMining_FPTreeItem_hpp
 

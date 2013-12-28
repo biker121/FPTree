@@ -131,8 +131,6 @@ bool HeaderTable::insertHeaderItems(HeaderTable *headerTable, HeaderItem *hash[M
                     delete(hash[i]);
                     hash[i] = NULL;
                 } else {
-                    //cout << "adding.."; //DEBUG
-                    //hash[i]->print(); //DEBUG
                     headerTable->headerItems->orderedInsert(hash[i]); //insert by frequency
                     headerTable->numDomainItems++;
                 }

@@ -113,40 +113,8 @@ void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
                 
                 FPTree::sortByPriority(buffer, size, hash);
                 
-                //DEBUG
-//                cout << "----new transaction ----" << endl;
-//                for (int i=0; i<size; i++){
-//                    if (buffer[i] != NULL){
-//                        buffer[i]->print();
-//                        cout << endl;
-//                    }
-//                }
-//                cout << endl;
-                
-                
-//                // DEBUG - TESTING: converts buffer array to list of paths
-//                DLinkedList *tempPathList = new DLinkedList();
-//                for (int i=0; i<size; i++)
-//                {
-//                    if (buffer[i] != NULL){
-//                        
-//                        TransPathItem *pathItem = new TransPathItem(
-//                                                  new FPTreeItem(buffer[i]->getData(),
-//                                                                 buffer[i]->getSupport()), NULL);
-//                        tempPathList->addToBack(pathItem);
-//                    }
-//                }
-                
-//                // DEBUG Print
-//                cout << "Path:\n";
-//                tempPathList->print();
-                
-//                // DEBUG Temporarily TESTING DLinkedList method
-//                this->insertTransaction(tempPathList);
-                
                 this->insertTransaction(buffer, size, hash);
                 
-                //this->printTree(); //DEBUG
             } while (currTransaction < numTransactions);
         }
         

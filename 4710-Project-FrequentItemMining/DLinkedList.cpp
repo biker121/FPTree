@@ -1,30 +1,24 @@
-//
-//  DLinkedList.cpp
-//  4710-Project-FrequentItemMining
-//
-//  Created by Brahmdeep Singh Juneja on 12/12/2013.
-//  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
-//
-
-#include "DLinkedList.hpp"
-
 #include <iostream>
 
+#include "DLinkedList.hpp"
 #include "OrderedData.hpp"
 #include "NodeLL.hpp"
 
-DLinkedList::DLinkedList(){
+DLinkedList::DLinkedList()
+{
     this->head = NULL;
     this->tail = NULL;
     this->size = 0;
 }
 
 // Purpose: destroys the entire list and its contents
-DLinkedList::~DLinkedList(){
+DLinkedList::~DLinkedList()
+{
     NodeLL *curr = this->head;
     NodeLL *next = NULL;
     
-    while (curr != NULL){
+    while (curr != NULL)
+    {
         next = curr->getNext();
         delete(curr);
         curr = next;
@@ -34,17 +28,22 @@ DLinkedList::~DLinkedList(){
     tail = NULL;
 }
 
-NodeLL* DLinkedList::addToFront(OrderedData *data) {
+NodeLL* DLinkedList::addToFront(OrderedData *data)
+{
     bool success = false;
     NodeLL *newNode=NULL;
     
-    if (data != NULL){
+    if (data != NULL)
+    {
         newNode = new NodeLL(data, NULL, NULL);
         
-        if (this->head == NULL && this->tail == NULL){  //empty list
+        //empty list
+        if (this->head == NULL && this->tail == NULL)
+        {  
             this->head = newNode;
             this->tail = newNode;
-        } else {
+        } else
+        {
             newNode->setNext(this->head);
             this->head->setPrev(newNode);
             this->head = newNode;
@@ -56,17 +55,22 @@ NodeLL* DLinkedList::addToFront(OrderedData *data) {
     return newNode;
 }
 
-NodeLL* DLinkedList::addToBack(OrderedData *data) {
+NodeLL* DLinkedList::addToBack(OrderedData *data)
+{
     bool success = false;
     NodeLL *newNode=NULL;
     
-    if (data != NULL){
+    if (data != NULL)
+    {
         newNode = new NodeLL(data, NULL, NULL);
         
-        if (this->head == NULL && this->tail == NULL){  //empty list
+        //empty list
+        if (this->head == NULL && this->tail == NULL)
+        {  
             this->head = newNode;
             this->tail = newNode;
-        } else {
+        } else
+        {
             newNode->setPrev(this->tail);
             this->tail->setNext(newNode);
             this->tail = newNode;
@@ -82,10 +86,12 @@ NodeLL* DLinkedList::addToBack(OrderedData *data) {
 // Purpose: Iterates through to find an item which comparitively equals to the given target
 // Parm   :
 // Return : ptr to the node that contains an item equals to the given taget
-NodeLL* DLinkedList::find(OrderedData *target){
+NodeLL* DLinkedList::find(OrderedData *target)
+{
     NodeLL *curr = this->head;
     
-    while (curr != NULL && curr->getData()->compareTo(target) == 0){
+    while (curr != NULL && curr->getData()->compareTo(target) == 0)
+    {
         curr = curr->getNext();
     }
     
@@ -93,27 +99,30 @@ NodeLL* DLinkedList::find(OrderedData *target){
 }
 
 // Purpose: pops the node containing the item similar to target
-OrderedData* DLinkedList::remove(OrderedData *target){
+OrderedData* DLinkedList::remove(OrderedData *target)
+{
     NodeLL *targetNode = find(target);
     OrderedData *item = NULL;
     
-    if (targetNode != NULL){
-        
+    if (targetNode != NULL)
+    {
         //unlink targetNode
-        if (targetNode == this->head && targetNode == this->tail){
+        if (targetNode == this->head && targetNode == this->tail)
+        {
             this->head = NULL;
             this->tail = NULL;
-        } else if (targetNode == this->head){
+        } else if (targetNode == this->head)
+        {
             this->head = this->head->getNext();
-            if (head != NULL){
+            if (head != NULL)
                 this->head->setPrev(NULL);
-            }
-        } else if (targetNode == this->tail){
+        } else if (targetNode == this->tail)
+        {
             this->tail = this->tail->getPrev();
-            if (this->tail != NULL){
+            if (this->tail != NULL)
                 this->tail->setNext(NULL);
-            }
-        } else {
+        } else
+        {
             targetNode->getPrev()->setNext(targetNode->getNext());
             targetNode->getNext()->setPrev(targetNode->getPrev());
         }
@@ -123,9 +132,12 @@ OrderedData* DLinkedList::remove(OrderedData *target){
         
         //remove node
         targetNode->setData(NULL);
+        
         delete(targetNode);
+        
         this->size--;
     }
+    
     return item;
 }
 
@@ -141,11 +153,13 @@ void DLinkedList::remove(NodeLL *node)
             head = currNext;
             if(currNext!=NULL)
                 currNext->setPrev(NULL);
-        }else if(node==tail) {
+        }else if(node==tail)
+        {
             tail = currPrev;
             if(currPrev!=NULL)
                 currPrev->setNext(NULL);
-        }else {
+        }else
+        {
             currPrev->setNext(currNext);
             currNext->setPrev(currPrev);
         }
@@ -160,15 +174,18 @@ void DLinkedList::destory(OrderedData *target)
 {
     OrderedData *item = remove(target);
     
-    if (item != NULL){
+    if (item != NULL)
+    {
         delete(item);
     }
 }
 
-void DLinkedList::print(){
+void DLinkedList::print()
+{
     NodeLL *curr = this->head;
     
-    while (curr != NULL){
+    while (curr != NULL)
+    {
         curr->getData()->print();
         cout << endl;
         
@@ -182,6 +199,7 @@ int DLinkedList::getSize()
     return this->size;
 }
 
-NodeLL* DLinkedList::getHead(){
+NodeLL* DLinkedList::getHead()
+{
     return this->head;
 }

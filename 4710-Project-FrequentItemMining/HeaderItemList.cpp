@@ -1,13 +1,4 @@
-//
-//  HeaderItemList.cpp
-//  4710-Project-FrequentItemMining
-//
-//  Created by Sukhpreet Lotey on 2013-12-17.
-//  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
-//
-
 #include "HeaderItemList.hpp"
-
 #include "HeaderItem.hpp"
 #include "NodeLL.hpp"
 #include "FPTreeItem.hpp"
@@ -21,7 +12,8 @@ HeaderItemList::HeaderItemList()
 HeaderItemList::~HeaderItemList()
 {
     NodeLL* curr = head;
-    while (curr!=NULL) {
+    while (curr!=NULL)
+    {
         delete (curr);
         curr = curr->getNext();
     }
@@ -31,22 +23,27 @@ HeaderItemList::~HeaderItemList()
 HeaderItem* HeaderItemList::insertByFreqOrder(HeaderItem *item)
 {
     HeaderItem *targetItem = NULL;
-    NodeLL *newNode = new NodeLL(item);
     NodeLL *extractedNode = NULL;
+    
+    NodeLL *newNode = new NodeLL(item);
     
     if(head == NULL && tail == NULL)
     {
         head = newNode;
         tail = head;
         targetItem = item;
-    }else {
+    }else
+    {
         
-        if( item != NULL && item->getData() != NULL) {
+        if( item != NULL && item->getData() != NULL)
+        {
             extractedNode = extract(item->getData()->getData());
-            if(extractedNode==NULL) {
+            if(extractedNode==NULL)
+            {
                 targetItem = item;
                 orderedInsert(item);
-            }else {
+            }else
+            {
                 targetItem = (HeaderItem*)extractedNode->getData();
                 targetItem->increaseSupport(item->getData()->getSupport());
                 orderedInsert(targetItem);
@@ -70,26 +67,31 @@ NodeLL* HeaderItemList::extract(int item)
     {
         currItem = dynamic_cast<HeaderItem*>(curr->getData());
         
-        if(currItem!=NULL && currItem->getData() != NULL) {
+        if(currItem!=NULL && currItem->getData() != NULL)
+        {
             found = currItem->getData()->getData() == item;
             
-            if(found) {
+            if(found)
+            {
                 result = curr;
                 
                 currNext = curr->getNext();
                 currPrev = curr->getPrev();
                 
-                if(curr == head) {
+                if(curr == head)
+                {
                     head = currNext;
                     
                     if(currNext!=NULL)
                         currNext->setPrev(NULL);
-                }else if(curr == tail) {
+                }else if(curr == tail)
+                {
                     tail = currPrev;
                     
                     if(currPrev!=NULL)
                         currPrev->setNext(NULL);
-                }else {
+                }else
+                {
                     currPrev->setNext(currNext);
                     currNext->setPrev(currPrev);
                 }
@@ -110,33 +112,35 @@ void HeaderItemList::orderedInsert(HeaderItem *item)
     orderedInsert(new NodeLL(item));
 }
 
-// Only used for global tree header tables
 void HeaderItemList::orderedInsert(NodeLL *newNode)
-{    
+{
+    
+    NodeLL* curr = NULL;
+    NodeLL *temp = NULL;
+    bool done = false;
+    
     if(head == NULL)
     {
         head = newNode;
         tail = newNode;
     }else
     {
-        bool done = false;
-        NodeLL* curr = head;
+        curr = head;
         while (!done)
         {
             if(newNode->getData()->compareTo(curr->getData()) == 1)
             {
-                NodeLL *temp = curr->getPrev();
+                temp = curr->getPrev();
                 
                 newNode->setNext(curr);
                 curr->setPrev(newNode);
                 
-                if(temp!=NULL) {
+                if(temp!=NULL)
+                {
                     temp->setNext(newNode);
                     newNode->setPrev(temp);
-                }else {
-                    // set new head
-                    head = newNode;
-                }
+                }else
+                    head = newNode; // set new head
                 
                 done = true;
             }
@@ -158,11 +162,13 @@ void HeaderItemList::orderedInsert(NodeLL *newNode)
 
 void HeaderItemList::removeInfrequent(int minsup)
 {
-    NodeLL *curr = head;
     HeaderItem *currHItem = NULL;
     FPTreeItem *currItem = NULL;
     NodeLL *tempNext = NULL;
+    
     int infreqId = 0;
+    
+    NodeLL *curr = head;
     
     while (curr!=NULL)
     {
@@ -199,7 +205,8 @@ void HeaderItemList::removeInfrequent(int minsup)
 void HeaderItemList::print()
 {
     NodeLL* curr = head;
-    while (curr!=NULL) {
+    while (curr!=NULL)
+    {
         curr->getData()->print();
         curr = curr->getNext();
     }
@@ -221,23 +228,17 @@ HeaderItem* HeaderItemList::getItem(FPTreeItem *item)
 {
     bool found = false;
     HeaderItem *itemFound = NULL;
-    HeaderItem *temp = NULL;
     FPTreeItem *tempFPItem = NULL;
+    HeaderItem *temp = NULL;
     
     NodeLL *curr = head;
-    while (!found && curr!=NULL) {
+    while (!found && curr!=NULL)
+    {
         temp = (HeaderItem*)curr->getData();
         
         if(temp != NULL)
         {
             tempFPItem = (FPTreeItem*)temp->getData();
-            
-            //DEBUG print
-//            cout << "Comparting:";
-//            tempFPItem->print();
-//            cout << " with ";
-//            item->print();
-//            cout << "\n";
             
             if (tempFPItem != NULL && tempFPItem->getData()==item->getData())
             {
@@ -248,6 +249,7 @@ HeaderItem* HeaderItemList::getItem(FPTreeItem *item)
         
         curr = curr->getNext();
     }
+    
     return itemFound;
 }
 

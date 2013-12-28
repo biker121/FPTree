@@ -13,7 +13,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "109"
          endingLineNumber = "109"
-         landmarkName = "findFreqItems(int k, vector&lt;string&gt; *items)"
+         landmarkName = "findFreqItems(int k, vector&lt;string&gt; *items, string label, int labelSize, int showFPs)"
          landmarkType = "7">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -1,18 +1,3 @@
-//
-//  HeaderItem.cpp
-//  4710-Project-FrequentItemMining
-//
-//  Created by Brahmdeep Singh Juneja on 11/28/2013.
-//  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
-//
-//
-//  HeaderItem.cpp
-//  4710-Project-FrequentItemMining
-//
-//  Created by Brahmdeep Singh Juneja on 11/28/2013.
-//  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
-//
-
 #include "FPTreeItem.hpp"
 #include "HeaderItem.hpp"
 #include "HeaderTable.hpp"
@@ -22,13 +7,16 @@
 #include "DLinkedList.hpp"
 
 //------------------------Constructors and destructors-----------------------
-HeaderItem::HeaderItem(FPTreeItem *data){
+HeaderItem::HeaderItem(FPTreeItem *data)
+{
     this->data = data;
     this->firstSimilarTreeNode = NULL;
     this->firstPathNode = NULL;
 }
 
-HeaderItem::~HeaderItem(){ //requires others to destroy path and tree nodes
+//requires others to destroy path and tree nodes
+HeaderItem::~HeaderItem()
+{
     delete(data);
     this->data = NULL;
     this->firstPathNode = NULL;
@@ -45,28 +33,18 @@ void HeaderItem::removeInfreqPathItems()
     while (pathNode!=NULL)
     {
         pathItem = (TransPathItem*)pathNode->getData();
-        
-//        //DEBUG Print
-//        pathItem->print();
-//        cout << "\n";
-
         currPathList = pathItem->getPathList();
 
         // get pointer to next path before destroying node
         nextPath = pathItem->getNextPathNode();
         
-        // DEBUG not sure
         if(currPathList != NULL)
-        {
             currPathList->remove(pathNode);
-        }
                 
         // dont delete because it is done by the currPathList itself
-        //delete (pathNode);
         
         pathNode = nextPath;
     }
-    //printf("\n");
 }
 
 /*-------------------------------------------------------------------------------------
@@ -79,9 +57,11 @@ void HeaderItem::linkTreeNode(FPTreeNode *treeNode, HeaderItem *hash[MAX_DOMAIN_
     FPTreeNode *curr = firstSimilarTreeNode;
     bool done = false;
     
-    if(curr==NULL) {
+    if(curr==NULL)
+    {
         setFirstSimilarTreeNode(treeNode);
-    }else {
+    }else
+    {
         while (curr != NULL && !done)
         {
             if(curr->getNextSimilarNode()==NULL)
@@ -98,13 +78,20 @@ void HeaderItem::linkTreeNode(FPTreeNode *treeNode, HeaderItem *hash[MAX_DOMAIN_
 
 void HeaderItem::linkNextPath(NodeLL *pathNodeToLink)
 {
-    if(this->firstPathNode==NULL) {
-        firstPathNode = pathNodeToLink;
-        lastPathNode = pathNodeToLink;
-    }else {
-        TransPathItem *pathItem = dynamic_cast<TransPathItem*>(lastPathNode->getData());
-        pathItem->setNextPathNode(pathNodeToLink);
-        lastPathNode = pathNodeToLink;
+    TransPathItem *pathItem = NULL;
+    
+    if(this->firstPathNode==NULL)
+    {
+        this->firstPathNode = pathNodeToLink;
+        this->lastPathNode = pathNodeToLink;
+    }else
+    {
+        pathItem = dynamic_cast<TransPathItem*>(lastPathNode->getData());
+        if(pathItem!=NULL)
+        {
+            pathItem->setNextPathNode(pathNodeToLink);
+            this->lastPathNode = pathNodeToLink;
+        }
     }
 }
 
@@ -125,20 +112,15 @@ int HeaderItem::compareTo(OrderedData *other)
     if (otherItem != NULL)
     {
         if (this->data->getData() == otherData->getData())
-        {
             result = 0;
-        } else if(this->data->getSupport() < otherData->getSupport())
-        {
+        else if(this->data->getSupport() < otherData->getSupport())
             result = -1;
-        } else if(this->data->getSupport() == otherData->getSupport())
+        else if(this->data->getSupport() == otherData->getSupport())
         {
             if (this->data->getData() < otherData->getData())
-            {
                 result = 1;
-            } else
-            {
+            else
                 result = -1;
-            }
         }
     }
     return result;
@@ -147,7 +129,8 @@ int HeaderItem::compareTo(OrderedData *other)
 /*-------------------------------------------------------------------------------------
  * PURPOSE: prints priority, data value, frequency (e.g. "{10} 22 : 1")
  *-----------------------------------------------------------------------------------*/
-void HeaderItem::print(){
+void HeaderItem::print()
+{
     this->data->print();
     cout << endl;
 }
@@ -155,28 +138,27 @@ void HeaderItem::print(){
 void HeaderItem::increaseSupport()
 {
     if(data!=NULL)
-    {
         data->increaseSupport();
-    }
 }
 
 void HeaderItem::increaseSupport(int inc)
 {
     if(data!=NULL)
-    {
         data->increaseSupport(inc);
-    }
 }
 
 //***************** GETTERS ******************
+
 FPTreeItem* HeaderItem::getData()
 {
     return this->data;
 }
+
 FPTreeNode* HeaderItem::getFirstSimilarTreeNode()
 {
     return this->firstSimilarTreeNode;
 }
+
 NodeLL* HeaderItem::getFirstPathNode()
 {
     return this->firstPathNode;
@@ -187,7 +169,8 @@ int HeaderItem::getSimilarNodeCount()
     int similarNodeCount = 0;
     
     FPTreeNode *curr = this->firstSimilarTreeNode;
-    while (curr!=NULL) {
+    while (curr!=NULL)
+    {
         similarNodeCount++;
         curr = curr->getNextSimilarNode();
     }
@@ -201,6 +184,7 @@ NodeLL* HeaderItem::getLastPathNode()
 }
 
 //***************** SETTERS ******************
+
 void HeaderItem::setFirstSimilarTreeNode(FPTreeNode *firstSimilarTreeNode)
 {
     this->firstSimilarTreeNode = firstSimilarTreeNode;

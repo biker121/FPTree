@@ -1,21 +1,15 @@
-//
-//  FPTreeItem.cpp
-//  4710-Project-FrequentItemMining
-//
-//  Created by Brahmdeep Singh Juneja on 11/21/2013.
-//  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
-//
-
 #include "HeaderTable.hpp"
 #include "FPTreeItem.hpp"
 
 //------------------Constructor/Destructor---------------------
-FPTreeItem::FPTreeItem(){
+FPTreeItem::FPTreeItem()
+{
     this->data = 0;
     this->support = 0;
 }
 
-FPTreeItem::FPTreeItem(int data, int support){
+FPTreeItem::FPTreeItem(int data, int support)
+{
     this->data = data;
     this->support = support;
 }
@@ -27,24 +21,26 @@ FPTreeItem::~FPTreeItem(){}
 /*-------------------------------------------------------------------------------------
  * PURPOSE: increases the frequency by one
  *-----------------------------------------------------------------------------------*/
-void FPTreeItem::increaseSupport(){
+void FPTreeItem::increaseSupport()
+{
     this->support++;
 }
 
 /*-------------------------------------------------------------------------------------
  * PURPOSE: increases the frequency by one
  *-----------------------------------------------------------------------------------*/
-void FPTreeItem::increaseSupport(int inc){
+void FPTreeItem::increaseSupport(int inc)
+{
     this->support+=inc;
 }
 
 /*-------------------------------------------------------------------------------------
  * PURPOSE: increases frequency by the frequency of given item
  *-----------------------------------------------------------------------------------*/
-void FPTreeItem::increaseSupport(FPTreeItem *item){
-    if (item != NULL){
+void FPTreeItem::increaseSupport(FPTreeItem *item)
+{
+    if (item != NULL)
         this->support += item->support;
-    }
 }
 
 /*-------------------------------------------------------------------------------------
@@ -55,22 +51,24 @@ void FPTreeItem::increaseSupport(FPTreeItem *item){
  *        : +1 -> this TreeItem would appear after  the given, in alphabetical order
  *        : -1 -> this TreeItem swould appear before the given, in alphabetical order
  *-----------------------------------------------------------------------------------*/
-int FPTreeItem::compareTo(OrderedData *item){
+int FPTreeItem::compareTo(OrderedData *item)
+{
     FPTreeItem *otherFPTreeItem = dynamic_cast<FPTreeItem *>(item);
     int result = 0;
     
-    if (otherFPTreeItem != NULL){
+    if (otherFPTreeItem != NULL)
+    {
         result = this->support - otherFPTreeItem->support;
         
-        if (result == 0){//compare canonical order
+        if (result == 0) //compare canonical order
             result = otherFPTreeItem->data - this->data;
-        }
     }
     
     return result;
 }
 
-bool FPTreeItem::isEqualsTo(OrderedData *target){
+bool FPTreeItem::isEqualsTo(OrderedData *target)
+{
     FPTreeItem *otherFPTreeItem = dynamic_cast<FPTreeItem *>(target);
     bool result = false;
     
@@ -83,7 +81,8 @@ bool FPTreeItem::isEqualsTo(OrderedData *target){
 /*-------------------------------------------------------------------------------------
  * PURPOSE: prints data item and frequency
  *-----------------------------------------------------------------------------------*/
-void FPTreeItem::print(){
+void FPTreeItem::print()
+{
     cout << this->data << " : " << this->support;
 }
 

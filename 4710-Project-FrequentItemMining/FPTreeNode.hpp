@@ -1,11 +1,3 @@
-//
-//  FPTreeNode.hpp
-//  4710-Project-FrequentItemMining
-//
-//  Created by Brahmdeep Singh Juneja on 11/27/2013.
-//  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
-//
-
 #ifndef _710_Project_FrequentItemMining_FPTreeNode_hpp
 #define _710_Project_FrequentItemMining_FPTreeNode_hpp
 
@@ -37,7 +29,7 @@ private:
     void insertTransactionItem(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, int pos, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     void insertTransactionItem(NodeLL *curr, HeaderTable *htable);
     FPTreeNode *insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
-    FPTreeNode *insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOMAIN_ITEMS], HeaderTable *headerTable);
+    FPTreeNode *insertChild(FPTreeItem *target, HeaderTable *headerTable);
     
 public:
     FPTreeNode();

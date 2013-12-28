@@ -1,11 +1,3 @@
-//
-//  HeaderItem.hpp
-//  4710-Project-FrequentItemMining
-//
-//  Created by Brahmdeep Singh Juneja on 11/28/2013.
-//  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
-//
-
 #ifndef _710_Project_FrequentItemMining_HeaderItem_hpp
 #define _710_Project_FrequentItemMining_HeaderItem_hpp
 
@@ -33,8 +25,9 @@ public:
     void linkTreeNode(FPTreeNode *treeNode, HeaderItem *hash[]);
     void linkNextPath(NodeLL *path);
     
-    int compareTo(OrderedData *other); //--refactor -
     void print();
+    int compareTo(OrderedData *other);
+    
     void increaseSupport();
     void increaseSupport(int inc);
     
