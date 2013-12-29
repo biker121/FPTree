@@ -1,13 +1,3 @@
-//
-//  HeaderTable.cpp
-//  4710-Project-FrequentItemMining
-//
-//  Created by Brahmdeep Singh Juneja on 11/21/2013.
-//  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
-//
-
-#include "HeaderTable.hpp"
-
 #include <fstream>
 #include <string>
 #include <iostream>
@@ -18,34 +8,45 @@
 #include "FPTreeNode.hpp"
 #include "FPTreeItem.hpp"
 #include "HeaderItem.hpp"
+#include "HeaderTable.hpp"
 #include "HeaderItemList.hpp"
 
-//------------------------Constructors and destructors-----------------------
-HeaderTable::HeaderTable(int minSup){
+//--------------------------------------------------------------------------//
+//  HeaderTable
+//
+//  A class holding a list of <HeaderItem>s. This class is responsible for
+//  populating the header table by inserting header items sorted by frequency,
+//  also the removal of infrequent items
+//--------------------------------------------------------------------------//
+
+HeaderTable::HeaderTable(int minSup)
+{
     this->headerItems = new HeaderItemList();
     this->numDomainItems = 0;
     this->minSup = minSup;
 }
-HeaderTable::~HeaderTable(){
+
+HeaderTable::~HeaderTable()
+{
     delete(headerItems);
     this->headerItems = NULL;
-}//--------------------------------------------------------------------------
+}
 
-/*-------------------------------------------------------------------------------------
+/**
  * PURPOSE: creates a header table based on the given data file, with only frequent items
  * PARM   : fileName, absolute file name
  * PARM   : minSup, support threshold for frequent items
  * RETURN : bool success, indicating whether or not table was created successfully
- *-----------------------------------------------------------------------------------*/
-bool HeaderTable::createHeaderTable(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
+ */
+bool HeaderTable::createHeaderTable(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
+{
     bool tableCreated = false;
     bool hashFilled = false;
     
     hashFilled = HeaderTable::populateHash(fileName, hash);
     
-    if (hashFilled){
+    if (hashFilled)
         tableCreated = HeaderTable::insertHeaderItems(this, hash);
-    }
     
     return tableCreated;
 }
@@ -55,12 +56,11 @@ void HeaderTable::removeInfrequent()
     headerItems->removeInfrequent(minSup);
 }
 
-/*-------------------------------------------------------------------------------------
- * PURPOSE:
- * PARM   :
- * PARM   :
- * RETURN :
- *-----------------------------------------------------------------------------------*/
+/**
+ * PURPOSE: creates a new <HeaderItem> containing the given parameters and inserts 
+ *          it into the <HeaderItemList>
+ * RETURN : returns the item inserted into the <HeaderItemList>
+ */
 HeaderItem* HeaderTable::insertByFreqOrder(int domainItem, int support)
 {
     HeaderItem *newItem = new HeaderItem(new FPTreeItem(domainItem, support));
@@ -69,14 +69,14 @@ HeaderItem* HeaderTable::insertByFreqOrder(int domainItem, int support)
     return returned;
 }
 
-// PURPOSE : fills the given hash with their frequency in the file
-/*-------------------------------------------------------------------------------------
- * PURPOSE:
+/**
+ * PURPOSE: fills the given hash with their frequency in the file
  * PARM   :
  * PARM   :
  * RETURN :
- *-----------------------------------------------------------------------------------*/
-bool HeaderTable::populateHash(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
+ */
+bool HeaderTable::populateHash(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
+{
     bool success = false;
     ifstream dataFile;    //the input file
     int numTransactions;
@@ -87,21 +87,26 @@ bool HeaderTable::populateHash(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEM
     
     dataFile.open(fileName.c_str());
     
-    if ( dataFile.is_open() == false ){
+    if (dataFile.is_open() == false)
+    {
         cout<<"Error while opening file. "<< endl;
-    } else {
+    } else
+    {
         dataFile >> numTransactions;
         
         //cycle through each transaction
-        if (numTransactions > 0){
+        if (numTransactions > 0)
+        {
             do {
                 dataFile >> currTransaction >> transactionSize;
                 
                 //increment appropriate count
-                for (int i=0; i<transactionSize; i++){
+                for (int i=0; i<transactionSize; i++)
+                {
                     dataFile >> temp;
                     
-                    tempItem = new FPTreeItem(temp, 1); //temp is later freed
+                    //temp is later freed
+                    tempItem = new FPTreeItem(temp, 1); 
                     HeaderTable::incrementHashItem(tempItem, hash);
                 }
             } while (currTransaction < numTransactions);
@@ -110,27 +115,34 @@ bool HeaderTable::populateHash(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEM
         dataFile.close();
         success = true;
     }
+    
     return success;
 }
-
-// PURPOSE : inserts frequent items from hash into header table list and removes
-//           removes all infrequent items in hash
-/*-------------------------------------------------------------------------------------
- * PURPOSE:
+          
+/**
+ * PURPOSE: inserts frequent items from hash into header table list and removes
+ *          removes all infrequent items in hash
  * PARM   :
  * PARM   :
  * RETURN :
- *-----------------------------------------------------------------------------------*/
-bool HeaderTable::insertHeaderItems(HeaderTable *headerTable, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
+ */
+bool HeaderTable::insertHeaderItems(HeaderTable *headerTable, HeaderItem *hash[MAX_DOMAIN_ITEMS])
+{
     bool success = false;
     
-    if (headerTable != NULL && hash != NULL){
-        for (int i=0; i<MAX_DOMAIN_ITEMS; i++){
-            if (hash[i] != NULL){ //frequent
-                if (hash[i]->getData()->getSupport() < headerTable->minSup){
+    if (headerTable != NULL && hash != NULL)
+    {
+        for (int i=0; i<MAX_DOMAIN_ITEMS; i++)
+        {
+            //frequent
+            if (hash[i] != NULL)
+            {
+                if (hash[i]->getData()->getSupport() < headerTable->minSup)
+                {
                     delete(hash[i]);
                     hash[i] = NULL;
-                } else {
+                } else
+                {
                     headerTable->headerItems->orderedInsert(hash[i]); //insert by frequency
                     headerTable->numDomainItems++;
                 }
@@ -143,41 +155,47 @@ bool HeaderTable::insertHeaderItems(HeaderTable *headerTable, HeaderItem *hash[M
     return success;
 }
 
-/*-------------------------------------------------------------------------------------
+/**
  * PURPOSE: returns the hash index of the given item by applying hash expresssion
  * PARM   : *item - which is to be evaluated for a hash index
  * RETURN : int - representing the hash index
  * REMARKS: - each item must have its own unique hash index
- *-----------------------------------------------------------------------------------*/
-int HeaderTable::getHashIndex(FPTreeItem *item){
+ */
+int HeaderTable::getHashIndex(FPTreeItem *item)
+{
     int result = -1;
     
-    if (item != NULL && item->getData() >= 0 && item->getData() < MAX_DOMAIN_ITEMS){
+    if (item != NULL && item->getData() >= 0 && item->getData() < MAX_DOMAIN_ITEMS)
         result = item->getData() - 1;
-    }
     
     return result;
 }
 
-/*-------------------------------------------------------------------------------------
+/**
  * PURPOSE:
  * PARM   :
  * PARM   :
  * RETURN :
- *-----------------------------------------------------------------------------------*/
-void  HeaderTable::incrementHashItem(FPTreeItem *item, HeaderItem *hash[MAX_DOMAIN_ITEMS]){
+ */
+void  HeaderTable::incrementHashItem(FPTreeItem *item, HeaderItem *hash[MAX_DOMAIN_ITEMS])
+{
     HeaderItem *found;
     int hashIndex = -1;
     
-    if (item != NULL && hash != NULL){
+    if (item != NULL && hash != NULL)
+    {
         hashIndex = HeaderTable::getHashIndex(item);
         
-        if (hashIndex >= 0 && hashIndex < MAX_DOMAIN_ITEMS){
+        if (hashIndex >= 0 && hashIndex < MAX_DOMAIN_ITEMS)
+        {
             found = hash[hashIndex];
             
-            if (found == NULL){ //if no entry
+            //if no entry
+            if (found == NULL)
+            {
                 hash[hashIndex] = new HeaderItem(item);
-            } else {
+            }else
+            {
                 found->getData()->increaseSupport(item);
                 delete(item);
             }
@@ -185,9 +203,9 @@ void  HeaderTable::incrementHashItem(FPTreeItem *item, HeaderItem *hash[MAX_DOMA
     }
 }
 
-/*-------------------------------------------------------------------------------------
+/**
  * PURPOSE: simply prints the entire header table to console
- *-----------------------------------------------------------------------------------*/
+ */
 void HeaderTable::printTable()
 {
     cout << "Header table [" << numDomainItems << "] : " << endl;
@@ -195,7 +213,8 @@ void HeaderTable::printTable()
     cout << endl;
 }
 
-//************************* GETTERS ************************
+//------------------------------GETTERS-----------------------------//
+
 int HeaderTable::getNumDomainItem()
 {
     return this->numDomainItems;

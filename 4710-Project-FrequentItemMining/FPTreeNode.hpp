@@ -10,9 +10,9 @@
 
 using namespace std;
 
+class NodeLL;
 class FPTreeNode;
 class DLinkedList;
-class NodeLL;
 class HeaderItem;
 class FPTreeItem;
 class HeaderTable;
@@ -28,6 +28,7 @@ private:
     
     void insertTransactionItem(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, int pos, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     void insertTransactionItem(NodeLL *curr, HeaderTable *htable);
+    
     FPTreeNode *insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     FPTreeNode *insertChild(FPTreeItem *target, HeaderTable *headerTable);
     
@@ -39,22 +40,24 @@ public:
     void insertTransaction(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, HeaderItem *hash[MAX_DOMAIN_ITEMS]);
     void insertTransaction(DLinkedList *items, HeaderTable *htable);
     
-    //************* minor methods **********
+    //--------------------MINOR METHODS----------------------------//
     int compareTo(OrderedData *);
     bool isEqualsTo(OrderedData *);
-    void print();
+    
     void print(int level);
+    void print();
+    
     bool hasSingleChild();
     int countNodes();
     
-    //************* GETTERS ****************
+    //--------------------GETTERS---------------------------------//
     FPTreeItem* getData();
     FPTreeNode* getNextSimilarNode();
     FPTreeNode* getParent();
     FPTreeNode* getNextSibling();
     FPTreeNode* getHeadChild();
     
-    //************* SETTERS ****************
+    //--------------------SETTERS---------------------------------//
     void setNextSibling(FPTreeNode *nextSibling);
     void setNextSimilarNode(FPTreeNode *nextSimilarNode);
 };

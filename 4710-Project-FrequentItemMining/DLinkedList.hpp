@@ -4,7 +4,8 @@
 class NodeLL;
 class OrderedData;
 
-class DLinkedList {
+class DLinkedList
+{
   
 private:
     NodeLL *head;
@@ -18,7 +19,6 @@ public:
     NodeLL *find(OrderedData *target);
     NodeLL *addToFront(OrderedData *item);
     NodeLL *addToBack(OrderedData *item);
-    
     OrderedData* remove(OrderedData *target);
     
     void remove(NodeLL *node);

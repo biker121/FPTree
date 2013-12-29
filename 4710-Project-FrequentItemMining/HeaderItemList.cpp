@@ -3,6 +3,13 @@
 #include "NodeLL.hpp"
 #include "FPTreeItem.hpp"
 
+//--------------------------------------------------------------------------//
+//  HeaderItemList
+//
+//  Basically a linked list but contains some methods required specifically
+//  for performing functions on header table items.
+//--------------------------------------------------------------------------//
+
 HeaderItemList::HeaderItemList()
 {
     head = NULL;
@@ -19,7 +26,14 @@ HeaderItemList::~HeaderItemList()
     }
 }
 
-// used for projected tree header tables
+/**
+ * PURPOSE: inserts a given <HeaderItem> into the list sorted by a frequency order
+ * RETURNS: returns the same <HeaderItem> item which is passed as a parameter if the 
+ *          header table does not already include it, otherwise returns the found 
+ *          item in the header table.
+ * REMARKS: if the given  <HeaderItem> is found in the table, then it also increase
+ *          the support by given <HeaderItem>
+ */
 HeaderItem* HeaderItemList::insertByFreqOrder(HeaderItem *item)
 {
     HeaderItem *targetItem = NULL;
@@ -54,6 +68,11 @@ HeaderItem* HeaderItemList::insertByFreqOrder(HeaderItem *item)
     return targetItem;
 }
 
+/**
+ * PURPOSE: detaches the node containing the given item from the headerlist
+ * RETURNS: returns the <NodeLL> if found in the header list otherwise a NULL 
+ *          is returned
+ */
 NodeLL* HeaderItemList::extract(int item)
 {
     NodeLL *curr = head;
@@ -160,6 +179,10 @@ void HeaderItemList::orderedInsert(NodeLL *newNode)
     }
 }
 
+/**
+ * PURPOSE: removes and deletes all the infrequent header items for a given minsup value
+ * REMARKS: this method also removes the infrequent items from the linked path nodes
+ */
 void HeaderItemList::removeInfrequent(int minsup)
 {
     HeaderItem *currHItem = NULL;
@@ -213,7 +236,8 @@ void HeaderItemList::print()
     
 }
 
-//****************** GETTERS *******************
+//----------------------GETTERS-----------------------------//
+
 NodeLL* HeaderItemList::getHeadNode()
 {
     return head;

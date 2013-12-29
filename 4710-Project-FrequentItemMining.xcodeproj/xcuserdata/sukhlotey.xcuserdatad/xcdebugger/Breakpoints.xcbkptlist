@@ -8,13 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "4710-Project-FrequentItemMining/main.cpp"
-         timestampString = "409376173.95733"
+         timestampString = "409967027.085897"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "109"
-         endingLineNumber = "109"
-         landmarkName = "findFreqItems(int k, vector&lt;string&gt; *items, string label, int labelSize, int showFPs)"
-         landmarkType = "7">
+         startingLineNumber = "101"
+         endingLineNumber = "101">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

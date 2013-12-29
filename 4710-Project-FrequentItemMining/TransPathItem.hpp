@@ -7,7 +7,8 @@ class FPTreeItem;
 class NodeLL;
 class DLinkedList;
 
-class TransPathItem : public OrderedData {
+class TransPathItem : public OrderedData
+{
     
 private:
     FPTreeItem *item;
@@ -21,12 +22,12 @@ public:
     int compareTo(OrderedData *other);
     void print();
     
-    //**************** GETTERS *******************
+    //----------------------GETTERS-------------------------//
     FPTreeItem* getItem();
     NodeLL* getNextPathNode();
     DLinkedList* getPathList();
     
-    //**************** SETTERS *******************
+    //----------------------SETTERS-------------------------//
     void setPathList(DLinkedList *pathList);
     void setNextPathNode(NodeLL* next);
     void setItem(FPTreeItem* item);

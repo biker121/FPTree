@@ -31,14 +31,14 @@ public:
     void increaseSupport();
     void increaseSupport(int inc);
     
-    //************* GETTERS *************
+    //----------------------GETTERS-------------------------//
     FPTreeItem* getData();
     FPTreeNode* getFirstSimilarTreeNode();
     NodeLL* getFirstPathNode();
     NodeLL* getLastPathNode();
     int getSimilarNodeCount();
     
-    //************* SETTERS *************
+    //----------------------SETTERS-------------------------//
     void setFirstSimilarTreeNode(FPTreeNode *firstSimilarTreeNode);
     void setFirstPathNode(NodeLL *firstPathNode);
     void setLastPathNode(NodeLL *lastPathNode);

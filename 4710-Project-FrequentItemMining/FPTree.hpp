@@ -48,14 +48,16 @@ public :
     int totalTreeNodes();
     bool isSinglePath();
     bool isEmpty();
+    
     void printHeaderTable();
-    string getLabelPrefix();
-    vector<string> *getSinglePath();
-    int getBaseLevel();
-    
-    int getMinSup();
-    HeaderTable* getHeaderTable();
-    
     void printTree();
+    
+    //------------------------GETTERS-------------------------------//
+    
+    HeaderTable* getHeaderTable();
+    vector<string> *getSinglePath();
+    string getLabelPrefix();
+    int getBaseLevel();
+    int getMinSup();
 };
 #endif

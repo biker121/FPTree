@@ -1,13 +1,3 @@
-//
-//  DataMining.cpp
-//  4710-Project-FrequentItemMining
-//
-//  Created by Brahmdeep Singh Juneja on 12/16/2013.
-//  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
-//
-
-#include "DataMining.hpp"
-
 #include <vector>
 #include <string>
 
@@ -16,6 +6,7 @@
 #include "FPTreeItem.hpp"
 #include "HeaderTable.hpp"
 #include "HeaderItem.hpp"
+#include "DataMining.hpp"
 #include "DLinkedList.hpp"
 #include "TransPathItem.hpp"
 #include "NodeLL.hpp"
@@ -24,7 +15,10 @@ DataMining::DataMining()
 {
     memset(this->k_level_itemset_counts, 0, (sizeof(int) * MAX_DOMAIN_ITEMS) );
 }
-DataMining::~DataMining(){}
+
+DataMining::~DataMining()
+{
+}
 
 void DataMining::processFile(string fileName, int minSup, int showFPs, int showTime, int countFPs, int countNodes)
 {
@@ -32,7 +26,8 @@ void DataMining::processFile(string fileName, int minSup, int showFPs, int showT
     clock_t start;
     double duration;
     
-    if (showFPs == 1){
+    if (showFPs == 1)
+    {
         cout << "---------showFPs=" << showFPs << "-----------" << endl;
     }
     
@@ -45,7 +40,8 @@ void DataMining::processFile(string fileName, int minSup, int showFPs, int showT
     //----------END-------
     duration = (clock() - start) / (double)  CLOCKS_PER_SEC;
     
-    if (showFPs == 1){
+    if (showFPs == 1)
+    {
         cout << endl;
     }
     
@@ -106,20 +102,22 @@ void DataMining::findFreqItems(int k, vector<string> *items, string label, int l
         {
             string curri = items->at(i);
             
-            //record - relative 1-itemset
+            // record - relative 1-itemset
             k_level_itemset_counts[labelSize+k-1]++;
             
             if (showFPs == 1)
                 cout << "{" << formattedLabel << items->at(i) << "}" << endl;
             
-            for (int j=i+1; j<items->size(); j++) {
+            for (int j=i+1; j<items->size(); j++)
+            {
                 string currj = items->at(j);
                 string joint = curri + "," + currj;
                 fitems->push_back(joint);
             }
         }
         
-    }if(k>1) {
+    }else if(k>1)
+    {
         for(int i=0; i<items->size(); i++)
         {
             string curri = items->at(i);
@@ -149,13 +147,13 @@ void DataMining::findFreqItems(int k, vector<string> *items, string label, int l
         }
     }
     
-    //record - relative k-itemsets, where k>1
+    // record - relative k-itemsets, where k>1
     for (int i=0; i<fitems->size(); i++)
     {
         k_level_itemset_counts[labelSize+k]++;
         
         if (showFPs == 1)
-            cout << "{" << formattedLabel << fitems->at(i) << "}" << endl; //DEBUG
+            cout << "{" << formattedLabel << fitems->at(i) << "}" << endl; 
     }
     
     
@@ -167,7 +165,14 @@ void DataMining::findFreqItems(int k, vector<string> *items, string label, int l
 
 void DataMining::FPGrowthMine(FPTree* tree, int showFPs, int countFPs)
 {
-    //record - relative 0-itemset
+    HeaderTable *headerTable = NULL;
+    NodeLL *currHeaderNode = NULL;
+    HeaderItem *headerItem = NULL;
+    FPTree *newProjTree = NULL;
+    HeaderTable *projHeader = NULL;
+    FPTreeNode *currSimilarNode = NULL;
+    
+    // record - relative 0-itemset
     if (tree->getBaseLevel() > 0 && tree->getLabelPrefix() != "")
     {
         k_level_itemset_counts[tree->getBaseLevel()-1]++;
@@ -182,26 +187,26 @@ void DataMining::FPGrowthMine(FPTree* tree, int showFPs, int countFPs)
         findFreqItems(1, singletons, tree->getLabelPrefix(), tree->getBaseLevel(), showFPs);
     } else
     {
-    	HeaderTable *headerTable = tree->getHeaderTable();
+    	headerTable = tree->getHeaderTable();
         
         // Iterates through each header item in the header table starting from
         // the bottom to the top
-        NodeLL *currHeaderNode = dynamic_cast<NodeLL*>(headerTable->getLowestFreqNode());
+        currHeaderNode = dynamic_cast<NodeLL*>(headerTable->getLowestFreqNode());
         while(currHeaderNode != NULL)
         {
-            HeaderItem *headerItem = (HeaderItem*)currHeaderNode->getData();
+            headerItem = (HeaderItem*)currHeaderNode->getData();
             DLinkedList *paths[headerItem->getSimilarNodeCount()];
             DLinkedList *path = NULL;
             
-            FPTree *newProjTree = new FPTree(tree->getMinSup(), headerItem->getData()->getData(), tree);
-            HeaderTable *projHeader = newProjTree->getHeaderTable();
+            newProjTree = new FPTree(tree->getMinSup(), headerItem->getData()->getData(), tree);
+            projHeader = newProjTree->getHeaderTable();
             
             int currPathIndex = 0;
             
             // Iterates over nodes in the FP tree starting with a given header item
             // and generates a new list containing that path following the global
             // FP tree sorting order
-            FPTreeNode *currSimilarNode = headerItem->getFirstSimilarTreeNode();
+            currSimilarNode = headerItem->getFirstSimilarTreeNode();
             while(currSimilarNode != NULL)
             {
                 paths[currPathIndex] = new DLinkedList();
@@ -235,7 +240,7 @@ void DataMining::FPGrowthMine(FPTree* tree, int showFPs, int countFPs)
             // while also filtering out the infrequents from the paths
             projHeader->removeInfrequent();
             
-            //insert all paths and DELETE them
+            // insert all paths and DELETE them
             for (int i=0; i<headerItem->getSimilarNodeCount(); i++)
             {
                 newProjTree->insertTransaction(paths[i]);
@@ -252,20 +257,20 @@ void DataMining::FPGrowthMine(FPTree* tree, int showFPs, int countFPs)
     }
 }
 
-/*-----------------------------------------------------------------------------------
+/**
  * PURPOSE : primary handler method for mining a given datafile with indicated minsup
  * PARM    : string fileName, absolute file name
  * PARM    : int minSup, support threshold for frequent items
- *----------------------------------------------------------------------------------*/
+ */
 FPTree* DataMining::createTree(string fileName, int minSup)
 {
     HeaderItem **hash =  new HeaderItem *[MAX_DOMAIN_ITEMS];
     FPTree *tree = new FPTree(minSup);
     
-    //first pass - populate frequent items
+    // first pass - populate frequent items
     tree->createHeaderTable(fileName, hash); //will also fill hash[] with frequent 1-itemsets
     
-    //second pass - tree creation of frequent items
+    // second pass - tree creation of frequent items
     if (tree->getHeaderTable()->getNumDomainItem() > 0) {
         tree->createTree(fileName, hash);
         

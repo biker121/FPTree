@@ -6,6 +6,16 @@
 #include "NodeLL.hpp"
 #include "DLinkedList.hpp"
 
+//--------------------------------------------------------------------------//
+//  TransPathItem
+//
+//  Data type for a transaction path list, which is used while building paths
+//  for projected trees. This object contains a <FPTree> data item and a link to
+//  the next similar path node, which is later set when reading paths.
+//  A link to the parent <DLinkedList> of the next similar node is also stored
+//  as it is required for properly removing the item from the list.
+//--------------------------------------------------------------------------//
+
 TransPathItem::TransPathItem(FPTreeItem *item, DLinkedList *pathList)
 {
     this->item = item;
@@ -20,7 +30,7 @@ TransPathItem::~TransPathItem()
     this->pathList = NULL;
 }
 
-//******************* MINOR METHODS *****************
+//----------------------MINOR METHODS-----------------------//
 
 int TransPathItem::compareTo(OrderedData *other)
 {
@@ -33,7 +43,7 @@ void TransPathItem::print()
         this->item->print();
 }
 
-//**************** GETTERS *******************
+//----------------------GETTERS-----------------------------//
 
 FPTreeItem* TransPathItem::getItem()
 {
@@ -50,7 +60,7 @@ DLinkedList* TransPathItem::getPathList()
     return pathList;
 }
 
-//**************** SETTERS *******************
+//----------------------SETTERS-----------------------------//
 
 void TransPathItem::setNextPathNode(NodeLL *next)
 {

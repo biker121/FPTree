@@ -1,19 +1,9 @@
-//
-//  FPTree.cpp
-//  4710-Project-FrequentItemMining
-//
-//  Created by Brahmdeep Singh Juneja on 11/26/2013.
-//  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
-//
-
-#include "FPTree.hpp"
-
 #include <iostream>
 #include <string>
 #include <fstream>
 
+#include "FPTree.hpp"
 #include "FPContants.hpp"
-
 #include "DLinkedList.hpp"
 #include "FPTreeNode.hpp"
 #include "HeaderItem.hpp"
@@ -21,7 +11,12 @@
 #include "HeaderTable.hpp"
 #include "TransPathItem.hpp"
 
-//------------------------Constructors and destructors-----------------------
+//--------------------------------------------------------------------------//
+//  FPTree
+//
+//  
+//--------------------------------------------------------------------------//
+
 FPTree::FPTree(int minSup)
 {
     this->headerTable = new HeaderTable(minSup);
@@ -46,24 +41,24 @@ FPTree::~FPTree()
 {
     delete(headerTable);
     delete(root);
-}//-------------------------------------------------------------------------
+}
 
-/*-----------------------------------------------------------------------------------
+/**
  * PURPOSE:
  * PARM   :
  * PARM   :
  * RETURN :
  * REMARKS:
- *----------------------------------------------------------------------------------*/
+ */
 void FPTree::createHeaderTable(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 {
     this->headerTable->createHeaderTable(fileName, hash);
 }
 
-/*-----------------------------------------------------------------------------------
+/**
  * PURPOSE: creates the FP-Tree by reading and inserting one transaction at a time for
  *          only the frequent items
- *----------------------------------------------------------------------------------*/
+ */
 void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 {
     ifstream dataFile;
@@ -79,7 +74,7 @@ void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
     
     dataFile.open(fileName.c_str());
     
-    if ( dataFile.is_open() == false )
+    if (dataFile.is_open() == false)
     {
         cout<<"Error while opening file. "<< endl;
     } else
@@ -123,7 +118,9 @@ void FPTree::createTree(string fileName, HeaderItem *hash[MAX_DOMAIN_ITEMS])
     delete[] buffer;
 }
 
-// PURPOSE: sorts **array based by comparing their counterparts in the **hash, in descending order
+/**
+ * PURPOSE: sorts **array based by comparing their counterparts in the **hash, in descending order
+ */
 void FPTree::sortByPriority(FPTreeItem **array, int size, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 {
     FPTreeItem *temp;
@@ -150,28 +147,26 @@ void FPTree::sortByPriority(FPTreeItem **array, int size, HeaderItem *hash[MAX_D
     }
 }
 
-/*----------------------------------------------------------------------------
+/**
  * PURPOSE: passes job to root node which recursively inserts each item
  * PARM   : buffer - items to be inserted into tree
  * PARM   : size - buffer size
  * PARM   : hash - passed for deleting consumed items to avoid dangling ptrs
- * REMARKS: - inserts all items from the array
- *          - any item from items[] that are not used, are freed
- *--------------------------------------------------------------------------*/
+ * REMARKS: inserts all items from the array any item from items[] that 
+ *          are not used, are freed
+ */
 void FPTree::insertTransaction(FPTreeItem *buffer[MAX_DOMAIN_ITEMS], int size, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 {
     if (size > 0)
-    {
         this->root->insertTransaction(buffer, size, hash);
-    }
 }
 
-/*----------------------------------------------------------------------------
+/**
  * PURPOSE:
  * PARM   :
  * PARM   :
  * REMARKS: - frees data items from transactionItems list
- *--------------------------------------------------------------------------*/
+ */
 void FPTree::insertTransaction(DLinkedList *transactionItems)
 {
     if (transactionItems->getSize() > 0)
@@ -182,7 +177,6 @@ void FPTree::insertTransaction(DLinkedList *transactionItems)
 
 bool FPTree::isEmpty()
 {
-    // DEBUG not sure
     return (this->root->getHeadChild()==NULL);
 }
 
@@ -191,7 +185,8 @@ bool FPTree::isSinglePath()
     bool isSinglePath = true;
     
     FPTreeNode *curr = root;
-    while (curr!=NULL && isSinglePath) {
+    while (curr!=NULL && isSinglePath)
+    {
         isSinglePath = curr->hasSingleChild();
         curr = curr->getHeadChild();
     }
@@ -199,14 +194,21 @@ bool FPTree::isSinglePath()
     return isSinglePath;
 }
 
-// PURPOSE: returns total number of nodes in the tree *including root*
-int FPTree::totalTreeNodes(){
+/**
+ * PURPOSE:  counts total number of nodes in the tree *including root*
+ * PARM   :
+ * PARM   :
+ * REMARKS: frees data items from transactionItems list
+ */
+
+int FPTree::totalTreeNodes()
+{
     return this->root->countNodes();;
 }
 
-/*----------------------------------------------------------------------------
+/**
  * PURPOSE: prints the tree structure to console by recursively calling print node
- *--------------------------------------------------------------------------*/
+ */
 void FPTree::printTree()
 {
     this->root->print(0);
@@ -218,7 +220,9 @@ void FPTree::printHeaderTable()
     this->headerTable->printTable();
 }
 
-// PURPOSE: iterate through projections from yourself -> original tree and append label at each projection
+/**
+ * PURPOSE: iterate through projections from yourself -> original tree and append label at each projection
+ */
 string FPTree::getLabelPrefix()
 {
     stringstream ss;
@@ -237,7 +241,9 @@ string FPTree::getLabelPrefix()
     return ss.str();
 }
 
-// PURPOSE: returns integer representing base k-level projection
+/**
+ * PURPOSE: returns integer representing base k-level projection
+ */
 int FPTree::getBaseLevel()
 {
     int lvl = 0;
@@ -252,7 +258,8 @@ int FPTree::getBaseLevel()
     return lvl;
 }
 
-//**************************** GETTERS ************************
+//----------------------------GETTERS-----------------------------//
+
 int FPTree::getMinSup()
 {
     return this->minSup;
@@ -263,25 +270,23 @@ HeaderTable* FPTree::getHeaderTable()
     return headerTable;
 }
 
+/**
+ * PURPOSE: creates a list domain items contained in this single path tree
+ * RETURN : returns a vector of string, where each string is a domain item
+ * REMARKS: assumes tree is a single path
+ */
 vector<string> *FPTree::getSinglePath()
 {
     vector<string> *path = new vector<string>();
     FPTreeNode *curr = root->getHeadChild();
     
-    //DEBUG optimization: remove this check and
-    //assume you get single path already
-    if(isSinglePath())
+    while (curr!=NULL && curr->getData()!=NULL)
     {
-        while (curr!=NULL && curr->getData()!=NULL)
-        {
-            string item;
-            item = to_string(curr->getData()->getData());
-            path->push_back(item);
+        string item;
+        item = to_string(curr->getData()->getData());
+        path->push_back(item);
             
-//            // DEBUG Print
-//            cout << "string created" << item << endl;
-            curr = curr->getHeadChild();
-        }
+        curr = curr->getHeadChild();
     }
     
     return path;

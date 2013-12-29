@@ -1,10 +1,9 @@
-//
-//  OrderedData.cpp
-//  4710-Project-FrequentItemMining
-//
-//  Created by Brahmdeep Singh Juneja on 11/21/2013.
-//  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
-//
 #include "OrderedData.hpp"
+
+//--------------------------------------------------------------------------//
+// OrderedData
+//
+// abstract class created to group objects together, in an ordered fashion
+//--------------------------------------------------------------------------//
 
 OrderedData::~OrderedData(){}

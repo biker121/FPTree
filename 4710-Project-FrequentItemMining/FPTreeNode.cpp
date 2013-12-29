@@ -7,7 +7,13 @@
 #include "DLinkedList.hpp"
 #include "TransPathItem.hpp"
 
-//------------------------Constructors and destructors-----------------------
+//--------------------------------------------------------------------------//
+//  FPTreeNode
+//
+//  An <FPTree> node that holds a <FPTree> data, and multiple pointers required
+//  for <FPTree> data structure.
+//--------------------------------------------------------------------------//
+
 FPTreeNode::FPTreeNode()
 {
     this->data = NULL;
@@ -26,6 +32,7 @@ FPTreeNode::FPTreeNode(FPTreeItem *data, FPTreeNode *parent, FPTreeNode *nextSib
     this->nextSimilarNode = NULL;
     this->headChild = NULL;
 }
+
 FPTreeNode::~FPTreeNode()
 {
     if (data != NULL)
@@ -35,15 +42,15 @@ FPTreeNode::~FPTreeNode()
         delete(nextSibling);
     if (headChild != NULL)
         delete(headChild);
-}//--------------------------------------------------------------------------
+}
 
-/*-------------------------------------------------------------------------------------
+/**
  * PURPOSE: sequentially inserts the given items into 'this' node structure
- * PARM   : pre-sorted list of items (FPTreeItem *) that are to be inserted into
- *          current sub-tree
+ * PARM   : pre-sorted list of items (FPTreeItem *) that are to be inserted 
+ *          into current sub-tree
  * PARM   : hash[] for linking tree nodes
- * REMARKS: - items[] must be prioritized and contain only frequent items
- *-----------------------------------------------------------------------------------*/
+ * REMARKS: items[] must be prioritized and contain only frequent items
+ */
 void FPTreeNode::insertTransaction(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 {
     this->insertTransactionItem(items, size, 0, hash); //recursive call
@@ -54,8 +61,14 @@ void FPTreeNode::insertTransaction(DLinkedList *items, HeaderTable *htable)
     this->insertTransactionItem(items->getHead(), htable); //recursive call
 }
 
-// PURPOSE: Recursively inserts each NodeLL's data (which should be of type FPTreeItem)
-//          into node's sub-tree
+/**
+ * PURPOSE: Recursively inserts each NodeLL's data (which should be of type FPTreeItem)
+ *          into node's sub-tree
+ * PARM   : pre-sorted list of items (FPTreeItem *) that are to be inserted
+ *          into current sub-tree
+ * PARM   : hash[] for linking tree nodes
+ * REMARKS: items[] must be prioritized and contain only frequent items
+ */
 void FPTreeNode::insertTransactionItem(FPTreeItem *items[MAX_DOMAIN_ITEMS], int size, int pos, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 {
     FPTreeNode *targetNode;
@@ -92,15 +105,14 @@ void FPTreeNode::insertTransactionItem(NodeLL *curr, HeaderTable *htable)
 }
 
 
-/*-------------------------------------------------------------------------------------
+/**
  * PURPOSE: adds target as one of its children
  * PARM   : *target - item that is to be added as a child
  * PARM   : *headerTable - for used for linking new nodes to the table
  * RETURN : returns a ptr to the child that is added
  * REMARKS: if 'this' already contains a child similar to target, it increments the
- *          child's frequency instead of adding a new node
- *        : consumes given target
- *-----------------------------------------------------------------------------------*/
+ *          child's frequency instead of adding a new node, it consumes given target
+ */
 FPTreeNode* FPTreeNode::insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 {
     FPTreeNode *targetNode = NULL;
@@ -148,15 +160,14 @@ FPTreeNode* FPTreeNode::insertChild(FPTreeItem *target, HeaderItem *hash[MAX_DOM
     return targetNode;
 }
 
-/*-------------------------------------------------------------------------------------
+/**
  * PURPOSE: adds target as one of its children
  * PARM   : *target - item that is to be added as a child
  * PARM   : *headerTable - for used for linking new nodes to the table
  * RETURN : returns a ptr to the child that is added
  * REMARKS: if 'this' already contains a child similar to target, it increments the
- *          child's frequency instead of adding a new node
- *        : consumes given target
- *-----------------------------------------------------------------------------------*/
+ *          child's frequency instead of adding a new node, consumes given target
+ */
 FPTreeNode* FPTreeNode::insertChild(FPTreeItem *target, HeaderTable *headerTable)
 {
     FPTreeNode *targetNode = NULL;
@@ -206,7 +217,9 @@ FPTreeNode* FPTreeNode::insertChild(FPTreeItem *target, HeaderTable *headerTable
     return targetNode;
 }
 
-// PURPOSE: counts total number of in its subtree, including itself
+/** 
+ * PURPOSE: counts total number of in its subtree, including itself
+ */
 int FPTreeNode::countNodes()
 {
     int count = 1;
@@ -219,14 +232,14 @@ int FPTreeNode::countNodes()
     return count;
 }
 
-/*-------------------------------------------------------------------------------------
+/**
  * PURPOSE: compares based on alphabetical order and returns an integer representing
  *          result of comparison
  * PARM   : *OrderedItem , item that is to be compared
- * PARM   : 0  -> if both have similar data value
- *        : +1 -> current tree would appear after  the given, in a sorted order
- *        : -1 -> current tree swould appear before the given, in a sorted order
- *-----------------------------------------------------------------------------------*/
+ * RETURN : 0 -> if both have similar data value
+ *         +1 -> current tree would appear after  the given, in a sorted order
+ *         -1 -> current tree swould appear before the given, in a sorted order
+ */
 int FPTreeNode::compareTo(OrderedData *item)
 {
     FPTreeNode *otherFPTreeNode = dynamic_cast<FPTreeNode *>(item);
@@ -256,18 +269,18 @@ bool FPTreeNode::isEqualsTo(OrderedData *item)
     return result;
 }
 
-/*-------------------------------------------------------------------------------------
+/**
  * PURPOSE: prints the contents of the current node
- *-----------------------------------------------------------------------------------*/
+ */
 void FPTreeNode::print()
 {
     this->data->print();
 }
 
-/*-------------------------------------------------------------------------------------
+/**
  * PURPOSE: prints the contents of node, subling, then children
  * PARM   : level - to identify pad space
- *-----------------------------------------------------------------------------------*/
+ */
 void FPTreeNode::print(int level)
 {
     stringstream ss;
@@ -304,23 +317,41 @@ bool FPTreeNode::hasSingleChild()
     return (headChild==NULL || headChild->getNextSibling()==NULL);
 }
 
-//********************** GETTERS ***********************
+//------------------------GETTERS---------------------------------//
+
 FPTreeItem* FPTreeNode::getData()
 {
     return this->data;
 }
 
-FPTreeNode* FPTreeNode::getNextSimilarNode(){ return this->nextSimilarNode; }
-FPTreeNode* FPTreeNode::getParent(){ return this->parent; }
-FPTreeNode* FPTreeNode::getNextSibling(){ return this->nextSibling; }
-FPTreeNode* FPTreeNode::getHeadChild(){ return this->headChild; }
+FPTreeNode* FPTreeNode::getNextSimilarNode()
+{
+    return this->nextSimilarNode;
+}
 
-//********************** Setters ***********************
+FPTreeNode* FPTreeNode::getParent()
+{
+    return this->parent;
+}
+
+FPTreeNode* FPTreeNode::getNextSibling()
+{
+    return this->nextSibling;
+}
+
+FPTreeNode* FPTreeNode::getHeadChild()
+{
+    return this->headChild;
+}
+
+//------------------------SETTERS---------------------------------//
+
 void FPTreeNode::setNextSibling(FPTreeNode *nextSibling)
 {
     this->nextSibling = nextSibling;
 }
 
-void FPTreeNode::setNextSimilarNode(FPTreeNode *nextSimilarNode){
+void FPTreeNode::setNextSimilarNode(FPTreeNode *nextSimilarNode)
+{
     this->nextSimilarNode = nextSimilarNode;
 }

@@ -8,14 +8,8 @@ using namespace std;
 class HeaderTable;
 class FPTreeItem;
 
-//-----------------------------------------------------------------------
-// CLASS: FPTreeItem
-//
-// Author: Brahmdeep Singh Juneja
-//
-// REMARKS: Designed to be used as both header item and node data item
-//-----------------------------------------------------------------------
-class FPTreeItem : public OrderedData {
+class FPTreeItem : public OrderedData
+{
     
 private:
     int data;
@@ -30,12 +24,13 @@ public:
     void increaseSupport(int inc);
     void increaseSupport(FPTreeItem *item);
     
-    //*****************Minor Methods********************
-    int compareTo(OrderedData *item);       //compares frequency
-    void print();
-    bool isEqualsTo(OrderedData *target);    //compares data value
+    //----------------MINOR METHODS---------------------------//
+    int compareTo(OrderedData *item);        // compares frequency
+    bool isEqualsTo(OrderedData *target);    // compares data value
     
-    //************ Getters ********
+    void print();
+    
+    //----------------GETTERS---------------------------------//
     int getData();
     int getSupport();
 };

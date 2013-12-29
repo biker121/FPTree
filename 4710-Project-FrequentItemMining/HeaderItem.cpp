@@ -6,7 +6,14 @@
 #include "TransPathItem.hpp"
 #include "DLinkedList.hpp"
 
-//------------------------Constructors and destructors-----------------------
+//--------------------------------------------------------------------------//
+//  HeaderItem
+//
+//  <HeaderTable> data type containing <FPTreeItem>, a link to the next
+//  similar node in the <FPTree>, and also a link to the first node in
+//  transaction path list
+//--------------------------------------------------------------------------//
+
 HeaderItem::HeaderItem(FPTreeItem *data)
 {
     this->data = data;
@@ -14,15 +21,24 @@ HeaderItem::HeaderItem(FPTreeItem *data)
     this->firstPathNode = NULL;
 }
 
-//requires others to destroy path and tree nodes
+/**
+ * PURPOSE: requires others to destroy path and tree nodes
+ */
 HeaderItem::~HeaderItem()
 {
     delete(data);
     this->data = NULL;
     this->firstPathNode = NULL;
     this->firstSimilarTreeNode = NULL;
-}//--------------------------------------------------------------------------
+}
 
+/**
+ * PURPOSE: removes and deletes all the path nodes by chasing the links
+ *          from the first path node
+ * REMARKS: this method is called when a header item is found to be infrequent
+ *          and as a result this removes the similar infrequent items from all 
+ *          the transaction paths
+ */
 void HeaderItem::removeInfreqPathItems()
 {
     NodeLL *pathNode = firstPathNode;
@@ -47,11 +63,11 @@ void HeaderItem::removeInfreqPathItems()
     }
 }
 
-/*-------------------------------------------------------------------------------------
+/**
  * PURPOSE: adds the link to the given node for the appropriate headerItem
- * PARM   : *node - that is to be linked to the header table
- * REMARKS: - this method links the node without question
- *-----------------------------------------------------------------------------------*/
+ * PARAM  : treenode to be linked to the header table
+ * REMARKS: this method links the node without question
+ */
 void HeaderItem::linkTreeNode(FPTreeNode *treeNode, HeaderItem *hash[MAX_DOMAIN_ITEMS])
 {
     FPTreeNode *curr = firstSimilarTreeNode;
@@ -76,6 +92,11 @@ void HeaderItem::linkTreeNode(FPTreeNode *treeNode, HeaderItem *hash[MAX_DOMAIN_
     }
 }
 
+/**
+ * PURPOSE: links the last similar node the give <NodeLL> and sets it as the last
+ *          path similar node
+ * PARAM  : Node pointer to be linked
+ */
 void HeaderItem::linkNextPath(NodeLL *pathNodeToLink)
 {
     TransPathItem *pathItem = NULL;
@@ -95,14 +116,14 @@ void HeaderItem::linkNextPath(NodeLL *pathNodeToLink)
     }
 }
 
-/*-------------------------------------------------------------------------------------
+/**
  * PURPOSE: compares the frequency of two domain items 
- * PARM   : HeaderItem - item that is being compared
+ * PARM   : HeaderItem being compared
  * RETURN : <0 = 'this' item is less frequent
  *           0 = same item regardless of frequency
  *          >0 = 'this' item is more frequent
  * REMARKS: NULL items are taken as lowest priority
- *-----------------------------------------------------------------------------------*/
+ */
 int HeaderItem::compareTo(OrderedData *other)
 {
     HeaderItem *otherItem = dynamic_cast<HeaderItem *>(other);
@@ -126,9 +147,9 @@ int HeaderItem::compareTo(OrderedData *other)
     return result;
 }
 
-/*-------------------------------------------------------------------------------------
+/**
  * PURPOSE: prints priority, data value, frequency (e.g. "{10} 22 : 1")
- *-----------------------------------------------------------------------------------*/
+ */
 void HeaderItem::print()
 {
     this->data->print();
@@ -147,7 +168,7 @@ void HeaderItem::increaseSupport(int inc)
         data->increaseSupport(inc);
 }
 
-//***************** GETTERS ******************
+//--------------------GETTERS------------------------//
 
 FPTreeItem* HeaderItem::getData()
 {
@@ -183,7 +204,7 @@ NodeLL* HeaderItem::getLastPathNode()
     return lastPathNode;
 }
 
-//***************** SETTERS ******************
+//--------------------SETTERS------------------------//
 
 void HeaderItem::setFirstSimilarTreeNode(FPTreeNode *firstSimilarTreeNode)
 {

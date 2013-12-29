@@ -1,11 +1,3 @@
-//
-//  HeaderTable.hpp
-//  4710-Project-FrequentItemMining
-//
-//  Created by Brahmdeep Singh Juneja on 11/21/2013.
-//  Copyright (c) 2013 Brahmdeep Singh Juneja. All rights reserved.
-//
-
 #ifndef _710_Project_FrequentItemMining_HeaderTable_hpp
 #define _710_Project_FrequentItemMining_HeaderTable_hpp
 
@@ -20,7 +12,8 @@ class HeaderItem;
 class HeaderItemList;
 class NodeLL;
 
-class HeaderTable {
+class HeaderTable
+{
     
 private:    
     HeaderItemList *headerItems;
@@ -42,7 +35,8 @@ public:
     
     static int getHashIndex(FPTreeItem *item);
     
-    //************* GETTERS ***************
+    //-----------------------GETTERS-------------------------//
+    
     int getNumDomainItem();
     NodeLL* getLowestFreqNode();
     NodeLL* getHighestFreqNode();

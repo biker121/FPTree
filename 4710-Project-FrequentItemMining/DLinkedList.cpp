@@ -4,6 +4,14 @@
 #include "OrderedData.hpp"
 #include "NodeLL.hpp"
 
+//--------------------------------------------------------------------------//
+//  DLinkedList
+//
+//  A generic doubly linked-list that stores any object extending
+//  OrderedData
+//--------------------------------------------------------------------------//
+
+
 DLinkedList::DLinkedList()
 {
     this->head = NULL;
@@ -11,7 +19,9 @@ DLinkedList::DLinkedList()
     this->size = 0;
 }
 
-// Purpose: destroys the entire list and its contents
+/**
+ * PURPOSE: destroys the entire list and its contents
+ */
 DLinkedList::~DLinkedList()
 {
     NodeLL *curr = this->head;
@@ -83,9 +93,11 @@ NodeLL* DLinkedList::addToBack(OrderedData *data)
     return newNode;
 }
 
-// Purpose: Iterates through to find an item which comparitively equals to the given target
-// Parm   :
-// Return : ptr to the node that contains an item equals to the given taget
+/**
+ * PURPOSE: Iterates through to find an item which comparitively equals to the given target
+ * PARAM  :
+ * RETURN : ptr to the node that contains an item equals to the given taget
+ */
 NodeLL* DLinkedList::find(OrderedData *target)
 {
     NodeLL *curr = this->head;
@@ -98,7 +110,11 @@ NodeLL* DLinkedList::find(OrderedData *target)
     return curr;
 }
 
-// Purpose: pops the node containing the item similar to target
+/**
+ * PURPOSE: pops the node containing the item similar to target
+ * PARAM  :
+ * RETURN : 
+ */
 OrderedData* DLinkedList::remove(OrderedData *target)
 {
     NodeLL *targetNode = find(target);
@@ -193,6 +209,8 @@ void DLinkedList::print()
     }
     cout << endl;
 }
+
+//-------------------GETTERS----------------------//
 
 int DLinkedList::getSize()
 {
